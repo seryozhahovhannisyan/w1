@@ -1,0 +1,604 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'GothaProIta.otf';
+    src: url(../../../css/general/fonts/GothaProIta.otf);
+}
+@font-face {
+    font-family: 'GothaProBol.otf';
+    src: url(../../../css/general/fonts/GothaProBol.otf);
+}
+@font-face {
+    font-family: 'GothaProReg.otf';
+    src: url(../../../css/general/fonts/GothaProReg.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    src: url(../../../css/general/fonts/HelveticaNeueCyr-Roman.otf);
+}
+@font-face {
+    font-family: 'GothaProMed.otf';
+    src: url(../../../css/general/fonts/GothaProMed.otf);
+}
+@font-face {
+    font-family: 'GothaProMedIta.otf';
+    src: url(../../../css/general/fonts/GothaProMedIta.otf);
+}
+
+.row{
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.container-for-scroll-sliding {
+    overflow: scroll;
+}
+
+.row-for-scroll-sliding{
+    width:150%;
+    color: #ff0000;
+    opacity: 0;
+}
+
+.main{
+    background-color: #212430;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+.user_search_div{
+    position: relative;
+    padding: 10px;
+    text-align: center;
+}
+.search_parent_div{
+    position: relative;
+    padding: 10px;
+    display: inline-block;
+}
+.sort_div_parent{
+    display: inline-block;
+}
+.arrow_div{
+    width: 50px;
+    padding: 10px;
+    position: relative;
+    display: inline-block;
+}
+.arrow_div img{
+    width: 100%;
+    height: auto;
+}
+.up{
+    position: absolute;
+    top:4px;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+
+}
+.down{
+    position: absolute;
+    bottom:5px;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+
+}
+.sort_div{
+    color: #c3c3c3;
+    font-family: 'GothaProReg.otf';
+    padding: 20px;
+    display: inline-block;
+
+}
+.input_before_text{
+    display: inline-block;
+    color: #a5a9a9;
+    margin-top: 15px;
+
+}
+.search{
+    width: 35px;
+    height: 35px;
+    background: url("../../../img/wallet/icon/search_icon.png") no-repeat center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.search_user_input{
+    background-color: #2b2f3e;
+    border: none;
+    border-radius: 10px;
+    width: 300px;
+    height: 35px;
+    padding: 10px 50px 10px 10px;
+    color: #6d6d6d;
+}
+.search_user_input::-webkit-input-placeholder{
+    text-align: left;
+    font-family: 'GothaProReg.otf';
+    font-size: smaller;
+}
+
+
+
+
+.port-menu-list {
+    overflow: auto;
+}
+.port-menu-list li {
+    background-color: #212430;
+    cursor: default;
+    margin-bottom: 0.2em;
+    padding: 0.5em;
+    width: 100%;
+    border-bottom: 1px solid #555965;
+}
+
+
+.user_div img{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.envelop_div img{
+    width: 100%;
+    height: auto;
+}
+
+
+
+/*popup design*/
+.popup_cont{
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(32, 32, 32, 0.5);
+    width: 100%;
+    top: 300px;
+    padding: 20px;
+    display: none;
+}
+.popup_main{
+    margin-left:25%;
+    width: 100%;
+    height: auto;
+    min-height: 500px;
+    background-image: url(../../../img/wallet/wallet-popup/send_money_popup_bg.png);
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    padding-bottom: 20px;
+    max-width: 920px;
+}
+.popup_sm_header_parent{
+    padding: 20px 10px 2px 10px;
+}
+.popup_sm_header{
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px dashed #959390;
+    font-size: 150%;
+    color: #6d6d6d;
+    font-family: 'GothaProMed.otf';
+    margin-right: 10px;
+}
+.popup_sm_header div:nth-child(1){
+    float: left;
+    margin-left: 20px;
+}
+
+.popup_sm_header div:nth-child(2){
+    float: right;
+    margin-right: 20px;
+}
+
+.popup_sm_header span{
+    cursor:pointer;
+}
+
+.left_first img{
+    width: 100%;
+    height: 100%;
+}
+.a_href_name{
+    margin-left: 20px;
+    border-bottom: 1px dashed #7e7e7e ;
+
+
+}
+.a_href_name a{
+    color:#7e7e7e;
+    font-family: 'GothaProReg.otf';
+    font-size: 150%;
+}
+
+
+.file_upload{
+    position: absolute;
+    width: 30px;
+    height: 28px;
+    top: 10px;
+    right: 25px;
+    background: url(../../../img/wallet/icon/file_upload.png);
+    background-size: cover;
+    cursor: pointer;
+    overflow: hidden;
+}
+.file_upload_input{
+    width: 31px;
+    font-size: 0px;
+    cursor: pointer;
+    opacity: 0;
+    height: 28px;
+}
+
+.write_message span{
+    color:#929191 ;
+    font-size: 180%;
+}
+
+
+.popup_ammount_input::-webkit-input-placeholder{
+    text-align: left;
+    font-family: 'GothaProReg.otf';
+    font-size: smaller;
+}
+.currency_type{
+    text-transform: uppercase;
+}
+.popup_select_sm{
+    width: 200px;
+    height: 40px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 10px;
+    border: 1px dashed #7e7e7e;
+    margin: 20px auto 0;
+}
+
+.aplooaded_file .file_upload_name{
+
+    display: inline-block;
+
+}.aplooaded_file .file_upload_size{
+
+    display: inline-block;
+    margin-left: 20px;
+
+}.aplooaded_file .close_x_img{
+    float: right;
+    margin-right: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+
+    .name_surname_device{
+        display: none;
+    }
+
+    .info_parent_div {
+        margin: 0 auto;
+        display: table;
+        text-align: center;
+        width: auto;
+        height: auto;
+        position: relative;
+        min-width: 320px;
+
+    }
+    .port-menu-list li a {
+        text-decoration: none;
+        color: #c3c2c2;
+        font-size: 120%;
+        font-family: 'GothaProReg.otf';
+    }
+    .user_div {
+        width: 60px;
+        height: 60px;
+        display: inline-block;
+        background-color: #7e7e7e;
+        border-radius: 10px;
+        float: left;
+        overflow: hidden;
+    }
+    .detales {
+        min-width: 200px;
+        display: inline-block;
+        margin-left: 20px;
+        float: left;
+        margin-top: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .envelop_div {
+        display: inline-block;
+        width: 51px;
+        height: auto;
+        float: right;
+        margin-right: 36px;
+        margin-top: 16px;
+    }
+
+
+    /*popup design*/
+    .popup_cont {
+        position: absolute;
+        z-index: 1;
+        background-color: rgba(32, 32, 32, 0.5);
+        width: 100%;
+        top: 100px;
+        padding: 0;
+        display: inline-block;
+        height: 100%;
+        display: none;
+    }
+    .popup_sm_header {
+        width: 100%;
+        height: 60px;
+        border-bottom: 1px dashed #959390;
+        font-size: 100%;
+        color: #6d6d6d;
+        font-family: 'GothaProMed.otf';
+        margin-right: 10px;
+    }
+    .popup_sm_header img{
+        height:20px ;
+    }
+    .popup_sm_header div:nth-child(1) {
+        float: left;
+        margin-left: 10px;
+        margin-top: 15px;
+    }
+    .popup_sm_header div:nth-child(2) {
+        float: right;
+        margin-right: 10px;
+        margin-top: 15px;
+    }
+    .name_img_surname{
+        display: table;
+        width: auto;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .left_first {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #7e7e7e;
+        display: inline-block;
+        margin-top:10px;
+        margin-left: 20px;
+    }
+    .popup_textarea{
+        position: relative;
+        font-family: 'GothaProMed.otf';
+        font-size: 100%;
+        width: 65%;
+        margin: 10px auto;
+    }
+    .popup_ammount {
+        width: auto;
+        padding: 5px;
+        font-family: 'GothaProIta.otf';
+        font-size: 120%;
+        text-align: center;
+        border-bottom: 1px dashed #7e7e7e;
+        margin-bottom: 20px;
+        margin: 0 auto;
+        display: table;
+    }
+    .popup_ammount_input{
+        border: none;
+        width: 50%;
+        text-align: center;
+        padding-right: 10px;
+    }
+    .aplooaded_file{
+        background-color: #e3dac7;
+        height: auto;
+        border-radius: 15px;
+        padding: 10px;
+        margin-top: 20px;
+        width: 80%;
+        display: inline-block;
+    }
+    .write_message{
+        font-family: 'GothaProMedIta.otf';
+        font-size: 70%;
+        height: 170px;
+        background-color: #e3dac7;
+        padding:5px 40px 5px 10px;
+        overflow: auto;
+    }
+    .arrow-left-payment-popup, .arrow-right-payment-popup {
+        cursor: pointer;
+        font-size: 30px;
+    }
+    .arrow-left-payment-popup {
+        position: absolute;
+        margin-top: 200px;
+        margin-left: -60px;
+        color: #ffffff;
+    }
+
+    .arrow-right-payment-popup {
+        text-align: right;
+        margin-right: -60px;
+        margin-top: -300px;
+        color: #ffffff;
+    }
+
+ @media all and  (max-width: 500px){
+     .name_surname_device{
+         display: none;
+     }
+
+     .info_parent_div {
+         margin: 0 auto;
+         display: table;
+         text-align: center;
+         width: auto;
+         height: auto;
+         position: relative;
+         min-width: 320px;
+
+     }
+     .port-menu-list li a {
+         text-decoration: none;
+         color: #c3c2c2;
+         font-size: 100%;
+         font-family: 'GothaProReg.otf';
+     }
+     .user_div {
+         width: 50px;
+         height: 50px;
+         display: inline-block;
+         background-color: #7e7e7e;
+         border-radius: 10px;
+         float: left;
+         overflow: hidden;
+     }
+     .detales {
+         min-width: 155px;
+         display: inline-block;
+         margin-left: 20px;
+         float: left;
+         margin-top: 16px;
+         overflow: hidden;
+         text-overflow: ellipsis;
+         white-space: nowrap;
+     }
+     .envelop_div {
+         display: inline-block;
+         width: 51px;
+         height: auto;
+         float: right;
+         margin-right: 36px;
+         margin-top: 16px;
+     }
+     .search_user_input{
+         width: 280px;
+     }
+
+     /*popup design*/
+     .popup_cont {
+         position: absolute;
+         z-index: 1;
+         background-color: rgba(32, 32, 32, 0.5);
+         width: 100%;
+         top: 100px;
+         padding: 0;
+         display: inline-block;
+         height: 100%;
+         display: none;
+     }
+     .popup_sm_header {
+         width: 100%;
+         height: auto;
+         border-bottom: 1px dashed #959390;
+         font-size: 100%;
+         color: #6d6d6d;
+         font-family: 'GothaProMed.otf';
+         margin-right: 10px;
+     }
+     .popup_sm_header img{
+         height:20px ;
+     }
+     .popup_sm_header div:nth-child(1) {
+         float: none;
+         text-align: center;
+         margin-top: 15px;
+     }
+     .popup_sm_header div:nth-child(2) {
+         float: none;
+         text-align: center;
+         margin: 15px 0;
+     }
+     .name_img_surname{
+         display: table;
+         width: auto;
+         margin: 0 auto;
+         text-align: center;
+     }
+     .left_first {
+         width: 80px;
+         height: 80px;
+         border-radius: 10px;
+         overflow: hidden;
+         background-color: #7e7e7e;
+         display: inline-block;
+         margin-top:10px;
+         margin-left: 20px;
+     }
+
+     .popup_textarea{
+         position: relative;
+         font-family: 'GothaProMed.otf';
+         font-size: 100%;
+         width: 85%;
+         margin: 10px auto;
+     }
+     .popup_ammount {
+         width: auto;
+         padding: 5px;
+         font-family: 'GothaProIta.otf';
+         font-size: 120%;
+         text-align: center;
+         border-bottom: 1px dashed #7e7e7e;
+         margin-bottom: 20px;
+         margin: 0 auto;
+         display: table;
+     }
+     .popup_ammount_input{
+         border: none;
+         width: 50%;
+         text-align: center;
+         padding-right: 10px;
+     }
+     .aplooaded_file{
+         background-color: #e3dac7;
+         height: auto;
+         border-radius: 15px;
+         padding: 10px;
+         margin-top: 20px;
+         width: 80%;
+         display: inline-block;
+     }
+     .write_message{
+         font-family: 'GothaProMedIta.otf';
+         font-size: 70%;
+         height: 170px;
+         background-color: #e3dac7;
+         padding:5px 40px 5px 10px;
+         overflow: auto;
+     }
+
+
+ }
+
+
+

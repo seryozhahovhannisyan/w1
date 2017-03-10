@@ -1,0 +1,91 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsExchangeRate">
+
+    <cacheModel id="cmExchangeRate" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmExchangeRate" class="ExchangeRate">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="oneCurrency" column="one_currency"/>
+        <result property="toCurrency" column="to_currency"/>
+        <result property="buy" column="buy"/>
+        <result property="sell" column="sell"/>
+        <result property="updatedDate" column="updated_date"/>
+        <result property="sourceId" column="source_id"/>
+        <result property="source" column="source_id" select="nsExchangeSource.getById"/>
+    </resultMap>
+
+
+    <insert id="add" parameterClass="ExchangeRate">
+        INSERT INTO `w_exchange_rate` (
+        `one_currency`,
+        `to_currency`,
+        `buy`,
+        `sell`,
+        `updated_date`,
+        `source_id`
+        ) VALUES (
+        #oneCurrency#,
+        #toCurrency#,
+        #buy#,
+        #sell#,
+        #updatedDate#,
+        #sourceId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmExchangeRate" resultMap="rmExchangeRate" parameterClass="long">
+        select	s.id source_id , r.*
+        from w_exchange_rate r,w_exchange_source s
+        where   r.source_id = s.id and
+                r.id  = #id#
+    </select>
+
+    <select id="getByParams" cacheModel="cmExchangeRate" resultMap="rmExchangeRate" parameterClass="map">
+        select s.id source_id , r.*
+        from w_exchange_rate r,w_exchange_source s
+        <dynamic prepend="WHERE">
+            r.source_id = s.id
+            <isNotNull property="isDefault">
+                and s.is_default = 1
+            </isNotNull>
+            <isNotNull property="sourceId">
+                and r.source_id = #sourceId#
+            </isNotNull>
+            <isNotNull property="oneCurrency">
+                and r.one_currency = #oneCurrency#
+            </isNotNull>
+            <isNotNull property="toCurrency">
+                and r.to_currency = #toCurrency#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="lastOne">
+            order by r.updated_date desc limit 1
+        </isNotNull>
+    </select>
+
+    <select id="getLastUpdatesByCurrency" cacheModel="cmExchangeRate" resultMap="rmExchangeRate" parameterClass="int">
+        SELECT a.*  from (
+            select	r.*
+            from w_exchange_rate r,w_exchange_source s
+            WHERE r.source_id = s.id and r.one_currency = #sourceId#  and updated_date  >= NOW() - INTERVAL 1 DAY
+            order by r.id desc
+        ) a group by a.to_currency, a.source_id
+        order by a.id desc
+    </select>
+
+    <delete id="delete" parameterClass="long">
+        DELETE FROM `w_exchange_rate` WHERE `id` = #id#
+    </delete>
+
+
+</sqlMap>

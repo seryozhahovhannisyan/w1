@@ -1,0 +1,101 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionTax">
+
+    <cacheModel id="cmTransactionTax" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionTax" class="TransactionTax">
+        <result property="id" column="id" nullValue="0"/>
+
+        <result property="walletId" column="wallet_id"/>
+        <result property="walletSetupId" column="w_setup_id"/>
+
+        <result property="createdAt" column="created_at"/>
+        <result property="paymentDate" column="payment_date"/>
+
+        <result property="totalAmountTax" column="total_amount_tax"/>
+        <result property="totalAmountTaxPrice" column="total_amount_tax_price"/>
+
+        <result property="transferTax" column="t_tax"/>
+        <result property="transferTaxPrice" column="t_tax_price"/>
+        <result property="transferTaxType" column="t_tax_type"/>
+        <result property="transferTaxExchangeId" column="t_tax_exchange_id"/>
+
+        <result property="transferExchangeTax" column="t_exchange_tax"/>
+        <result property="transferExchangeTaxPrice" column="t_exchange_tax_price"/>
+        <result property="transferExchangeTaxType" column="t_exchange_tax_type"/>
+        <result property="transferExchangeTaxExchangeId" column="t_exchange_tax_exchange_id"/>
+
+    </resultMap>
+
+    <insert id="add" parameterClass="TransactionTax">
+        INSERT INTO `w_transaction_tax` (
+
+        `wallet_id`,
+        `w_setup_id`,
+
+        `created_at`,
+        `payment_date`,
+
+        `total_amount_tax`,
+        `total_amount_tax_price`,
+
+        `t_tax`,
+        `t_tax_price`,
+        `t_tax_type`,
+        `t_tax_exchange_id`,
+
+        `t_exchange_tax`,
+        `t_exchange_tax_price`,
+        `t_exchange_tax_type`,
+        `t_exchange_tax_exchange_id`,
+
+        `is_paid`
+
+        ) VALUE (
+
+        #walletId#,
+        #walletSetupId#,
+
+        #createdAt#,
+        #paymentDate#,
+
+        #totalAmountTax#,
+        #totalAmountTaxPrice#,
+
+        #transferTax#,
+        #transferTaxPrice#,
+        #transferTaxType#,
+        #transferTaxExchangeId#,
+
+        #transferExchangeTax#,
+        #transferExchangeTaxPrice#,
+        #transferExchangeTaxType#,
+        #transferExchangeTaxExchangeId#,
+
+        #isPaid#
+
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionTax" resultMap="rmTransactionTax" parameterClass="long">
+        SELECT * from `w_transaction_tax` WHERE `id` = #id#
+    </select>
+
+    <update id="updatePayment" parameterClass="TransactionTax">
+        UPDATE `w_transaction_tax`
+        SET `payment_date` = #paymentDate# ,`is_paid` = #isPaid#
+
+        WHERE `id` = #id#
+    </update>
+
+</sqlMap>

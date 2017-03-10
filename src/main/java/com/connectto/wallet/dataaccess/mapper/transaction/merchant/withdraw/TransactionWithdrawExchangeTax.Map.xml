@@ -1,0 +1,56 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionWithdrawExchangeTax">
+
+    <cacheModel id="cmTransactionWithdrawExchangeTax" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionWithdrawExchangeTaxSample" class="TransactionWithdrawExchangeTax">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="actionDate" column="action_date"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="exchangeTax" column="exchange_tax"/>
+        <result property="exchangeTaxCurrencyType" column="exchange_tax_ct"/>
+        <result property="exchangeTaxPrice" column="exchange_tax_price"/>
+        <result property="exchangeTaxPriceCurrencyType" column="exchange_tax_price_ct"/>
+        <result property="exchangeTaxType" column="exchange_tax_type"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="TransactionWithdrawExchangeTax">
+        INSERT INTO `w_t_withdraw_exchange_tax` (
+            `action_date`,
+            `wallet_id`,
+            `setup_id`,
+            `exchange_tax`,
+            `exchange_tax_ct`,
+            `exchange_tax_price`,
+            `exchange_tax_price_ct`,
+            `exchange_tax_type`
+        ) VALUES (
+            #actionDate#,
+            #walletId#,
+            #setupId#,
+            #exchangeTax#,
+            #exchangeTaxCurrencyType#,
+            #exchangeTaxPrice#,
+            #exchangeTaxPriceCurrencyType#,
+            #exchangeTaxType#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionWithdrawExchangeTax" resultMap="rmTransactionWithdrawExchangeTaxSample" parameterClass="long">
+        SELECT * from `w_t_withdraw_exchange_tax` WHERE `id` = #id#
+    </select>
+
+
+
+</sqlMap>

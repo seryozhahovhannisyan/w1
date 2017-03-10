@@ -1,0 +1,110 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsExchange">
+
+    <cacheModel id="cmExchange" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+
+    <resultMap id="rmExchange" class="Exchange">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="walletAmount" column="wallet_amount"/>
+        <result property="walletCurrencyType" column="wallet_currency"/>
+        <result property="rateAmount" column="rate_amount"/>
+        <result property="rateCurrency" column="rate_currency"/>
+        <result property="exchangeDate" column="exchange_date"/>
+
+        <result property="resultAmount" column="result_amount"/>
+        <result property="resultCurrency" column="result_currency"/>
+
+        <result property="exchangeRateId" column="rate_id"/>
+        <result property="exchangeRate" column="rate_id" select="nsExchangeRate.getById"/>
+    </resultMap>
+
+    <!--
+    id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+              `wallet_id` int(15) unsigned NOT NULL,
+              `wallet_amount` float(15,2) unsigned NOT NULL,
+              `wallet_currency` int(3) unsigned NOT NULL,
+              `rate_amount` float(15,2) unsigned NOT NULL,
+              `rate_currency` int(3) unsigned NOT NULL,
+              `result_amount` float(15,2) unsigned NOT NULL,
+              `result_currency` int(3) unsigned NOT NULL,
+              `exchange_date` date NOT NULL,
+              `rate_id` int(15) unsigned NOT NULL,
+    -->
+    <insert id="add" parameterClass="Exchange">
+        INSERT INTO `w_exchange` (
+        `wallet_id`,
+        `wallet_amount`,
+        `wallet_currency`,
+        `rate_amount`,
+        `rate_currency`,
+        `exchange_date`,
+        `result_amount`,
+        `result_currency`,
+        `rate_id`
+        ) VALUES (
+        #walletId#,
+        #walletAmount#,
+        #walletCurrencyType#,
+        #rateAmount#,
+        #rateCurrency#,
+        #exchangeDate#,
+        #resultAmount#,
+        #resultCurrency#,
+        #exchangeRateId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmExchange" resultMap="rmExchange" parameterClass="long">
+        SELECT * from `w_exchange` WHERE `id` = #id#
+    </select>
+
+    <select id="getByParams" cacheModel="cmExchange" resultMap="rmExchange" parameterClass="map">
+        SELECT * from `w_exchange`
+        <dynamic prepend="WHERE">1
+            <isNotNull property="id">
+                and id` = #id#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <select id="getCountByParams" cacheModel="cmExchange" resultMap="rmExchange" parameterClass="map">
+        SELECT count(`id`) from `w_exchange`
+        <dynamic prepend="WHERE">1
+            <isNotNull property="id">
+                and id` = #id#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <update id="update" parameterClass="Exchange">
+        UPDATE `w_exchange`
+        SET `id` = #id#
+
+        WHERE `id` = #id#
+    </update>
+
+
+    <delete id="delete" parameterClass="long">
+        DELETE FROM `w_exchange` WHERE `id` = #id#
+    </delete>
+
+
+</sqlMap>

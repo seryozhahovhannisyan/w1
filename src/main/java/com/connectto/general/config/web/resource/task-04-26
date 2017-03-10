@@ -1,0 +1,36 @@
+wallet.general.wallet.blocked.user=Ջնջել
+grec c : ay popoxutyunnern ays file- mej kgres, vorn vor hayereni karriq ka, da update kanenq im mot knayem
+ok, es mianga
+vonc vor te verj, yes himna im mot kqashem, mi jamva gorc une, kavartem, liver server kdnem, kpordzenq, bayc lav klni ayd yntacqum,
+qo asac, popoxutyunnern el ays fili mijocov poxances da el anenq
+hima inch ij-um chem gtel grem estegh?
+ayo sa mer workspacen e in4 anum enq aystex enq anum, heto ete petq lini, khanenq
+lav, u esd baner ka popoxel em, bayc karogha achqics vripats linen du mi hat verjum knayesm, ha
+ete handipem, anpayman kasem, kam vor ayl ban poxoelu kariq lini knayeq Aram -i het
+ok
+
+
+Default percent- The min and max percent of transaction fees.
+Максимальные и минимальные проценты, начисляемые за транзакции.
+Գործարքներից գանձվող առավելագույն և նվազագույն տոկոսները:
+Transfer to ConnectToWallet
+disable-Ապաակտիվացնել
+enable-Ակտիվացնել
+Invalid parameter-Your parameter is incorrect as you have not enter any amount.
+Անվավեր պարամետր: Ձեր պարամետրն անվավեր է, քանի որ Դուք գումար չեք մուտքագրել:
+Недопустимый параметр. Ваш параметр является недопустимым, потому что вы не вводили деньги.
+Internal error. Please, try again. An error occurred on the server, because you do not have so enough money in your account. Replenish it.
+Внутренняя ошибка.Пожалуйста, попробуйте еще раз. Произошла ошибка на сервере, потому что у Вас нет достаточно денег. Пополните ваш счет.
+Ներքին սխալ: Խնդրում ենք կրկին փորձել: Սերվերում սխալ է տեղի ունեցել, քանի որ Դուք բավարար գումար չունեք Ձեր հաշվի վրա: Վերալիցքավորեք Ձեր հաշիվը:
+Min exchange fee-Минимальный биржевой сбор-Նվազագույն փոխանցման վճար
+Max exchange fee-Максимальный биржевой сбор-Առավելագույն փոխանցման վճար
+Default exchange percent
+Welcome to your ConnectToWallet. With the help of this page you can send money, also ask for it and receive it by selecting any precipitant of ConnectToWallet. During these transactions a certain percent of the money you deal with will be charged from you(you may get familiar with the max and min percents of transactions by looking through the section Terms and Conditions). If someone annoys you, you may add him/her to your Blocked Users' list. If you are dealing mainly with one currency you had better set it as your current currency in the section Current Currency, as in this case you may save your money. You also have the opportunity to look through your pending transactions, as well as the transactions you have already completed, making your search easier and more comfortable with the help of various filters. You may have transactions using your credit cards too by selecting section Credit Card Transaction and following the given instructions. ConnectToWallet supports four types of credit cards: MasterCard, Visa, American Express, Discover. You may also set your priority over your credit cards by sorting them.
+Добро пожаловать в ваш ConnectToWallet.С помощью этой страницы Вы можете послать деньги, а также просить и получать, выбрав любой член ConnectToWallet_а. Во время этих транзакцй, определенный процент денег отнимется от вас (вы можете ознакомиться с  максимальными и минимальными процентами сделок, просмотрев раздел Условия). Если кто-то вас беспокоит, вы можете добавить его/ее в список Заблокированных Пользователей. Если вы работаете в основном с одной валютой, установите ее в качестве текущей валюте в разделе Текущая Валюта, так как в этом случае вы можете сэкономить свои деньги. У вас также есть возможность смотреть через незавершенных сделок, а также сделок, которые вы уже завершили, делая ваш поиск проще и комфортнее с помощью различных фильтров. Вы можете иметь транзакции с использованием кредитной карты, выбрав раздел Трансакция по Кредитной Карте и следуя инструкциям. ConnectToWallet поддерживает четыре типа кредитных карт: MasterCard, Visa, American Express, Discover. Вы также можете установить свой приоритет на ваших кредитных карт, путем их сортировки.
+Բարի գալուստ Ձեր ConnectToWallet. Այս էջի օգնությամբ Դուք կարող եք ուղարկել, ինչպես նաև խնդրել և ստանալ գումարներ ConnectToWallet-ի այլ օգտատերերից: Այս գործարքների ժամանակ որոշակի տոկոսներ են պահվում այն գումարներից, որոնց Դուք առնչվում եք(Դուք կարող եք ավելի մանրամասն տեղեկություն ստանալ առավելագույն և նվազագույն տոկոսներից Պայմաններ և Հանգամանքներ բաժնում): Եթե ինչ-որ անձ անհանգստացնում է Ձեզ, ապա կարող եք նրան ավելացնել Ձեր Արգելափակված օգտատերերի ցուցակում: Եթե մեծ մասամբ գործ եք ունենում մեկ արժույթի հետ, ապա խորհուրդ ենք տալիս այն դարձնել Ձեր ընթացիկ արժույթը Ընթացիկ արժույթ բաժնում, քանի որ այսպիսով Դուք ավելի քիչ գումար կծախսեք:  Դուք նաև կարող եք աչքի անցկացնել Ձեր ընթացիկ և արդեն իսկ ավարտած գործարքները, ինչը Ձեզ համար ավելի հեշտ և հարմարավետ կդառնա մեր բազմաթիվ ֆիլտրերի միջոցով: Դուք նաև կարող եք գործարքներ ունենալ Ձեր վարկային քարտերով՝ ընտրելով Վարկային քարտով գործարքներ բաժինը և հետևելով ցուցումներին: ConnectToWallet-ը աջակցում է չորս վարկային քարտերի՝ MasterCard, Visa, American Express, Discover: Դուք նաև կարող եք ըստ հերթականության դասավորել Ձեր վարկային քարտերը՝ ելնելով օգտագործման հաճախականությունից:
+The person you have blocked will no longer be able to have any type of transactions with you.
+Человек, которого вы заблокировали, больше не будете иметь никаких сделок с Вами.
+Անձը, որին դուք արգելափակել եք, այլևս չի կարող Ձեզ հետ ոչ մի տեսակի գործարքի մեջ մտնել:
+You have ..., that is why if you change your current currency from ... into ..., you will be charged for ...
+У вас есть ..., поэтому, если Вы измените текущую валюту из ... в ..., вы будете платить ...
+Դուք ունեք...., այդ իսկ պատճառով, եթե Դուք փոխեք Ձեր ընթացիկ արժույթը ...-ից ...-ի, Ձեզանից կգանձվի...

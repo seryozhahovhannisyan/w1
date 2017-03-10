@@ -1,0 +1,65 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionWithdrawProcessTax">
+
+    <cacheModel id="cmTransactionWithdrawProcessTax" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionWithdrawProcessTaxSample" class="TransactionWithdrawProcessTax">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="actionDate" column="action_date"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="processTax" column="process_tax"/>
+        <result property="processTaxTotal" column="process_tax_total"/>
+        <result property="processTaxCurrencyType" column="process_tax_ct"/>
+        <result property="processTaxPrice" column="process_tax_price"/>
+        <result property="processTaxPriceTotal" column="process_tax_price_total"/>
+        <result property="processTaxPriceCurrencyType" column="process_tax_price_ct"/>
+        <result property="processTaxType" column="process_tax_type"/>
+        <result property="exchangeId" column="exchange_id"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="TransactionWithdrawProcessTax">
+        INSERT INTO `w_t_withdraw_process_tax` (
+            `action_date`,
+            `wallet_id`,
+            `setup_id`,
+            `process_tax`,
+            `process_tax_total`,
+            `process_tax_ct`,
+            `process_tax_price`,
+            `process_tax_price_total`,
+            `process_tax_price_ct`,
+            `process_tax_type`,
+            `exchange_id`
+        ) VALUES (
+            #actionDate#,
+            #walletId#,
+            #setupId#,
+            #processTax#,
+            #processTaxTotal#,
+            #processTaxCurrencyType#,
+            #processTaxPrice#,
+            #processTaxPriceTotal#,
+            #processTaxPriceCurrencyType#,
+            #processTaxType#,
+            #exchangeId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionWithdrawProcessTax" resultMap="rmTransactionWithdrawProcessTaxSample" parameterClass="long">
+        SELECT * from `w_t_withdraw_process_tax` WHERE `id` = #id#
+    </select>
+
+
+
+</sqlMap>

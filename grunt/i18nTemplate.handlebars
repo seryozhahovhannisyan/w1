@@ -1,0 +1,5 @@
+/* Compiled with love by Gruntfile.js */
+var I18N_LOCALE_MESSAGES{{msgKeys.locale}} = {
+{{#each msgKeys.keys}}   "{{this.key}}": {{#if this.value}}"{{{this.value}}}"{{else}}null{{/if}}{{#unless @last}},{{/unless}}  // Used in: {{this.uses}}
+{{/each}}
+}

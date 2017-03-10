@@ -1,0 +1,219 @@
+DROP TABLE IF EXISTS w_merchant_deposit;
+DROP TABLE IF EXISTS w_merchant_deposit_tax;
+DROP TABLE IF EXISTS w_t_deposit_exchange_tax;
+DROP TABLE IF EXISTS w_t_deposit_exchange;
+DROP TABLE IF EXISTS w_t_wallet_setup_deposit_tax;
+DROP TABLE IF EXISTS w_t_deposit_process_tax;
+DROP TABLE IF EXISTS w_t_deposit_process;
+DROP TABLE IF EXISTS w_t_deposit;
+
+
+DROP TABLE IF EXISTS w_merchant_deposit;
+CREATE TABLE `w_merchant_deposit` (
+                     `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                     `item_id` INT(15) UNSIGNED NOT NULL,
+                     `name` VARCHAR(1024) COLLATE utf8_bin NOT NULL,
+                     `description` TEXT COLLATE utf8_bin NOT NULL,
+                     `start_at` DATETIME,
+                     `rational_stop_at`  DATETIME,
+                     `end_at`   DATETIME,
+                     `m_deposit_tax_id` INT(15) UNSIGNED NOT NULL,
+                 PRIMARY KEY (`id`)
+               ) ENGINE=INNODB;
+
+DROP TABLE IF EXISTS w_merchant_deposit_tax;
+CREATE TABLE `w_merchant_deposit_tax` (
+                            `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+                            `action_date` datetime NOT NULL,
+                            `wallet_id` int(15) NOT NULL,
+                            `setup_id` int(15) NOT NULL,
+                            `paid_tax_to_merchant` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `paid_tax_ct` int(3) unsigned NOT NULL,
+                            `deposit_tax` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `deposit_tax_total` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `deposit_tax_ct` int(3) unsigned NOT NULL,
+                            `deposit_tax_price` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `deposit_tax_price_total` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `deposit_tax_price_ct` int(3) unsigned NOT NULL,
+                            `process_tax_type` int(1) unsigned NOT NULL,
+                            `exchange_id` int(15) unsigned DEFAULT NULL,
+                            PRIMARY KEY (`id`)
+                          ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS w_t_deposit_exchange_tax;
+CREATE TABLE `w_t_deposit_exchange_tax` (
+                           `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+                           `action_date` datetime NOT NULL,
+                           `wallet_id` int(15) NOT NULL,
+                           `setup_id` int(15) NOT NULL,
+                           `exchange_tax` varchar(512) COLLATE utf8_bin NOT NULL,
+                           `exchange_tax_ct` int(3) unsigned NOT NULL,
+                           `exchange_tax_price` varchar(512) COLLATE utf8_bin NOT NULL,
+                           `exchange_tax_price_ct` int(3) unsigned NOT NULL,
+                           `exchange_tax_type` int(1) unsigned NOT NULL,
+                           PRIMARY KEY (`id`)
+                         ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS w_t_deposit_exchange;
+CREATE TABLE `w_t_deposit_exchange` (
+                      `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+                      `wallet_id` int(15) unsigned NOT NULL,
+                      `setup_id` int(15) unsigned NOT NULL,
+                      `rate_id` int(15) unsigned NOT NULL,
+                      `exchange_date` datetime NOT NULL,
+                      `setup_amount` varchar(512) COLLATE utf8_bin NOT NULL,
+                      `setup_ct` int(3) unsigned NOT NULL,
+                      `rate` varchar(512) COLLATE utf8_bin NOT NULL,
+                      `rate_ct` int(3) unsigned NOT NULL,
+                      `wallet_bought_amount` varchar(512) COLLATE utf8_bin NOT NULL,
+                      `wallet_bought_ct` int(3) unsigned NOT NULL,
+                      `wallet_paid_amount` varchar(512) COLLATE utf8_bin NOT NULL,
+                      `wallet_paid_ct` int(3) unsigned NOT NULL,
+                      `exchange_tax_id` int(15) unsigned NOT NULL,
+                      PRIMARY KEY (`id`),
+                      KEY `FK_w_t_deposit_exchange_t` (`exchange_tax_id`),
+                      CONSTRAINT `FK_w_t_deposit_exchange_t` FOREIGN KEY (`exchange_tax_id`) REFERENCES `w_t_deposit_exchange_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                    ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS w_t_wallet_setup_deposit_tax;
+CREATE TABLE `w_t_wallet_setup_deposit_tax` (
+                            `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+                            `action_date` datetime NOT NULL,
+                            `wallet_id` int(15) NOT NULL,
+                            `setup_id` int(15) NOT NULL,
+                            `deposit_tax` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `deposit_tax_total` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `deposit_tax_ct` int(3) unsigned NOT NULL,
+                            `deposit_tax_price` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `deposit_tax_price_total` varchar(512) COLLATE utf8_bin NOT NULL,
+                            `deposit_tax_price_ct` int(3) unsigned NOT NULL,
+                            `deposit_tax_type` int(1) unsigned NOT NULL,
+                            `exchange_id` int(15) unsigned DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            KEY `FK_w_t_wallet_setup_deposit_tax_e` (`exchange_id`),
+                            CONSTRAINT `FK_w_t_wallet_setup_deposit_tax_e` FOREIGN KEY (`exchange_id`) REFERENCES `w_t_deposit_exchange_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                          ) ENGINE=InnoDB;
+
+
+DROP TABLE IF EXISTS w_t_deposit_process_tax;
+CREATE TABLE `w_t_deposit_process_tax` (
+                          `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+                          `action_date` datetime NOT NULL,
+                          `wallet_id` int(15) NOT NULL,
+                          `setup_id` int(15) NOT NULL,
+                          `process_tax` varchar(512) COLLATE utf8_bin NOT NULL,
+                          `process_tax_total` varchar(512) COLLATE utf8_bin NOT NULL,
+                          `process_tax_ct` int(3) unsigned NOT NULL,
+                          `process_tax_price` varchar(512) COLLATE utf8_bin NOT NULL,
+                          `process_tax_price_total` varchar(512) COLLATE utf8_bin NOT NULL,
+                          `process_tax_price_ct` int(3) unsigned NOT NULL,
+                          `process_tax_type` int(1) unsigned NOT NULL,
+                          `exchange_id` int(15) unsigned DEFAULT NULL,
+                          PRIMARY KEY (`id`),
+                          KEY `FK_w_t_deposit_process_tax_e` (`exchange_id`),
+                          CONSTRAINT `FK_w_t_deposit_process_tax_e` FOREIGN KEY (`exchange_id`) REFERENCES `w_t_deposit_exchange_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+                        ) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS w_t_deposit_process;
+CREATE TABLE `w_t_deposit_process` (
+              `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+              `state` int(1) unsigned NOT NULL,
+              `action_date` datetime DEFAULT NULL,
+              `wallet_id` int(15) unsigned NOT NULL,
+              `setup_id` int(15) unsigned NOT NULL,
+              `deposit_amount` varchar(512) COLLATE utf8_bin NOT NULL,
+              `deposit_amount_ct` int(3) unsigned NOT NULL,
+              `wallet_deposit_price` varchar(512) COLLATE utf8_bin NOT NULL,
+              `wallet_total_price` varchar(512) COLLATE utf8_bin NOT NULL,
+              `wallet_total_price_ct` int(3) unsigned NOT NULL,
+              `setup_deposit_price` varchar(512) COLLATE utf8_bin NOT NULL,
+              `setup_total_price` varchar(512) COLLATE utf8_bin NOT NULL,
+              `setup_total_price_ct` int(3) unsigned NOT NULL,
+              `process_tax_id` int(15) unsigned NOT NULL,
+              `setup_deposit_tax_id` int(15) unsigned NOT NULL,
+              `exchange_id` int(15) unsigned DEFAULT NULL,
+              PRIMARY KEY (`id`),
+              KEY `FK_w_t_deposit_process_t` (`process_tax_id`),
+              KEY `FK_w_t_deposit_process_setup_deposit_t` (`setup_deposit_tax_id`),
+              KEY `FK_w_t_deposit_process_e` (`exchange_id`),
+              CONSTRAINT `FK_w_t_deposit_process_e` FOREIGN KEY (`exchange_id`) REFERENCES `w_t_deposit_exchange` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+              CONSTRAINT `FK_w_t_deposit_process_t` FOREIGN KEY (`process_tax_id`) REFERENCES `w_t_deposit_process_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE ,
+              CONSTRAINT `FK_w_t_deposit_process_setup_deposit_t` FOREIGN KEY (`setup_deposit_tax_id`) REFERENCES `w_t_wallet_setup_deposit_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+            ) ENGINE=InnoDB
+-- todo
+
+
+CREATE TABLE `w_t_deposit_tax` (                                                                                                                                     
+                    `id` int(15) unsigned NOT NULL AUTO_INCREMENT,                                                                                                                      
+                    `action_date` datetime NOT NULL,                                                                                                                                    
+                    `wallet_id` int(15) unsigned NOT NULL,                                                                                                                              
+                    `setup_id` int(15) unsigned NOT NULL,                                                                                                                               
+                    `total_tax` varchar(512) COLLATE utf8_bin NOT NULL,                                                                                                                 
+                    `total_tax_price` varchar(512) COLLATE utf8_bin NOT NULL,                                                                                                           
+                    `process_tax_id` int(15) unsigned NOT NULL,                                                                                                                         
+                    `process_tax_exchange_tax_id` int(15) unsigned DEFAULT NULL,                                                                                                        
+                    `exchange_tax_id` int(15) unsigned DEFAULT NULL,
+
+                    `setup_deposit_tax_id` int(15) unsigned DEFAULT NULL,
+                    `setup_deposit_tax_exchange_tax_id` int(15) unsigned DEFAULT NULL,
+
+                    `merchant_deposit_tax_id` int(15) unsigned DEFAULT NULL,
+                    `merchant_deposit_tax_exchange_tax_id` int(15) unsigned DEFAULT NULL,
+
+
+
+                    `is_paid` tinyint(1) unsigned NOT NULL,                                                                                                                             
+                    UNIQUE KEY `id` (`id`),                                                                                                                                             
+                    KEY `FK_w_t_deposit_tax_pt` (`process_tax_id`),                                                                                                                    
+                    KEY `FK_w_t_deposit_tax_e` (`exchange_tax_id`),                                                                                                                    
+                    KEY `FK_w_t_deposit_tax_et` (`process_tax_exchange_tax_id`),                                                                                                       
+                    CONSTRAINT `FK_w_t_deposit_tax_e` FOREIGN KEY (`exchange_tax_id`) REFERENCES `w_t_deposit_exchange_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,               
+                    CONSTRAINT `FK_w_t_deposit_tax_et` FOREIGN KEY (`process_tax_exchange_tax_id`) REFERENCES `w_t_deposit_exchange_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,  
+                    CONSTRAINT `FK_w_t_deposit_tax_pt` FOREIGN KEY (`process_tax_id`) REFERENCES `w_t_deposit_process_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE                 
+                  ) ENGINE=InnoDB 
+
+DROP TABLE IF EXISTS w_t_deposit;
+CREATE TABLE `w_t_deposit` (
+                `id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+                `wallet_id` int(15) unsigned NOT NULL,
+                `setup_id` int(15) unsigned NOT NULL,
+                `final_state` int(3) unsigned NOT NULL,
+                `opened_at` datetime NOT NULL,
+                `closed_at` datetime DEFAULT NULL,
+
+                `deposit_amount` varchar(512) COLLATE utf8_bin NOT NULL,
+                `deposit_amount_ct` int(3) unsigned NOT NULL,
+
+                `deposit_m_total_tax` varchar(512) COLLATE utf8_bin NOT NULL,
+                `deposit_m_total_tax_ct` int(3) unsigned NOT NULL,
+
+                `wallet_total_price` varchar(512) COLLATE utf8_bin NOT NULL,
+                `wallet_total_price_ct` int(3) unsigned NOT NULL,
+
+                `setup_total_amount` varchar(512) COLLATE utf8_bin NOT NULL,
+                `setup_total_amount_ct` int(3) unsigned NOT NULL,
+
+                `process_start_id` int(15) unsigned NOT NULL,
+                `process_end_id` int(15) unsigned DEFAULT NULL,
+
+                `tax_id` int(15) unsigned NOT NULL,
+                `merchant_deposit_id` int(15) unsigned NOT NULL,
+
+                `is_encoded` tinyint(1) NOT NULL,
+                `order_code` varchar(64) COLLATE utf8_bin NOT NULL,
+                `message` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+                `session_id` varchar(256) COLLATE utf8_bin NOT NULL,
+                PRIMARY KEY (`id`),
+                KEY `FK_w_t_deposit_ps` (`process_start_id`),
+                KEY `FK_w_t_deposit_pe` (`process_end_id`),
+                KEY `FK_w_t_deposit_tax` (`tax_id`),
+                KEY `FK_w_t_deposit_pct` (`deposit_amount_ct`),
+                KEY `FK_w_t_deposit_tct` (`setup_total_amount_ct`),
+                KEY `FK_w_t_deposit_wtt` (`wallet_total_price_ct`),
+                CONSTRAINT `FK_w_t_deposit_pct` FOREIGN KEY (`deposit_amount_ct`) REFERENCES `w_currency_type_lcp` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                CONSTRAINT `FK_w_t_deposit_pe` FOREIGN KEY (`process_end_id`) REFERENCES `w_t_deposit_process` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                CONSTRAINT `FK_w_t_deposit_ps` FOREIGN KEY (`process_start_id`) REFERENCES `w_t_deposit_process` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                CONSTRAINT `FK_w_t_deposit_tax` FOREIGN KEY (`tax_id`) REFERENCES `w_t_deposit_tax` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                CONSTRAINT `FK_w_t_deposit_tct` FOREIGN KEY (`setup_total_amount_ct`) REFERENCES `w_currency_type_lcp` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                CONSTRAINT `FK_w_t_deposit_wtt` FOREIGN KEY (`wallet_total_price_ct`) REFERENCES `w_currency_type_lcp` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+              ) ENGINE=InnoDB

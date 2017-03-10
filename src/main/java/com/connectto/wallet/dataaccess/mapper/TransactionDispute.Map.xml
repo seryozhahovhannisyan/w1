@@ -1,0 +1,124 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionDispute">
+
+    <cacheModel id="cmTransactionDispute" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionDispute" class="TransactionDispute">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="transactionId" column="transaction_id"/>
+        <result property="walletExchangeId" column="wallet_exchange_id"/>
+        <result property="disputeId" column="dispute_id"/>
+        <result property="disputedById" column="disputed_by"/>
+        <result property="disputedAt" column="disputed_at"/>
+        <result property="reason" column="reason"/>
+        <result property="content" column="content"/>
+        <result property="answer" column="answer"/>
+        <result property="answeredAt" column="answered_at"/>
+        <result property="answeredById" column="answered_by"/>
+        <result property="disputes" column="id" select="nsTransactionDispute.getDisputesByDisputeId"/>
+        <result property="transactionDatas" column="id" select="nsTransactionData.getByDisputeId"/>
+    </resultMap>
+
+    <select id="getDisputeByTransactionId" cacheModel="cmTransactionDispute" resultMap="rmTransactionDispute"
+            parameterClass="long">
+        SELECT * from `w_transaction_dispute` WHERE `transaction_id` = #transactionId#
+    </select>
+
+    <select id="getDisputesByDisputeId" cacheModel="cmTransactionDispute" resultMap="rmTransactionDispute"
+            parameterClass="long">
+        SELECT * from `w_transaction_dispute` WHERE `dispute_id` = #disputeId#
+    </select>
+
+    <insert id="add" parameterClass="TransactionDispute">
+        INSERT INTO `w_transaction_dispute` (
+        `transaction_id`,
+        `wallet_exchange_id`,
+        `dispute_id`,
+        `disputed_by`,
+        `disputed_at`,
+        `reason`,
+        `content`,
+        `answer`,
+        `answered_at`,
+        `answered_by`,
+        `answered_partition_user_id`,
+        `state`
+        ) VALUES (
+        #transactionId#,
+        #walletExchangeId#,
+        #disputeId#,
+        #disputedById#,
+        #disputedAt#,
+        #reason#,
+        #content#,
+        #answer#,
+        #answeredAt#,
+        #answeredById#,
+        #answeredPartitionUserId#,
+        #state#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionDispute" resultMap="rmTransactionDispute" parameterClass="long">
+        SELECT * from `w_transaction_dispute` WHERE `id` = #id#
+    </select>
+
+    <select id="getByParams" cacheModel="cmTransactionDispute" resultMap="rmTransactionDispute" parameterClass="map">
+        SELECT * from `w_transaction_dispute`
+        <dynamic prepend="WHERE">1
+            <isNotNull property="id">
+                and `id` = #id#
+            </isNotNull>
+            <isNotNull property="lastUpdatedAt">
+                and `answered_at` &gt; #lastUpdatedAt#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <select id="getCountByParams" cacheModel="cmTransactionDispute" resultClass="long" parameterClass="map">
+        SELECT count(`id`) from `w_transaction_dispute`
+        <dynamic prepend="WHERE">1
+            <isNotNull property="id">
+                and `id` = #id#
+            </isNotNull>
+            <isNotNull property="lastUpdatedAt">
+                and `answered_at` &gt; #lastUpdatedAt#
+            </isNotNull>
+            <isNotNull property="disputedBy">
+                and `disputed_by` = #disputedBy#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <update id="update" parameterClass="TransactionDispute">
+        UPDATE `w_transaction_dispute`
+        SET `id` = #id#
+        <isNotNull property="state">
+            ,`state` = #state#
+        </isNotNull>
+        WHERE `id` = #id#
+    </update>
+
+
+    <delete id="delete" parameterClass="long">
+        DELETE FROM `w_transaction_dispute` WHERE `id` = #id#
+    </delete>
+
+
+</sqlMap>

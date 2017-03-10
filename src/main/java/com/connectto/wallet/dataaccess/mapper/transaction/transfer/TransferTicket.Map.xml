@@ -1,0 +1,29 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransferTicket">
+
+    <insert id="add" parameterClass="TransferTicket">
+        INSERT INTO `w_t_transfer_ticket` (
+            `item_id`,
+            `wallet_id`,
+            `name`,
+            `description`,
+            `sys_admin_username`,
+            `sys_admin_partition_id`
+        ) VALUES (
+            #itemId#,
+            #walletId#,
+            #name#,
+            #description#,
+            #systemAdminUsername#,
+            #systemAdminPartitionId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+</sqlMap>

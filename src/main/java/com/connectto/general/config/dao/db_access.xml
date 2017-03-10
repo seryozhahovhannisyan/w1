@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <!--data source definition form MySql-->
+    <bean id="dataSourceConnectto" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${mysql-db-driver}"/>
+        <property name="url" value="${mysql-db-connectto-url}"/>
+        <property name="username" value="${mysql-db-connectto-username}"/>
+        <property name="password" value="${mysql-db-connectto-password}"/>
+        <property name="maxActive" value="50"/>
+        <property name="validationQuery" value="select 1 "/>
+    </bean>
+
+    <bean id="sqlMapClientConnectto" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="classpath:ConfigLocation.xml"/>
+        <property name="dataSource" ref="dataSourceConnectto"/>
+    </bean>
+
+    <bean id="dataSourceWallet" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${mysql-db-driver}"/>
+        <property name="url" value="${mysql-db-wallet-url}"/>
+        <property name="username" value="${mysql-db-wallet-username}"/>
+        <property name="password" value="${mysql-db-wallet-password}"/>
+        <property name="maxActive" value="50"/>
+        <property name="validationQuery" value="select 1 "/>
+    </bean>
+
+    <bean id="sqlMapClientWallet" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="classpath:ConfigLocation.xml"/>
+        <property name="dataSource" ref="dataSourceWallet"/>
+    </bean>
+
+    <bean id="transactionManagerWallet" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceWallet"/>
+    </bean>
+
+    <!-- Enable the configuration of transactional behavior based on annotations -->
+    <tx:annotation-driven transaction-manager="transactionManagerWallet"/>
+
+</beans>

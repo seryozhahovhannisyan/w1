@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <package name="transaction-merchant" extends="wallet_auth_package" namespace="/">
+
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"></result-type>
+        </result-types>
+
+
+        <global-results>
+            <result name="error" type="tiles">error</result>
+            <result name="transactionMerchantShow" type="redirect">transaction-merchant-show.htm</result>
+            <result name="home" type="redirect">home_wallet.htm</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="com.connectto.general.exception.InternalErrorException" result="error"/>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+        </global-exception-mappings>
+
+        <action name="transaction-merchant-show" class="ShellAction" method="execute">
+            <result name="success" type="tiles">transaction-merchant</result>
+        </action>
+
+        <action name="confirm_password_wallet" class="ConfirmPassword" method="execute">
+            <result name="continue" type="redirect">home_wallet.htm</result>
+            <result name="input" type="tiles">wallet</result>
+            <result name="m-input" type="tiles">wallet-mobile</result>
+            <result name="success" type="tiles">wallet</result>
+        </action>
+
+    </package>
+
+    <package name="transaction-merchant-custom-json" extends="custom-json-default" namespace="/">
+
+        <default-interceptor-ref name="CustomJsonValidationWorkflowStack"/>
+        <default-class-ref class="com.connectto.general.util.ShellAction"/>
+
+        <action name="start-deposit" class="TransactionMerchantDepositAction" method="startDeposit">
+            <result name="success" type="json"/>
+        </action>
+
+        <!--provide for merchant-->
+        <action name="preview-withdraw" class="TransactionMerchantWithdrawAction" method="previewWithdraw">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="start-withdraw" class="TransactionMerchantWithdrawAction" method="startWithdraw">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="merchant-withdraw-time-out" class="TransactionMerchantWithdrawAction" method="merchantWithdrawTimeOut">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="transfer-from-merchant-to-user" class="TransactionMerchantTransferAction" method="transferFromMerchantToUser">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="preview-deposit" class="TransactionMerchantWithdrawAction" method="previewWithdraw">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="start-deposit" class="TransactionMerchantWithdrawAction" method="startWithdraw">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="merchant-deposit-time-out" class="TransactionMerchantWithdrawAction" method="merchantWithdrawTimeOut">
+            <result name="success" type="json"/>
+        </action>
+
+    </package>
+
+    <package name="transaction-merchant-json" extends="json-default" namespace="/">
+
+        <default-interceptor-ref name="jsonValidationWorkflowStack"/>
+        <default-class-ref class="com.connectto.general.util.ShellAction"/>
+
+        <action name="view-locked-transaction" class="TransactionMerchantNotificationAction" method="viewLocked">
+            <result name="success" type="json"/>
+        </action>
+
+        <!--provide for merchant end-->
+        <action name="cancel-withdraw-wallet" class="TransactionMerchantWithdrawAction" method="cancelWithdraw">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="approve-withdraw-wallet" class="TransactionMerchantWithdrawAction" method="approveWithdraw">
+            <result name="success" type="json"/>
+        </action>
+
+    </package>
+
+</struts>

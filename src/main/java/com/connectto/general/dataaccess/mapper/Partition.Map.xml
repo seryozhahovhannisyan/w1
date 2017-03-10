@@ -1,0 +1,107 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsPartitionSetup">
+
+    <cacheModel id="cmPartitionSetup" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmPartitionAll" class="Partition">
+        <result property="id" column="partition_id" nullValue="0"/>
+        <result property="apiKey" column="api_key"/>
+        <result property="domainName" column="domain_name"/>
+        <result property="host" column="host"/>
+        <result property="port" column="port"/>
+        <result property="name" column="name"/>
+        <result property="logoPath" column="logo"/>
+        <result property="partitionServerUrl" column="partitionServerUrl"/>
+        <result property="partitionUrl" column="partitionUrl"/>
+        <result property="partitionEmail" column="partitionEmail"/>
+        <result property="partitionEmailPassword" column="partitionEmailPassword"/>
+        <result property="partitionLogoDirectory" column="partitionLogoDirectory"/>
+
+        <result property="language" column="language"  />
+
+        <result property="urlFb" column="url_fb"  />
+        <result property="urlGmail" column="url_gmail"  />
+        <result property="urlTwitter" column="url_twitter"  />
+
+        <result property="recaptchaSecretKey" column="recaptcha_secret_key"  />
+        <result property="recaptchaClientKey" column="recaptcha_client_key"  />
+    </resultMap>
+
+    <resultMap id="rmWalletSetup" class="WalletSetup">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="partitionId" column="partition_id"/>
+
+        <result property="availableRateValues" column="available_rates"/>
+        <result property="availableCardValues" column="available_cards"/>
+
+        <result property="currencyType" column="currency_type"/>
+        <result property="balance" column="balance"/>
+
+        <result property="transferFeePercent" column="transfer_fee_percent"/>
+        <result property="transferMinFee" column="transfer_min_fee"/>
+        <result property="transferMaxFee" column="transfer_max_fee"/>
+
+        <result property="receiverFeePercent" column="receiver_fee_percent"/>
+        <result property="receiverMinFee" column="receiver_min_fee"/>
+        <result property="receiverMaxFee" column="receiver_max_fee"/>
+
+        <result property="exchangeTransferFeePercent" column="exchange_transfer_fee_percent"/>
+        <result property="exchangeTransferMinFee" column="exchange_transfer_min_fee"/>
+        <result property="exchangeTransferMaxFee" column="exchange_transfer_max_fee"/>
+
+        <result property="exchangeReceiverFeePercent" column="exchange_receiver_fee_percent"/>
+        <result property="exchangeReceiverMinFee" column="exchange_receiver_min_fee"/>
+        <result property="exchangeReceiverMaxFee" column="exchange_receiver_max_fee"/>
+
+        <result property="frozenAmount" column="frozen_amount"/>
+        <result property="receivingAmount" column="receiving_amount"/>
+
+    </resultMap>
+
+    <resultMap id="rmPartitionDto" class="PartitionDto">
+        <result property="partitionId" column="partition_id" />
+        <result property="walletSetupId" column="wallet_setup_id" />
+        <result property="name" column="name" />
+        <result property="icon" column="icon" />
+    </resultMap>
+
+    <select id="getWalletSetupById" parameterClass="long" resultMap="rmWalletSetup">
+        select * from wallet_setup where id = #id#
+    </select>
+
+    <select id="getPartitionById" parameterClass="int" resultMap="rmPartitionAll">
+        select pbx.*,
+        p.partition_name `name`, p.logo logo,
+        p.partitionServerUrl partitionServerUrl, p.partition_url partitionUrl,
+        p.partitionLogoDirectory partitionLogoDirectory, p.partition_email partitionEmail, p.partition_email_psw partitionEmailPassword,
+        s.url_fb url_fb, s.url_gmail url_gmail, s.url_twitter url_twitter,
+        s.language_id language,
+        gm.recaptcha_secret_key recaptcha_secret_key,
+        gm.recaptcha_client_key recaptcha_client_key
+
+        from
+            `partition_setup` s,
+            `partition_setup_on_gmail` gm,
+            `core_partition_pbx` pbx,
+            `core_partitions` p
+        where pbx.partition_id = s.partition_id and
+              gm.partition_id = s.partition_id and
+              p.`partition_id` = s.partition_id and
+              s.partition_id =#id#
+    </select>
+
+    <select id="getPartitionDtoByWalletSetupId" parameterClass="int" resultMap="rmPartitionDto">
+        SELECT  cp.partition_id partition_id ,
+                ws.id wallet_setup_id,
+                cp.partition_name  name ,
+                concat (cp.partitionServerUrl,cp.partitionLogoDirectory,cp.logo) icon
+        from core_partitions cp
+        join wallet_setup  ws on ws.partition_id = cp.partition_id and ws.id = #walletSetupId#
+    </select>
+
+</sqlMap>

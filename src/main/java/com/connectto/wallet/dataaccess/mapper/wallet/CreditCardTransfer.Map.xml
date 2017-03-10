@@ -1,0 +1,97 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsCreditCardTransfer">
+
+    <cacheModel id="cmCreditCardTransfer" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <insert id="add" parameterClass="CreditCardTransfer">
+        INSERT INTO `w_card_transfer` (
+            `t_purchase_id`,
+            `credit_card_id`,
+            `transfer_amount`,
+            `transfer_dt`
+        ) VALUES (
+            #transactionPurchaseId#,
+            #creditCardId#,
+            #transferAmount#,
+            #transferDt#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <insert id="addTransactionResult" parameterClass="CreditCardTransactionResult">
+        INSERT INTO `w_card_transfer` (
+            `transfer_id`,
+            `transaction_error`,
+            `transaction_approved`,
+            `transfer_response_msg`,
+            `EXact_resp_code`,
+            `EXact_message`,
+            `bank_resp_code`,
+            `bank_message`,
+            `bank_resp_code2`,
+            `sequence_no`,
+            `AVS`,
+            `CVV2`,
+            `retrieval_ref_no`,
+            `CAVV_response`,
+            `amount_requested`,
+            `merchant_name`,
+            `merchant_address`,
+            `merchant_city`,
+            `merchant_province`,
+            `merchant_country`,
+            `merchant_postal`,
+            `merchantURL`,
+            `current_balance`,
+            `previous_balance`,
+            `CTR`
+        ) VALUES (
+            #transferId#,
+            #transactionError#,
+            #transactionApproved#,
+            #EXactRespCode#,
+            #EXactMessage#,
+            #bankRespCode#,
+            #bankMessage#,
+            #bankRespCode2#,
+            #sequenceNo#,
+            #AVS#,
+            #CVV2#,
+            #retrievalRefNo#,
+            #CAVVResponse#,
+            #amountRequested#,
+            #merchantName#,
+            #merchantAddress#,
+            #merchantCity#,
+            #merchantProvince#,
+            #merchantCountry#,
+            #merchantPostal#,
+            #merchantURL#,
+            #currentBalance#,
+            #previousBalance#,
+            #CTR#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+
+    <update id="edit" parameterClass="CreditCardTransfer">
+        UPDATE `w_card_transfer`
+        SET  `transfer_response_msg` = #transferResponseMsg# ,`transfer_response_code` = #transferResponseCode#
+        WHERE `id` = #id#
+    </update>
+
+</sqlMap>

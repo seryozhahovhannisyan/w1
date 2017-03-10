@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    ####################################################################################################################
+    ####################################################################################################################
+    Start SETUP
+    ####################################################################################################################
+    ####################################################################################################################
+    -->
+
+    <!--
+   ####################################################################################################################
+   ####################################################################################################################
+   END SETUP
+   ####################################################################################################################
+   ####################################################################################################################
+   -->
+
+
+    <bean id="ShellAction" class="com.connectto.general.util.ShellAction" scope="prototype">
+    </bean>
+
+    <bean id="WalletMenuAction" class="com.connectto.wallet.web.action.wallet.menu.WalletMenuAction" scope="prototype">
+        <property name="responseDto" ref="ResponseDto"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+    </bean>
+
+
+    <bean id="SearchAction" class="com.connectto.wallet.web.action.wallet.load.SearchAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+        <property name="userManager" ref="UserManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+    </bean>
+
+    <bean id="LoadSettingAction" class="com.connectto.wallet.web.action.wallet.load.LoadSettingAction" scope="prototype">
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="BlockedUserAction" class="com.connectto.wallet.web.action.wallet.BlockedUserAction" scope="prototype">
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="ConfirmPassword" class="com.connectto.wallet.web.action.wallet.ConfirmPassword" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+    </bean>
+
+    <bean id="CreditCardAction" class="com.connectto.wallet.web.action.wallet.CreditCardAction" scope="prototype">
+        <property name="creditCardManager" ref="CreditCardManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+    </bean>
+
+    <bean id="DisputeAction" class="com.connectto.wallet.web.action.wallet.DisputeAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="disputeManager" ref="TransactionDisputeManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="EntryAction" class="com.connectto.wallet.web.action.wallet.EntryAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="userManager" ref="UserManagerImpl"/>
+    </bean>
+
+    <bean id="TransactionDataUploadAction" class="com.connectto.wallet.web.action.wallet.TransactionDataUploadAction"
+          scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="TransactionDataDownloadAction"
+          class="com.connectto.wallet.web.action.wallet.TransactionDataDownloadAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+    </bean>
+
+    <bean id="TransactionInfoAction"
+          class="com.connectto.wallet.web.action.wallet.TransactionInfoAction" scope="prototype">
+        <property name="transactionManager" ref="WalletTransactionManagerImpl"/>
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+
+    <bean id="WalletTransactionAction" class="com.connectto.wallet.web.action.wallet.WalletTransactionAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="exchangeRateManager" ref="ExchangeRateManagerImpl"/>
+        <property name="userManager" ref="UserManagerImpl"/>
+        <property name="walletSetupManager" ref="WalletSetupManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="transactionManager" ref="WalletTransactionManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="TransactionPurchaseTicketAction" class="com.connectto.wallet.web.action.wallet.TransactionPurchaseTicketAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="walletSetupManager" ref="WalletSetupManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="transactionManager" ref="WalletTransactionManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="TransactionPurchaseAction" class="com.connectto.wallet.web.action.wallet.transaction.purchase.TransactionPurchaseAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="exchangeRateManager" ref="ExchangeRateManagerImpl"/>
+        <property name="walletSetupManager" ref="WalletSetupManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="transactionPurchaseManager" ref="TransactionPurchaseManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="TransferTransactionAction" class="com.connectto.wallet.web.action.wallet.transaction.transfer.TransferTransactionAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="exchangeRateManager" ref="ExchangeRateManagerImpl"/>
+        <property name="coreSystemAdminManager" ref="CoreSystemAdminManagerImpl"/>
+        <property name="transferTransactionManager" ref="TransferTransactionManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="TransactionMerchantNotificationAction" class="com.connectto.wallet.web.action.wallet.transaction.merchant.TransactionMerchantNotificationAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="exchangeRateManager" ref="ExchangeRateManagerImpl"/>
+        <property name="walletSetupManager" ref="WalletSetupManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="transactionDepositManager" ref="TransactionDepositManagerImpl"/>
+        <property name="transactionWithdrawManager" ref="TransactionWithdrawManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="TransactionMerchantDepositAction" class="com.connectto.wallet.web.action.wallet.transaction.merchant.TransactionMerchantDepositAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="exchangeRateManager" ref="ExchangeRateManagerImpl"/>
+        <property name="walletSetupManager" ref="WalletSetupManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="transactionDepositManager" ref="TransactionDepositManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="TransactionMerchantWithdrawAction" class="com.connectto.wallet.web.action.wallet.transaction.merchant.TransactionMerchantWithdrawAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="exchangeRateManager" ref="ExchangeRateManagerImpl"/>
+        <property name="walletSetupManager" ref="WalletSetupManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="transactionWithdrawManager" ref="TransactionWithdrawManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+    <bean id="TransactionMerchantTransferAction" class="com.connectto.wallet.web.action.wallet.transaction.merchant.TransactionMerchantTransferAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="exchangeRateManager" ref="ExchangeRateManagerImpl"/>
+        <property name="merchantTransferTransactionManager" ref="MerchantTransferTransactionManagerImpl"/>
+        <property name="tsmManager" ref="TsmManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+
+
+
+
+    <!--Settings-->
+
+    <bean id="SettingsAction" class="com.connectto.wallet.web.action.wallet.setting.SettingsAction" scope="prototype">
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+    </bean>
+
+</beans>

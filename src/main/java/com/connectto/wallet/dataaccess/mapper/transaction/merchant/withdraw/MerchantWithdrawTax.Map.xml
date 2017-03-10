@@ -1,0 +1,70 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsMerchantWithdrawTax">
+
+    <cacheModel id="cmMerchantWithdrawTax" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmMerchantWithdrawTaxSample" class="MerchantWithdrawTax">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="actionDate" column="action_date"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="paidTaxToMerchant" column="paid_tax_to_merchant"/>
+        <result property="paidTaxCurrencyType" column="paid_tax_ct"/>
+        <result property="withdrawTax" column="withdraw_tax"/>
+        <result property="withdrawTaxTotal" column="withdraw_tax_total"/>
+        <result property="withdrawTaxCurrencyType" column="withdraw_tax_ct"/>
+        <result property="withdrawTaxPrice" column="withdraw_tax_price"/>
+        <result property="withdrawTaxPriceTotal" column="withdraw_tax_price_total"/>
+        <result property="withdrawTaxPriceCurrencyType" column="withdraw_tax_price_ct"/>
+        <result property="withdrawTaxType" column="withdraw_tax_type"/>
+        <result property="exchangeId" column="exchange_id"/>
+        
+    </resultMap>
+
+    <insert id="add" parameterClass="MerchantWithdrawTax">
+        INSERT INTO `w_merchant_withdraw_tax` (
+            `action_date`,
+            `wallet_id`,
+            `setup_id`,
+            `paid_tax_to_merchant`,
+            `paid_tax_ct`,
+            `withdraw_tax`,
+            `withdraw_tax_total`,
+            `withdraw_tax_ct`,
+            `withdraw_tax_price`,
+            `withdraw_tax_price_total`,
+            `withdraw_tax_price_ct`,
+            `withdraw_tax_type`,
+            `exchange_id`
+        ) VALUES ( 
+            #actionDate#,
+            #walletId#,
+            #setupId#,
+            #paidTaxToMerchant#,
+            #paidTaxCurrencyType#,
+            #withdrawTax#,
+            #withdrawTaxTotal#,
+            #withdrawTaxCurrencyType#,
+            #withdrawTaxPrice#,
+            #withdrawTaxPriceTotal#,
+            #withdrawTaxPriceCurrencyType#,
+            #withdrawTaxType#,
+            #exchangeId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmMerchantWithdrawTaxs" resultMap="rmMerchantWithdrawTaxSample" parameterClass="long">
+        SELECT * from `w_merchant_withdraw_tax` WHERE `id` = #id#
+    </select>
+
+</sqlMap>

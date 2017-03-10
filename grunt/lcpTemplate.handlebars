@@ -1,0 +1,4 @@
+/* Compiled with love by Gruntfile.js */
+var {{msgKeys.filename}} = [
+{{#each msgKeys.keys}} {{this.name}} = {  {{#each this.value}}  "{{this.key}}": {{#if this.value}}{{{this.value}}}{{else}}null{{/if}}{{#unless @last}},{{/unless}} {{/each}} }{{#unless @last}},{{/unless}}
+{{/each}}]

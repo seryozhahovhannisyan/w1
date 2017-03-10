@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="FileDataDaoImpl" class="com.connectto.wallet.dataaccess.dao.general.impl.FileDataDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="WalletLoggerDaoImpl" class="com.connectto.wallet.dataaccess.dao.general.impl.WalletLoggerDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="ExchangeDaoImpl" class="com.connectto.wallet.dataaccess.dao.impl.ExchangeDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="CreditCardDaoImpl" class="com.connectto.wallet.dataaccess.dao.wallet.impl.CreditCardDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="CreditCardTransferDaoImpl" class="com.connectto.wallet.dataaccess.dao.wallet.impl.CreditCardTransferDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransferSettingDaoImpl" class="com.connectto.wallet.dataaccess.dao.wallet.impl.TransferSettingDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="ExchangeRateDaoImpl" class="com.connectto.wallet.dataaccess.dao.wallet.impl.ExchangeRateDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="ExchangeSourceDaoImpl" class="com.connectto.wallet.dataaccess.dao.wallet.impl.ExchangeSourceDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionDataDaoImpl" class="com.connectto.wallet.dataaccess.dao.impl.TransactionDataDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionDisputeDaoImpl" class="com.connectto.wallet.dataaccess.dao.impl.TransactionDisputeDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <!--Transfer Start-->
+
+    <bean id="TransferTicketDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.transfer.impl.TransferTicketDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransferTransactionDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.transfer.impl.TransferTransactionDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <!--Purchase Start-->
+
+    <bean id="PurchaseTicketDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.purchase.impl.PurchaseTicketDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionPurchaseDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.purchase.impl.TransactionPurchaseDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionPurchaseExchangeDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.purchase.impl.TransactionPurchaseExchangeDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionPurchaseExchangeTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.purchase.impl.TransactionPurchaseExchangeTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionPurchaseProcessDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.purchase.impl.TransactionPurchaseProcessDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionPurchaseProcessTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.purchase.impl.TransactionPurchaseProcessTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionPurchaseTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.purchase.impl.TransactionPurchaseTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <!--Purchase End-->
+
+    <!--MerchantDeposit Start-->
+
+    <bean id="MerchantDepositDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.MerchantDepositDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="MerchantDepositTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.MerchantDepositTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionDepositDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.TransactionDepositDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionDepositExchangeDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.TransactionDepositExchangeDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionDepositExchangeTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.TransactionDepositExchangeTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionDepositProcessDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.TransactionDepositProcessDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionDepositProcessTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.TransactionDepositProcessTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionDepositTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.TransactionDepositTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="WalletSetupDepositTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.deposit.impl.WalletSetupDepositTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <!--MerchantDeposit End-->
+
+    <!--MerchantWithdraw Start-->
+
+    <bean id="MerchantWithdrawDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.MerchantWithdrawDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="MerchantWithdrawTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.MerchantWithdrawTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionWithdrawDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.TransactionWithdrawDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionWithdrawExchangeDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.TransactionWithdrawExchangeDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionWithdrawExchangeTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.TransactionWithdrawExchangeTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionWithdrawProcessDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.TransactionWithdrawProcessDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionWithdrawProcessTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.TransactionWithdrawProcessTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionWithdrawTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.TransactionWithdrawTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="WalletSetupWithdrawTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.withdraw.impl.WalletSetupWithdrawTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <!--MerchantWithdraw End-->
+
+    <!--Merchant Transfer Start-->
+
+    <bean id="MerchantTransferTicketDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.transfer.impl.MerchantTransferTicketDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="MerchantTransferTransactionDaoImpl" class="com.connectto.wallet.dataaccess.dao.transaction.merchant.transfer.impl.MerchantTransferTransactionDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <!--Merchant Transfer End-->
+
+
+
+    <bean id="WalletSetupDaoImpl" class="com.connectto.wallet.dataaccess.dao.wallet.impl.WalletSetupDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="WalletDaoImpl" class="com.connectto.wallet.dataaccess.dao.wallet.impl.WalletDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="WalletLocationDaoImpl" class="com.connectto.wallet.dataaccess.dao.wallet.impl.WalletLocationDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="WalletExchangeDaoImpl" class="com.connectto.wallet.dataaccess.dao.impl.WalletExchangeDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <!--
+    -->
+    <bean id="WalletTransactionActionDaoImpl" class="com.connectto.wallet.dataaccess.dao.impl.TransactionProcessDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="TransactionTaxDaoImpl" class="com.connectto.wallet.dataaccess.dao.impl.TransactionTaxDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+
+    <bean id="WalletTransactionDaoImpl" class="com.connectto.wallet.dataaccess.dao.impl.TransactionDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientWallet"/>
+    </bean>
+</beans>

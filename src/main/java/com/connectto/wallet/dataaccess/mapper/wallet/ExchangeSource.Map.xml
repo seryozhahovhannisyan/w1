@@ -1,0 +1,131 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsExchangeSource">
+
+    <cacheModel id="cmExchangeSource" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmExchangeSource" class="ExchangeSource">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="phone" column="phone"/>
+        <result property="url" column="url"/>
+        <result property="iconId" column="icon"/>
+        <result property="iconFileData" column="icon" select="nsWalletFileData.getById"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="isActive" column="is_active"/>
+        <result property="appId" column="app_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="ExchangeSource">
+        INSERT INTO `w_exchange_source` (
+        `name`,
+        `address`,
+        `phone`,
+        `url`,
+        `icon`,
+        `app_id`,
+        `username`,
+        `password`
+        ) VALUES (
+        #name#,
+        #address#,
+        #phone#,
+        #url#,
+        #iconId#,
+        #appId#,
+        #username#,
+        #password#
+        )
+
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmExchangeSource" resultMap="rmExchangeSource" parameterClass="int">
+        SELECT * from `w_exchange_source` WHERE `id` = #id#
+    </select>
+
+    <select id="getAllActive" cacheModel="cmExchangeSource" resultMap="rmExchangeSource"  >
+        SELECT * from `w_exchange_source` WHERE `is_active` = 1
+    </select>
+
+    <select id="getDefault" cacheModel="cmExchangeSource" resultMap="rmExchangeSource"  >
+        SELECT * from `w_exchange_source` WHERE `is_default` = 1
+    </select>
+
+    <select id="getAll" cacheModel="cmExchangeSource" resultMap="rmExchangeSource" parameterClass="int">
+        select s.* from w_exchange_source s
+        left join wallet_setup ws on  ws.id = s.wallet_setup_id
+        where ws.partition_id = #partitionId#
+        order by id desc
+    </select>
+
+    <select id="getAllActiveByPartition" cacheModel="cmExchangeSource" resultMap="rmExchangeSource" parameterClass="int">
+        select s.* from w_exchange_source s
+        left join wallet_setup ws on  ws.id = s.wallet_setup_id
+        where ws.partition_id = #partitionId# and s.`is_active` = 1
+        order by id desc
+    </select>
+
+    <update id="update" parameterClass="ExchangeSource">
+        UPDATE `w_exchange_source`
+        SET `id` = #id#
+        <isNotNull property="name">
+            ,`name` = #name#
+        </isNotNull>
+        <isNotNull property="address">
+            ,`address` = #address#
+        </isNotNull>
+        <isNotNull property="phone">
+            ,`phone` = #phone#
+        </isNotNull>
+        <isNotNull property="iconId">
+            ,`icon` = #iconId#
+        </isNotNull>
+        <isNotNull property="url">
+            ,`url` = #url#
+        </isNotNull>
+        <isNotNull property="appId">
+            ,`app_id` = #appId#
+        </isNotNull>
+        <isNotNull property="username">
+            ,`username` = #username#
+        </isNotNull>
+        <isNotNull property="password">
+            ,`password` = #password#
+        </isNotNull>
+        WHERE `id` = #id#
+    </update>
+
+    <update id="activate" parameterClass="ExchangeSource">
+        UPDATE `w_exchange_source`
+        SET  `is_active` = #isActive#
+        WHERE `id` = #id#
+    </update>
+
+    <update id="makeDefault" parameterClass="int">
+        UPDATE `w_exchange_source`
+        SET  `is_default` = 1
+        WHERE `id` = #id#
+    </update>
+
+    <update id="removeDefault">
+        UPDATE `w_exchange_source`
+        SET  `is_default` = 0
+    </update>
+
+    <delete id="delete" parameterClass="int">
+        DELETE FROM `w_exchange_source` WHERE `id` = #id#
+    </delete>
+
+
+</sqlMap>

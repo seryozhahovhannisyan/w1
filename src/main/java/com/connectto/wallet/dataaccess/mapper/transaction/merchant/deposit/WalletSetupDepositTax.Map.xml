@@ -1,0 +1,65 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsWalletSetupDepositTax">
+
+    <cacheModel id="cmWalletSetupDepositTax" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmWalletSetupDepositTaxSample" class="WalletSetupDepositTax">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="actionDate" column="action_date"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="depositTax" column="deposit_tax"/>
+        <result property="depositTaxTotal" column="deposit_tax_total"/>
+        <result property="depositTaxCurrencyType" column="deposit_tax_ct"/>
+        <result property="depositTaxPrice" column="deposit_tax_price"/>
+        <result property="depositTaxPriceTotal" column="deposit_tax_price_total"/>
+        <result property="depositTaxPriceCurrencyType" column="deposit_tax_price_ct"/>
+        <result property="depositTaxType" column="deposit_tax_type"/>
+        <result property="exchangeId" column="exchange_id"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="WalletSetupDepositTax">
+        INSERT INTO `w_t_wallet_setup_deposit_tax` (
+        `action_date`,
+        `wallet_id`,
+        `setup_id`,
+        `deposit_tax`,
+        `deposit_tax_total`,
+        `deposit_tax_ct`,
+        `deposit_tax_price`,
+        `deposit_tax_price_total`,
+        `deposit_tax_price_ct`,
+        `deposit_tax_type`,
+        `exchange_id`
+        ) VALUES (
+        #actionDate#,
+        #walletId#,
+        #setupId#,
+        #depositTax#,
+        #depositTaxTotal#,
+        #depositTaxCurrencyType#,
+        #depositTaxPrice#,
+        #depositTaxPriceTotal#,
+        #depositTaxPriceCurrencyType#,
+        #depositTaxType#,
+        #exchangeId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmWalletSetupDepositTax" resultMap="rmWalletSetupDepositTaxSample" parameterClass="long">
+        SELECT * from `w_t_wallet_setup_deposit_tax` WHERE `id` = #id#
+    </select>
+
+
+
+</sqlMap>

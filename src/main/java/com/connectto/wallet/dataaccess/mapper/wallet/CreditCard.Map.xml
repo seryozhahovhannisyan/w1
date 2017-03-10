@@ -1,0 +1,200 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsCreditCard">
+
+    <cacheModel id="cmCreditCard" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmCreditCard" class="CreditCard">
+        
+        <result property="id" column="id" nullValue="0"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="userId" column="user_id"/>
+        
+        <result property="holderName" column="holder_name"/>
+        <result property="number" column="number"/>
+        <result property="expiryDate" column="expiry_date"/>
+        <result property="cvv" column="cvv"/>
+        <result property="transactionType" column="type"/>
+
+        <result property="country" column="country"/>
+        <result property="zip" column="zip"/>
+        <result property="state" column="state"/>
+        <result property="city" column="city"/>
+
+        <result property="isBlocked" column="is_blocked"/>
+        <result property="isEnabled" column="is_enabled"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="priority" column="priority"/>
+
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="updatedDesc" column="updated_desc"/>
+
+    </resultMap>
+
+    <resultMap id="rmCreditCardSample" class="CreditCard">
+
+        <result property="id" column="id" nullValue="0"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="userId" column="user_id"/>
+
+        <result property="holderName" column="holder_name"/>
+        <result property="number" column="number"/>
+        <result property="expiryDate" column="expiry_date"/>
+        <result property="cvv" column="cvv"/>
+        <result property="transactionType" column="type"/>
+
+        <result property="country" column="country"/>
+        <result property="zip" column="zip"/>
+        <result property="state" column="state"/>
+        <result property="city" column="city"/>
+
+        <result property="isBlocked" column="is_blocked"/>
+        <result property="isEnabled" column="is_enabled"/>
+        <result property="isDeleted" column="is_deleted"/>
+        <result property="priority" column="priority"/>
+
+    </resultMap>
+
+    <insert id="add" parameterClass="CreditCard">
+        INSERT INTO `w_credit_card` (
+              `wallet_id`,
+              `user_id`,
+              `holder_name`,
+              `number`,
+              `expiry_date`,
+              `cvv`,
+              `type`,
+              `country`,
+              `zip`,
+              `state`,
+              `city`,
+              `is_enabled`,
+              `is_deleted`,
+              `priority`,
+              `created_at`
+        ) VALUES (
+            #walletId#,
+            #userId#,
+            #holderName#,
+            #number#,
+            #expiryDate#,
+            #cvv#,
+            #transactionType#,
+            #country#,
+            #zip#,
+            #state#,
+            #city#,
+            #isEnabled#,
+            #isDeleted#,
+            #priority#,
+            #createdAt#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmCreditCard" resultMap="rmCreditCardSample" parameterClass="long">
+        SELECT * from `w_credit_card` WHERE `id` = #id#
+    </select>
+
+    <select id="getMaxPriorityByWalletId" cacheModel="cmCreditCard" resultMap="rmCreditCardSample" parameterClass="long">
+        SELECT * from `w_credit_card` WHERE `wallet_id` = #walletId#   order by `priority` desc limit 1
+    </select>
+
+    <select id="getByParams" cacheModel="cmCreditCard" resultMap="rmCreditCardSample" parameterClass="map">
+        SELECT * from `w_credit_card`
+        <dynamic prepend="WHERE"> `is_deleted` = 0
+            <isNotNull property="walletId">
+                and `wallet_id` = #walletId#
+            </isNotNull>
+        </dynamic>
+        order by `priority` asc
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <select id="getCountByParams" cacheModel="cmCreditCard" resultClass="int" parameterClass="map">
+        SELECT count(`id`) from `w_credit_card`
+        <dynamic prepend="WHERE"> `is_deleted` = 0
+            <isNotNull property="walletId">
+                and `wallet_id` = #walletId#
+            </isNotNull>
+        </dynamic>
+    </select>
+
+    <update id="update" parameterClass="CreditCard">
+        UPDATE `w_credit_card`
+        SET
+            `holder_name` = #holderName#,
+            `number` = #number#
+            ,`expiry_date` = #expiryDate#
+            ,`cvv` = #cvv#
+            ,`type` = #transactionType#
+
+            ,`country` = #country#
+            ,`zip` = #zip#
+            ,`state` = #state#
+            ,`city` = #city#
+            ,`updated_at` = #updatedAt#
+
+            ,updated_desc =  IFNULL( CONCAT(`updated_desc`, #updatedDesc#),#updatedDesc#)
+
+        WHERE `id` = #id#
+    </update>
+
+    <update id="updateSwitches" parameterClass="CreditCard">
+        UPDATE `w_credit_card`
+        SET
+        `updated_at` = #updatedAt#
+        ,updated_desc =  IFNULL( CONCAT(`updated_desc`, #updatedDesc#),#updatedDesc#)
+        <isNotNull property="isEnabled">
+            , `is_enabled` = #isEnabled#
+        </isNotNull>
+        <isNotNull property="isDeleted">
+            , `is_deleted` = #isDeleted#
+        </isNotNull>
+
+        WHERE `id` = #id#
+    </update>
+
+    <update id="blockCreditCard" parameterClass="CreditCard">
+        UPDATE `w_credit_card`
+        SET
+        `updated_at` = #updatedAt#  , `is_blocked` = #isBlocked#
+
+        WHERE `id` = #id#
+    </update>
+
+    <update id="makeDefaultCard" parameterClass="CreditCard">
+        UPDATE `w_credit_card`
+        SET
+        `updated_at` = #updatedAt#
+        ,updated_desc =  IFNULL( CONCAT(`updated_desc`, #updatedDesc#),#updatedDesc#)
+        ,`priority` = 1
+        WHERE `id` = #id#
+    </update>
+
+    <update id="updatePriority" parameterClass="CreditCard">
+        UPDATE `w_credit_card`
+        SET
+        `updated_at` = #updatedAt#
+        ,updated_desc =  IFNULL( CONCAT(`updated_desc`, #updatedDesc#),#updatedDesc#)
+        ,`priority` = #priority#
+        WHERE `id` = #id#
+    </update>
+
+    <delete id="forceDelete" parameterClass="long">
+        DELETE FROM `w_credit_card` WHERE `id` = #id#
+    </delete>
+
+
+</sqlMap>

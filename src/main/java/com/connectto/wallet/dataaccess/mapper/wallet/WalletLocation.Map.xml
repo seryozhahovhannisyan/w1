@@ -1,0 +1,122 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsWalletLocation">
+
+    <cacheModel id="cmWalletLocation" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <!--
+    wallet_id            int(15) unsigned  (NULL)     NO      MUL     (NULL)                   select,insert,update,references         
+latitude             varchar(15)       utf8_bin   YES             (NULL)                   select,insert,update,references         
+longitude            varchar(15)       utf8_bin   YES             (NULL)                   select,insert,update,references         
+login_date           datetime          (NULL)     NO              (NULL)                   select,insert,update,references         
+logout_date          datetime          (NULL)     YES             (NULL)                   select,insert,update,references         
+r_user_agent         varchar(1024)     utf8_bin   NO              (NULL)                   select,insert,update,references         
+device_manufacturer  varchar(50)       utf8_bin   YES             (NULL)                   select,insert,update,references         
+device_model         varchar(50)       utf8_bin   YES             (NULL)                   select,insert,update,references         
+
+    -->
+    <resultMap id="rmWalletLocation" class="WalletLocation">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="loginDate" column="login_date"/>
+        <result property="logoutDate" column="logout_date"/>
+        <result property="userAgent" column="r_user_agent"/>
+        <result property="deviceManufacturer" column="device_manufacturer"/>
+        <result property="deviceModel" column="device_model"/>
+
+        <result property="previousUrl" column="previous_url"/>
+        <result property="encryptKey" column="encrypt_key"/>
+
+    </resultMap>
+
+    <insert id="add" parameterClass="WalletLocation">
+        INSERT INTO `w_wallet_current_location` (
+        `wallet_id`,
+        `latitude`,
+        `longitude`,
+        `login_date`,
+        `logout_date`,
+        `r_user_agent`,
+        `device_manufacturer`,
+        `device_model`,
+        `previous_url`,
+        `encrypt_key`
+        ) VALUES (
+        #walletId#,
+        #latitude#,
+        #longitude#,
+        #loginDate#,
+        #logoutDate#,
+        #userAgent#,
+        #deviceManufacturer#,
+        #deviceModel#,
+        #previousUrl#,
+        #encryptKey#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+    <!--
+    public void add(Exchange exchange) throws DatabaseException;
+    public Exchange getById(Long id)  throws DatabaseException, EntityNotFoundException;
+    public List<Exchange> getByParams(Map<String, Object> params)  throws DatabaseException;
+    public Integer getCountByParams(Map<String, Object> params)  throws DatabaseException;
+    public void update(Exchange exchange) throws DatabaseException,EntityNotFoundException;
+    public void delete(Long id) throws DatabaseException,EntityNotFoundException;
+    -->
+
+    <select id="isEncryptKeyUsed" cacheModel="cmUserWallet" resultClass="boolean" parameterClass="string">
+        SELECT count(id) from `w_wallet_current_location` where `encrypt_key` = #encryptKey#
+    </select>
+
+    <select id="getById" cacheModel="cmWalletLocation" resultMap="rmWalletLocation" parameterClass="long">
+        SELECT * from `w_wallet_current_location` WHERE `id` = #id#
+    </select>
+
+    <select id="getByParams" cacheModel="cmWalletLocation" resultMap="rmWalletLocation" parameterClass="map">
+        SELECT * from `w_wallet_current_location`
+        <dynamic prepend="WHERE">1
+            <isNotNull property="id">
+                and id` = #id#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <select id="getCountByParams" cacheModel="cmWalletLocation" resultMap="rmWalletLocation" parameterClass="map">
+        SELECT count(`id`) from `w_wallet_current_location`
+        <dynamic prepend="WHERE">1
+            <isNotNull property="id">
+                and id` = #id#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <update id="update" parameterClass="WalletLocation">
+        UPDATE `w_wallet_current_location`
+        SET `id` = #id#
+        <isNotNull property="logoutDate">
+            ,`logout_date` = #logoutDate#
+        </isNotNull>
+        WHERE `id` = #id#
+    </update>
+
+    <delete id="delete" parameterClass="long">
+        DELETE FROM `w_wallet_current_location` WHERE `id` = #id#
+    </delete>
+
+</sqlMap>

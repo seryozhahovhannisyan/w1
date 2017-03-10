@@ -1,0 +1,159 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'GothaProIta.otf';
+    src: url(../../css/general/fonts/GothaProIta.otf);
+}
+@font-face {
+    font-family: 'GothaProBol.otf';
+    src: url(../../css/general/fonts/GothaProBol.otf);
+}
+@font-face {
+    font-family: 'GothaProReg.otf';
+    src: url(../../css/general/fonts/GothaProReg.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    src: url(../../css/general/fonts/HelveticaNeueCyr-Roman.otf);
+}
+@font-face {
+    font-family: 'GothaProMed.otf';
+    src: url(../../css/general/fonts/GothaProMed.otf);
+}
+@font-face {
+    font-family: 'GothaProMedIta.otf';
+    src: url(../../css/general/fonts/GothaProMedIta.otf);
+}
+
+.row{
+    margin: 0!important;
+    padding: 0!important;
+}
+
+
+
+/*popup transfer design*/
+.popup_cont_transfer{
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(32, 32, 32, 0.5);
+    width: 100%;
+    top: 300px;
+    padding: 20px;
+    display: none;
+}
+.popup_main_transfer{
+    width: 100%;
+    min-height: 330px;
+    height: auto;
+    background: url(../../img/wallet/wallet-popup/send_money_popup_bg.png) no-repeat;
+    background-size: cover;
+}
+.transfer_fee{
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 120%;
+
+}
+.popup_sm_header_transfer div:nth-child(2){
+    float: left;
+    margin-left: 20px;
+}
+.popup_sm_header_transfer div:nth-child(2) span,.popup_sm_header_transfer div:nth-child(3) span {
+    cursor: pointer;
+}
+.popup_sm_header_transfer div:nth-child(3){
+    float: right;
+    margin-right: 20px;
+}
+
+.popup_sm_header_transfer{
+    width: 100%;
+    height: 90px;
+    border-bottom: 1px dotted rgb( 126, 126, 126 );
+    font-size: 150%;
+    color: #6d6d6d;
+    font-family: 'GothaProMed.otf';
+    margin-right: 10px;
+}
+
+
+.act-exc{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+.cntr-res-n{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cntr-res  {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'GothaProMed.otf';
+    font-size: 120%;
+    color: #6d6d6d;
+}
+.ttl{
+    text-align: right;
+}
+.ttr{
+    text-align: left;
+}
+.det-des{
+    padding: 5px 10px 5px 10px!important;
+}
+.det-des-1{
+    border-top:1px dotted rgb( 126, 126, 126 );
+    border-bottom:1px dotted rgb( 126, 126, 126 ) ;
+    padding: 20px;
+}
+.det-tem{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'GothaProReg.otf';
+    font-size: 100%;
+    color: #7a7a7a;
+}
+
+.show_details{
+    display: none;
+}
+.pdes{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'GothaProReg.otf';
+    font-size: 100%;
+    color: #7a7a7a;
+}
+.details_button{
+    text-align: center;
+}
+.details_button span{
+    margin: 20px auto;
+    display: inline-block;
+    font-family: 'GothaProMed.otf';
+    font-size: 130%;
+    color: #6d6d6d;
+    padding: 5px 30px 5px 30px;
+    border: 1px dotted rgb( 126, 126, 126 );
+    border-radius: 10px;
+    cursor: pointer;
+    background-color:#fff7e6 ;
+    letter-spacing: 2px;
+}
+.details_button span:hover{
+    background-color:#e2e2e2 ;
+}
+.details_button span:active{
+    background-color: #dddddd;
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    ####################################################################################################################
+    ####################################################################################################################
+
+    ####################################################################################################################
+    ####################################################################################################################
+    -->
+
+
+    <bean id="LocaleAction" class="com.connectto.general.web.action.LocaleAction" scope="prototype">
+        <property name="userManager" ref="UserManagerImpl"/>
+    </bean>
+
+    <bean id="Logout" class="com.connectto.general.web.action.Logout" scope="prototype">
+        <property name="userManager" ref="UserManagerImpl"/>
+    </bean>
+
+    <bean id="RememberPassword" class="com.connectto.general.web.action.RememberPassword" scope="prototype">
+        <property name="walletManager" ref="WalletManagerImpl"/>
+        <property name="walletLoggerManager" ref="WalletLoggerManagerImpl"/>
+        <property name="responseDto" ref="ResponseDto"/>
+        <property name="partitionSetupManager" ref="PartitionSetupManagerImpl"/>
+    </bean>
+
+</beans>

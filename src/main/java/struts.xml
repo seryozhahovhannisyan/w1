@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+
+    <constant name="struts.configuration.xml.reload" value="true"/>
+
+    <constant name="struts.action.extension" value="htm"/>
+
+    <constant name="struts.serve.static.browserCache" value="false"/>
+
+    <constant name="struts.custom.i18n.resources" value="message"/>
+
+    <constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory"/>
+
+    <constant name="struts.devMode" value="true"/>
+
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+
+    <!---->
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <!--<constant name="struts.ui.theme" value="simple"/>-->
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <!--1048576(Bytes)= 1024 *1024 = 1Mb -->
+    <constant name="struts.multipart.maxSize" value="10485760"/>
+
+    <!--Include wallet -->
+    <include file="com/connectto/wallet/config/web/struts/custom-json-default.xml"/>
+    <include file="com/connectto/wallet/config/web/struts/auxiliary/walletAuth.xml"/>
+    <include file="com/connectto/wallet/config/web/struts/auxiliary/walletAuthMerchant.xml"/>
+    <include file="com/connectto/wallet/config/web/struts/wallet.xml"/>
+    <include file="com/connectto/wallet/config/web/struts/merchant.xml"/>
+
+    <package name="general-package" namespace="/" extends="json-default">
+
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"></result-type>
+        </result-types>
+
+        <!--The filtering language data-->
+        <interceptors>
+
+            <interceptor name="language-interceptor" class="com.connectto.general.web.interceptor.LanguageInterceptor"/>
+            <interceptor name="partition-interceptor"  class="com.connectto.general.web.interceptor.PartitionInterceptor"/>
+
+            <interceptor-stack name="general-package">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="partition-interceptor"/>
+                <interceptor-ref name="language-interceptor"/>
+            </interceptor-stack>
+
+        </interceptors>
+        <!--The default filter/interceptor, action and class -->
+        <default-interceptor-ref name="general-package"/>
+        <!--<default-action-ref name="general"/>-->
+        <default-class-ref class="ShellAction"/>
+
+        <global-results>
+            <result name="internalErrorException" type="tiles">error</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="com.connectto.general.exception.InternalErrorException"
+                               result="internalErrorException"/>
+        </global-exception-mappings>
+
+        <action name="wallet_entry" class="EntryAction" method="entry">
+            <result name="success" type="tiles">wallet_entry</result>
+            <result name="error" type="tiles">wallet_entry</result>
+
+            <result name="m-success" type="tiles">m-wallet_entry</result>
+            <result name="m-error" type="tiles">m-wallet_entry</result>
+        </action>
+
+        <action name="wallet_exit" class="EntryAction" method="exit">
+            <result name="success" type="tiles">wallet_entry</result>
+            <result name="error" type="tiles">wallet_entry</result>
+
+            <result name="m-success" type="tiles">m-wallet_entry</result>
+            <result name="m-error" type="tiles">m-wallet_entry</result>
+        </action>
+
+
+
+        <action name="locale" class="LocaleAction">
+            <result name="success" type="redirect">${url}</result>
+        </action>
+
+        <action name="logout" class="Logout" method="logout">
+            <result name="success" type="redirect">index.jsp</result>
+        </action>
+
+        <action name="close-browser" class="Logout" method="closeBrowser">
+            <result name="success" type="redirect">index.jsp</result>
+        </action>
+
+
+        <!--Remember -->
+        <action name="redirect-wallet-reset-password" class="RememberPassword" method="redirectResetPassword">
+            <result name="success" type="redirect">reset-wallet-password.htm</result>
+        </action>
+
+        <action name="reset-wallet-password" class="RememberPassword" method="resetPassword">
+            <result name="success" type="tiles">wallet_entry</result>
+            <result name="m-success" type="tiles">m-wallet_entry</result>
+        </action>
+
+        <action name="do-wallet-reset-password" class="RememberPassword" method="reset">
+            <result name="success" type="redirect">wallet_entry.htm</result>
+            <result name="error" type="tiles">wallet_entry</result>
+            <result name="m-error" type="tiles">m-wallet_entry</result>
+        </action>
+
+        <action name="remember-wallet-password" class="RememberPassword" method="execute">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="redirect-action-*" class="EntryAction" method="entry">
+            <result name="success" type="tiles">wallet_entry</result>
+            <!--<result name="success" type="redirect">{1}.htm</result>-->
+        </action>
+
+        <!--
+        -->
+
+        <!--<action name="file_upload" class="FileUpload">
+            <result name="success" type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">result</param>
+            </result>
+            <result name="input" type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">result</param>
+            </result>
+        </action>
+
+        <action name="image_base64_upload" class="ImageBase64Upload">
+            <result name="success" type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">result</param>
+            </result>
+            <result name="input" type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">result</param>
+            </result>
+        </action>-->
+
+        <!--todo error handling-->
+        <!-- <action name="javascript_logger_action" class="ClientLoggerAction">
+             <result name="success" type="json"/>
+         </action>
+         <action name="client-logger" class="ClientLoggerAction">
+             <result name="success" type="json"/>
+         </action>-->
+        <!--Services And-->
+
+        <action name="transfer-from-partition-to-user" class="TransferTransactionAction" method="transferFromPartitionToUser">
+            <result name="success" type="json"/>
+        </action>
+
+
+
+        <!--vshoo-->
+        <!--todo - from balance directCharge -->
+        <action name="freeze-driver-wallet-for-future-payment" class="TransactionPurchaseAction" method="freezeDriverBalanceForFuturePayment">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="direct-charge-from-wallet" class="TransactionPurchaseAction" method="directCharge">
+            <result name="success" type="json"/>
+        </action>
+
+         <action name="freeze-wallet" class="TransactionPurchaseAction" method="freezeWallet">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="cancel-freeze-wallet" class="TransactionPurchaseAction" method="freezeWalletCancel">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="charge-from-wallet" class="TransactionPurchaseAction" method="freezeWalletCharge">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="check-wallet" class="TransactionPurchaseAction" method="checkWallet">
+            <result name="success" type="json"/>
+        </action>
+
+
+        <!--todo -->
+        <!--Merchant-->
+
+
+
+
+    </package>
+
+
+</struts>

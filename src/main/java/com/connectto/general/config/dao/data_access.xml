@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="CoreSystemAdminDaoImpl" class="com.connectto.general.dataaccess.dao.impl.CoreSystemAdminDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientConnectto"/>
+    </bean>
+
+    <bean id="TsmDaoImpl" class="com.connectto.general.dataaccess.dao.impl.TsmDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientConnectto"/>
+    </bean>
+
+    <bean id="UserDaoImpl" class="com.connectto.general.dataaccess.dao.impl.UserDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientConnectto"/>
+    </bean>
+
+    <bean id="PartitionSetupDaoImpl" class="com.connectto.general.dataaccess.dao.impl.PartitionSetupDaoImpl">
+        <property name="sqlMapClient" ref="sqlMapClientConnectto"/>
+    </bean>
+
+</beans>

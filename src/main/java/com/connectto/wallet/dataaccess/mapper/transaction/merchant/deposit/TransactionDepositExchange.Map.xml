@@ -1,0 +1,71 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionDepositExchange">
+
+    <cacheModel id="cmTransactionDepositExchange" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionDepositExchangeSample" class="TransactionDepositExchange">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="rateId" column="rate_id"/>
+        <result property="exchangeDate" column="exchange_date"/>
+        <result property="setupAmount" column="setup_amount"/>
+        <result property="setupCurrencyType" column="setup_ct"/>
+        <result property="rate" column="rate"/>
+        <result property="rateCurrencyType" column="rate_ct"/>
+        <result property="walletBoughtAmount" column="wallet_bought_amount"/>
+        <result property="walletBoughtAmountCurrencyType" column="wallet_bought_ct"/>
+        <result property="walletPaidAmount" column="wallet_paid_amount"/>
+        <result property="walletPaidCurrencyType" column="wallet_paid_ct"/>
+        <result property="exchangeTaxId" column="exchange_tax_id"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="TransactionDepositExchange">
+        INSERT INTO `w_t_deposit_exchange` (
+            `wallet_id`,
+            `setup_id`,
+            `rate_id`,
+            `exchange_date`,
+            `setup_amount`,
+            `setup_ct`,
+            `rate`,
+            `rate_ct`,
+            `wallet_bought_amount`,
+            `wallet_bought_ct`,
+            `wallet_paid_amount`,
+            `wallet_paid_ct`,
+            `exchange_tax_id`
+        ) VALUES (
+            #walletId#,
+            #setupId#,
+            #rateId#,
+            #exchangeDate#,
+            #setupAmount#,
+            #setupCurrencyType#,
+            #rate#,
+            #rateCurrencyType#,
+            #walletBoughtAmount#,
+            #walletBoughtAmountCurrencyType#,
+            #walletPaidAmount#,
+            #walletPaidCurrencyType#,
+            #exchangeTaxId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionDepositExchange" resultMap="rmTransactionDepositExchangeSample" parameterClass="long">
+        SELECT * from `w_t_deposit_exchange` WHERE `id` = #id#
+    </select>
+
+
+
+</sqlMap>

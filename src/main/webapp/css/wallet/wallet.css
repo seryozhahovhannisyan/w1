@@ -1,0 +1,230 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'GothaProIta.otf';
+    src: url(../../css/general/fonts/GothaProIta.otf);
+}
+@font-face {
+    font-family: 'GothaProBol.otf';
+    src: url(../../css/general/fonts/GothaProBol.otf);
+}
+@font-face {
+    font-family: 'GothaProReg.otf';
+    src: url(../../css/general/fonts/GothaProReg.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    src: url(../../css/general/fonts/HelveticaNeueCyr-Roman.otf);
+}
+@font-face {
+    font-family: 'GothaProMed.otf';
+    src: url(../../css/general/fonts/GothaProMed.otf);
+}
+@font-face {
+    font-family: 'GothaProMedIta.otf';
+    src: url(../../css/general/fonts/GothaProMedIta.otf);
+}
+
+
+
+
+.row{
+    margin: 0!important;
+    padding: 0!important;
+}
+
+
+.main{
+    background-color: #212430;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+.user_search_div{
+    float: right;
+    position: relative;
+    padding: 10px;
+}
+.search_parent_div{
+    float: left;
+    position: relative;
+    padding: 10px;
+}
+
+.arrow_div{
+    float: left;
+    padding: 10px;
+    position: relative;
+}
+.arrow_div img{
+    width: 100%;
+    height: auto;
+}
+.up{
+    position: absolute;
+    top:4px;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+
+}
+.down{
+    position: absolute;
+    bottom:5px;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+
+}
+.sort_div{
+    float: left;
+    color: #c3c3c3;
+    font-family: 'GothaProReg.otf';
+    padding: 20px;
+
+}
+.input_before_text{
+    color: #a5a9a9;
+    float: left;
+    margin-top: 17px;
+}
+.search{
+    width: 35px;
+    height: 35px;
+    background: url("../../img/wallet/icon/search_icon.png") no-repeat center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.search_user_input{
+    background-color: #2b2f3e;
+    border: none;
+    border-radius: 10px;
+    width: 300px;
+    height: 35px;
+    padding: 10px 50px 10px 10px;
+    color: #6d6d6d;
+}
+.search_user_input::-webkit-input-placeholder{
+    text-align: left;
+    font-family: 'GothaProReg.otf';
+    font-size: smaller;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.thumb{
+    height: 70px;
+    max-width: 100%;
+    width: 70px;
+}
+
+
+.port-menu-list {
+    height: 500px;
+    overflow: auto;
+}
+.port-menu-list li {
+    background-color: #212430;
+    cursor: default;
+    margin-bottom: 0.2em;
+    padding: 0.5em;
+    width: 100%;
+    border-bottom: 1px solid #555965;
+}
+
+
+.port-menu-list li a{
+    text-decoration: none;
+    color: #c3c2c2;
+    font-size: 200%;
+    font-family: 'GothaProReg.otf';
+}
+.user_div{
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    background-color: #7e7e7e;
+    border-radius: 10px;
+    float: left;
+    overflow: hidden;
+}
+.detales{
+    min-width: 300px;
+    display: inline-block;
+    margin-left: 20px;
+    float: left;
+    margin-top: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.user_div img{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.info_parent_div{
+    width:40%;
+    height: 86px;
+    min-width: 670px;
+    text-align: center;
+    margin: 0 auto;
+    float: none!important;
+    position: relative;
+}
+.envelop_div{
+    display: inline-block;
+    width: 80px;
+    height: auto;
+    float: left;
+    margin-left: 30px;
+    margin-top: 16px;
+
+}
+.envelop_div img{
+    width: 100%;
+    height: auto;
+}
+
+
+
+
+@media (max-width: 1000px) {
+    .logged_account {
+        float: left;
+        margin: 2%;
+        width: 60%;
+    }
+}

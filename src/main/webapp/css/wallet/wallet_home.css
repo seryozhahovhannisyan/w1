@@ -1,0 +1,298 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'GothaProReg.otf';
+    src: url(../../css/general/fonts/GothaProReg.otf);
+}
+
+@font-face {
+    font-family: 'GothaProBol.otf';
+    src: url(../../css/general/fonts/GothaProBol.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    src: url(../../css/general/fonts/HelveticaNeueCyr-Medium.otf);
+}
+
+@font-face {
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    src: url(../../css/general/fonts/HelveticaNeueCyr-Roman.otf);
+}
+
+@font-face {
+    font-family: 'GothaProMed.otf';
+    src: url(../../css/general/fonts/GothaProMed.otf);
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.centered {
+    margin: 0 auto;
+    float: none;
+}
+
+.main {
+    background-color: #2b2f3e;
+}
+
+.errorMessage {
+    color: #ff4154;
+    font-family: 'GothaProMed.otf';
+    list-style: none;
+    margin-top: 5px;
+}
+.log_out_div{
+    float: right;
+    margin-right: 20px;
+}
+.log_out{
+    float: right;
+    margin-left: 20px;
+    color: #a8a4a4;
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    font-size: 100%;
+    cursor: pointer;
+}
+.log_out img{
+    width: 14px;
+    height: auto;
+    vertical-align: sub;
+}
+.forget_pass{
+
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    color: #a8a4a4;
+    cursor: pointer;
+}
+.close_wallet{
+    float: right;
+    color: #a8a4a4;
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    font-size: 100%;
+    cursor: pointer;
+}
+.close_wallet img{
+    width: 12px;
+    height: auto;
+    vertical-align: baseline;
+}
+.logo_div {
+    height: auto;
+    margin-left: 10%;
+}
+
+.logo_div img {
+    width: 100%;
+    height: auto;
+}
+
+.text_parent {
+    width: 200px;
+    height: auto;
+    padding: 10px;
+    background-color: #404452;
+    margin-top: 50px;
+}
+
+.logo_img {
+    width: 50px;
+    height: 50px;
+    float: left;
+}
+
+.vshoo_type {
+    float: left;
+    margin-left: 10px;
+    margin-top: 15px;
+    font-family: 'GothaProMed.otf';
+    font-size: 110%;
+    color: #cfcfcf;
+
+}
+
+.logo_img img {
+    width: 100%;
+    height: auto;
+}
+
+.right {
+
+    height: auto;
+
+}
+
+.name_surname_parent_li {
+    min-height: 102px;
+    color: #d9d9d9;
+    text-align: center;
+}
+
+.avatar_div {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #27ccc0;
+    border-radius: 50%;
+    background-color: #d8d7d5;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.avatar_div img {
+    width: 100%;
+    height: 100%;
+}
+
+.name_surname_div {
+    font-size: 200%;
+    font-family: 'GothaProMed.otf';
+    padding: 30px 10px 50px 10px;
+}
+
+.person_img {
+    width: 40px;
+}
+
+.input_div,.input_wallet_div {
+    position: relative;
+    min-width: 280px;
+}
+
+
+.re_enter_pass,.enter_wallet_pass{
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-bottom: 1px solid #555965;
+    background: transparent;
+    padding: 2px 50px 2px 50px;
+    color: #f0f0f0;
+
+
+}
+.input_div input::-webkit-input-placeholder,.input_wallet_div input::-webkit-input-placeholder {
+    text-align: center;
+    font-family: 'GothaProReg.otf';
+    font-size: large;
+}
+
+.lock {
+    background-image: url("../../img/wallet/icon/password_lock.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 0px;
+    left: 5px;
+}
+
+.eye,.eye_wallet {
+    background-image: url("../../img/wallet/icon/password_eye_closed.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.captcha_box {
+    width: 70px;
+    height: 70px;
+    background-color: #555965;
+    border: none;
+    border-radius: 10px;
+}
+
+.captcha_text {
+    color: #cdcdcd;
+    font-size: 150%;
+    font-family: 'GothaProReg.otf';
+    margin-top: 15px;
+}
+
+.login_button {
+    width: 100%;
+    height: 70px;
+    border: none;
+    border-radius: 10px;
+    background-color: #27ccc0;
+    font-size: 150%;
+    text-transform: uppercase;
+    font-family: 'GothaProBol.otf';
+    color: #f0f0f0 !important;
+    margin-top: 10px;
+}
+
+.login_button:hover {
+    background-color: #25bfb4;
+    color: #f0f0f0 !important;
+}
+
+.login_button:active {
+    background-color: #23a095;
+    color: #f0f0f0 !important;
+}
+
+.g-recaptcha {
+    width: 304px;
+    margin: 0 auto;
+}
+
+.footer {
+    background-color: #b2b9bb;
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    height: 60px;
+}
+
+.footer_parent_div {
+    margin: 0 auto;
+    float: none !important;
+    padding-top: 25px;
+}
+
+.home {
+    width: 500px;
+    height: 200px;
+    background-color: lime;
+}
+
+@media all and (max-width: 768px) {
+    .logo_div {
+        margin-left: 0px;
+    }
+
+    .login_type {
+        margin-bottom: 10px;
+    }
+
+    .text_parent {
+        margin-top: 20px;
+    }
+}
+
+@media all and (max-width: 400px) {
+    .chapta {
+        width: 100%;
+        padding-right: 2px;
+        padding-left: 2px;
+        margin-left: -5px;
+    }
+    .button_div{
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .login_button{
+        height: 50px;
+    }
+}

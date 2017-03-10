@@ -1,0 +1,240 @@
+@font-face {
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    src: url(/css/general/fonts/HelveticaNeueCyr-Medium.otf);
+}
+.row{
+    margin: 0px;
+}
+.center{
+    margin: 0 auto;
+    float: none!important;
+}
+.input{
+    width: 70%;
+    min-height:50px ;
+    margin: 0 auto;
+}
+.pop_back {
+    position: absolute;
+    top: 0px;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+.form_body {
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #f3f3f3;
+    text-align: center;
+    top: 35%;
+}
+.info_popup{
+    margin-top:5%!important; ;
+}
+.value{
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.tgt{
+    width: 100%! important;
+    height: auto! important;
+}
+.cont{
+    height: 100%!important;
+}
+
+.pop_header_error{
+    background: -webkit-linear-gradient(left,rgba(156,182,199,1),rgba(3,6,78,1)); /*Safari 5.1-6*/
+    background: -o-linear-gradient(right,rgba(156,182,199,1),rgba(3,6,78,1)); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(right,rgba(156,182,199,1),rgba(3,6,78,1)); /*Fx 3.6-15*/
+    background: linear-gradient(to right, rgba(156,182,199,1),rgba(3,6,78,1)); /*Standard*/
+    color: #ffffff;
+    font-size: 200%;
+    text-align: center;
+    font-weight: 900;
+    height: 6vh;
+    min-height: 40px;
+
+}
+.email-pop{
+    display: block;
+    width: 80%;
+    height: 30px;
+    background-color: lime;
+    margin: 3% auto;
+}
+.phone_pop {
+    display: inline-block;
+    width: 53%;
+    height: 30px;
+    background-color: lime;
+    margin-top: 3%;
+    margin-left: 2%;
+}
+.phone_code{
+    width:25%;
+    height: 30px;
+    margin-left: 10%;
+}
+.error {
+    width: 100%;
+    height: 17vh;
+    background: -webkit-linear-gradient(left,rgba(58,59,86,1),rgba(3,6,78,1)); /*Safari 5.1-6*/
+    background: -o-linear-gradient(right,rgba(58,59,86,1),rgba(3,6,78,1)); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(right,rgba(58,59,86,1),rgba(3,6,78,1)); /*Fx 3.6-15*/
+    background: linear-gradient(to right, rgba(58,59,86,1),rgba(3,6,78,1)); /*Standard*/
+    color: #ffffff;
+    text-align: center;
+}
+.error h2{
+    margin:0px;
+    padding: 0px;
+}
+.info {
+    width: 100%;
+    height: 50px;
+    background-color: red;
+    color: #ffffff;
+}
+.email{
+
+    background:  url(/img/general/vshoo/envelop.png) no-repeat scroll 7px 10px;
+    width: 60%!important;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-size: 8% 45%;
+    background-color: rgb(234,240,241);
+    height: 5vh;
+    min-height: 35px;
+    border: 1px solid rgb(129,130,130);
+    border-radius: 10px;
+    margin-top:15px;
+    text-align: center;
+
+}
+
+.close_popup1_error{
+    background: -webkit-linear-gradient(left,rgba(58,59,86,1),rgba(3,6,78,1))!important; /*Safari 5.1-6*/
+    background: -o-linear-gradient(right,rgba(58,59,86,1),rgba(3,6,78,1))!important; /*Opera 11.1-12*/
+    background: -moz-linear-gradient(right,rgba(58,59,86,1),rgba(3,6,78,1))!important; /*Fx 3.6-15*/
+    background: linear-gradient(to right, rgba(58,59,86,1),rgba(3,6,78,1))!important; /*Standard*/
+    border-color: black! important;
+    border-radius: 15px! important;
+    float: right;
+    margin-right: 3%;
+    font-size: 100%! important;
+    width: 12%;
+    min-width: 35px;
+    height: 6vh;
+    min-height: 40px;
+}
+.btn-success{
+    background-color: red;
+}
+
+.pop_header_info{
+    background-color: #f3f3f3;
+    border-bottom: 1px solid black;
+    color: black;
+    font-size: 200%;
+    text-align: center;
+    font-weight: 900;
+    height: auto;
+    min-height: 6vh;
+
+}
+.info {
+    width: 100%;
+    height: 17vh;
+    background: -webkit-linear-gradient(left,rgba(101, 90, 99,1),rgba(77, 8, 99,1)); /*Safari 5.1-6*/
+    background: -o-linear-gradient(right,rgba(101, 90, 99,1),rgba(77, 8, 99,1)); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(right,rgba(101, 90, 99,1),rgba(77, 8, 99,1)); /*Fx 3.6-15*/
+    background: linear-gradient(to right, rgba(101, 90, 99,1),rgba(77, 8, 99,1)); /*Standard*/
+    color: #ffffff;
+    text-align: center;
+}
+.info h2{
+    margin-top: 0px;
+    padding-top: 2%;
+}
+
+.close_popup1_info{
+    background-color: #f3f3f3;
+    color: black;
+    border-color: black! important;
+    border-radius: 15px! important;
+    float: right! important;
+    margin-right: 3%;
+    /*font-size: 100%! important;*/
+}
+
+.pop_header_confirm {
+    background: -webkit-linear-gradient(left,rgba(10, 10, 10,1),rgba(8, 99, 57,1)); /*Safari 5.1-6*/
+    background: -o-linear-gradient(right,rgba(10, 10, 10,1),rgba(8, 99, 57,1)); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(right,rgba(10, 10, 10,1),rgba(8, 99, 57,1)); /*Fx 3.6-15*/
+    background: linear-gradient(to right, rgba(10, 10, 10,1),rgba(8, 99, 57,1)); /*Standard*/
+    color: #ffffff;
+    font-size: 200%;
+    text-align: center;
+    font-weight: 900;
+    height: 6vh;
+
+}
+.confirm {
+    width: 100%;
+    height: 17vh;
+    background: -webkit-linear-gradient(left,rgba(101, 115, 99,1),rgba(8, 99, 28,1)); /*Safari 5.1-6*/
+    background: -o-linear-gradient(right,rgba(101, 115, 99,1),rgba(8, 99, 28,1)); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(right,rgba(101, 115, 99,1),rgba(8, 99, 28,1)); /*Fx 3.6-15*/
+    background: linear-gradient(to right, rgba(101, 115, 99,1),rgba(8, 99, 28,1)); /*Standard*/
+    color: #ffffff;
+    text-align: center;
+}
+.confirm h2{
+    margin-top: 0px;
+    padding-top: 2%;
+}
+
+.close_popup1_confirm{
+    background: -webkit-linear-gradient(left,rgba(101, 115, 99,1),rgba(8, 99, 28,1))!important; /*Safari 5.1-6*/
+    background: -o-linear-gradient(right,rgba(101, 115, 99,1),rgba(8, 99, 28,1))!important; /*Opera 11.1-12*/
+    background: -moz-linear-gradient(right,rgba(101, 115, 99,1),rgba(8, 99, 28,1))!important; /*Fx 3.6-15*/
+    background: linear-gradient(to right, rgba(101, 115, 99,1),rgba(8, 99, 28,1))!important; /*Standard*/
+    border-color: black! important;
+    border-radius: 15px! important;
+    float: right;
+    margin-right: 3%;
+    font-size: 100%! important;
+}
+.button_left{
+    float:left! important;
+    margin-left: 20px;
+}
+.button_right{
+    float:right! important;
+    margin-right: 20px;
+}
+@media all and  (max-width: 600px) {
+    .form_body {
+        width: 80%;
+        min-width: 320px;
+        height: auto;
+        min-height: 155px;
+        margin: 0 auto;
+        background-color: #f3f3f3;;
+        top:20%;
+        text-align: center;
+    }
+    .cont {
+        min-width: 320px;
+        height: 100%!important;
+        padding: 0;
+    }
+    .pop_header_info h2 {
+        font-size: 27px;
+    }
+}

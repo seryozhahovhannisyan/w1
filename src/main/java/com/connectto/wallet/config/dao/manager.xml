@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="WalletLoggerManagerImpl"
+          class="com.connectto.wallet.dataaccess.service.general.impl.WalletLoggerManagerImpl">
+        <property name="walletLoggerDao" ref="WalletLoggerDaoImpl"/>
+    </bean>
+
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager2">
+
+        <tx:attributes >
+            <tx:method name="add" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+            <tx:method name="getById"  read-only="true"  />
+            <tx:method name="getByParams"  read-only="true"  />
+            <tx:method name="getCountByParams"   read-only="true"  />
+            <tx:method name="update" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+            <tx:method name="makeDefaultCard" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+            <tx:method name="reOrderPriorities" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+            <tx:method name="enable" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+            <tx:method name="disable" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+            <tx:method name="delete" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+            <tx:method name="forceDelete" propagation="REQUIRES_NEW" read-only="false" rollback-for="Throwable"/>
+
+        </tx:attributes>
+
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="CreditCardeOperation" expression="execution(* com.connectto.wallet.dataaccess.service.wallet.impl.CreditCardManagerImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="CreditCardeOperation"/>
+    </aop:config>-->
+
+    <bean id="CreditCardManagerImpl" class="com.connectto.wallet.dataaccess.service.wallet.impl.CreditCardManagerImpl">
+        <property name="creditCardDao" ref="CreditCardDaoImpl"/>
+    </bean>
+
+    <bean id="ExchangeManagerImpl" class="com.connectto.wallet.dataaccess.service.impl.ExchangeManagerImpl">
+        <property name="exchangeDao" ref="ExchangeDaoImpl"/>
+    </bean>
+
+    <bean id="ExchangeRateManagerImpl" class="com.connectto.wallet.dataaccess.service.wallet.impl.ExchangeRateManagerImpl">
+        <property name="exchangeRateDao" ref="ExchangeRateDaoImpl"/>
+    </bean>
+
+    <bean id="ExchangeSourceManagerImpl" class="com.connectto.wallet.dataaccess.service.wallet.impl.ExchangeSourceManagerImpl">
+        <property name="exchangeSourceDao" ref="ExchangeSourceDaoImpl"/>
+    </bean>
+
+    <bean id="TransactionDisputeManagerImpl"
+          class="com.connectto.wallet.dataaccess.service.impl.TransactionDisputeManagerImpl">
+        <property name="transactionDisputeDao" ref="TransactionDisputeDaoImpl"/>
+        <property name="transactionDataDao" ref="TransactionDataDaoImpl"/>
+    </bean>
+
+    <bean id="TransferTransactionManagerImpl" class="com.connectto.wallet.dataaccess.service.transaction.transfer.impl.TransferTransactionManagerImpl">
+        <property name="dao" ref="TransferTransactionDaoImpl"/>
+        <property name="ticketDao" ref="TransferTicketDaoImpl"/>
+        <property name="walletDao" ref="WalletDaoImpl"/>
+        <property name="walletSetupDao" ref="WalletSetupDaoImpl"/>
+    </bean>
+
+    <bean id="TransactionPurchaseManagerImpl"  class="com.connectto.wallet.dataaccess.service.transaction.purchase.impl.TransactionPurchaseManagerImpl">
+        <property name="purchaseTicketDao" ref="PurchaseTicketDaoImpl"/>
+        <property name="transactionPurchaseDao" ref="TransactionPurchaseDaoImpl"/>
+        <property name="exchangeDao" ref="TransactionPurchaseExchangeDaoImpl"/>
+        <property name="exchangeTaxDao" ref="TransactionPurchaseExchangeTaxDaoImpl"/>
+        <property name="processDao" ref="TransactionPurchaseProcessDaoImpl"/>
+        <property name="transactionPurchaseProcessTaxDao" ref="TransactionPurchaseProcessTaxDaoImpl"/>
+        <property name="taxDao" ref="TransactionPurchaseTaxDaoImpl"/>
+        <property name="walletDao" ref="WalletDaoImpl"/>
+        <property name="walletSetupDao" ref="WalletSetupDaoImpl"/>
+        <property name="creditCardDao" ref="CreditCardDaoImpl"/>
+        <property name="creditCardTransferDao" ref="CreditCardTransferDaoImpl"/>
+        <property name="transferSettingDao" ref="TransferSettingDaoImpl"/>
+    </bean>
+
+    <bean id="TransactionDepositManagerImpl"  class="com.connectto.wallet.dataaccess.service.transaction.merchant.impl.TransactionDepositManagerImpl">
+        <property name="merchantDepositDao" ref="MerchantDepositDaoImpl"/>
+        <property name="merchantDepositTaxDao" ref="MerchantDepositTaxDaoImpl"/>
+        <property name="transactionDepositDao" ref="TransactionDepositDaoImpl"/>
+        <property name="exchangeDao" ref="TransactionDepositExchangeDaoImpl"/>
+        <property name="exchangeTaxDao" ref="TransactionDepositExchangeTaxDaoImpl"/>
+        <property name="processDao" ref="TransactionDepositProcessDaoImpl"/>
+        <property name="transactionDepositProcessTaxDao" ref="TransactionDepositProcessTaxDaoImpl"/>
+        <property name="taxDao" ref="TransactionDepositTaxDaoImpl"/>
+        <property name="walletSetupDepositTaxDao" ref="WalletSetupDepositTaxDaoImpl"/>
+        <property name="walletDao" ref="WalletDaoImpl"/>
+        <property name="walletSetupDao" ref="WalletSetupDaoImpl"/>
+    </bean>
+
+    <bean id="TransactionWithdrawManagerImpl"  class="com.connectto.wallet.dataaccess.service.transaction.merchant.impl.TransactionWithdrawManagerImpl">
+        <property name="merchantWithdrawDao" ref="MerchantWithdrawDaoImpl" />
+        <property name="merchantWithdrawTaxDao" ref="MerchantWithdrawTaxDaoImpl"/>
+        <property name="transactionWithdrawDao" ref="TransactionWithdrawDaoImpl"/>
+        <property name="exchangeDao" ref="TransactionWithdrawExchangeDaoImpl"/>
+        <property name="exchangeTaxDao" ref="TransactionWithdrawExchangeTaxDaoImpl"/>
+        <property name="processDao" ref="TransactionWithdrawProcessDaoImpl"/>
+        <property name="transactionWithdrawProcessTaxDao" ref="TransactionWithdrawProcessTaxDaoImpl"/>
+        <property name="taxDao" ref="TransactionWithdrawTaxDaoImpl"/>
+        <property name="walletSetupWithdrawTaxDao" ref="WalletSetupWithdrawTaxDaoImpl"/>
+        <property name="walletDao" ref="WalletDaoImpl"/>
+        <property name="walletSetupDao" ref="WalletSetupDaoImpl"/>
+    </bean>
+
+    <bean id="MerchantTransferTransactionManagerImpl"  class="com.connectto.wallet.dataaccess.service.transaction.merchant.impl.MerchantTransferTransactionManagerImpl">
+        <property name="dao" ref="MerchantTransferTransactionDaoImpl"/>
+        <property name="ticketDao" ref="MerchantTransferTicketDaoImpl"/>
+        <property name="walletDao" ref="WalletDaoImpl"/>
+        <property name="walletSetupDao" ref="WalletSetupDaoImpl"/>
+    </bean>
+
+
+
+    <bean id="WalletTransactionManagerImpl" class="com.connectto.wallet.dataaccess.service.impl.TransactionManagerImpl">
+        <property name="transactionDao" ref="WalletTransactionDaoImpl"/>
+        <property name="walletSetupDao" ref="WalletSetupDaoImpl" />
+        <property name="transactionDataDao" ref="TransactionDataDaoImpl"/>
+        <property name="transactionTaxDao" ref="TransactionTaxDaoImpl"/>
+        <!--<property name="transactionFeeExchangeDao" ref="TransactionExchangeDaoImpl"/>-->
+        <property name="transactionActionDao" ref="WalletTransactionActionDaoImpl"/>
+        <property name="walletExchangeDao" ref="WalletExchangeDaoImpl"/>
+        <property name="walletDao" ref="WalletDaoImpl"/>
+        <property name="exchangeDao" ref="ExchangeDaoImpl"/>
+        <property name="userDao" ref="UserDaoImpl"/>
+        <property name="partitionSetupDao" ref="PartitionSetupDaoImpl"/>
+    </bean>
+
+
+
+    <bean id="WalletLocationManagerImpl" class="com.connectto.wallet.dataaccess.service.wallet.impl.WalletLocationManagerImpl">
+        <property name="walletLocationDao" ref="WalletLocationDaoImpl"/>
+    </bean>
+
+    <bean id="WalletManagerImpl" class="com.connectto.wallet.dataaccess.service.wallet.impl.WalletManagerImpl">
+        <property name="walletDao" ref="WalletDaoImpl"/>
+        <property name="locationDao" ref="WalletLocationDaoImpl"/>
+        <property name="userDao" ref="UserDaoImpl"/>
+    </bean>
+
+    <bean id="WalletSetupManagerImpl" class="com.connectto.wallet.dataaccess.service.wallet.impl.WalletSetupManagerImpl">
+        <property name="walletSetupDao" ref="WalletSetupDaoImpl"/>
+    </bean>
+
+</beans>

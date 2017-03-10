@@ -1,0 +1,65 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsWalletSetupWithdrawTax">
+
+    <cacheModel id="cmWalletSetupWithdrawTax" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmWalletSetupWithdrawTaxSample" class="WalletSetupWithdrawTax">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="actionDate" column="action_date"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="withdrawTax" column="withdraw_tax"/>
+        <result property="withdrawTaxTotal" column="withdraw_tax_total"/>
+        <result property="withdrawTaxCurrencyType" column="withdraw_tax_ct"/>
+        <result property="withdrawTaxPrice" column="withdraw_tax_price"/>
+        <result property="withdrawTaxPriceTotal" column="withdraw_tax_price_total"/>
+        <result property="withdrawTaxPriceCurrencyType" column="withdraw_tax_price_ct"/>
+        <result property="withdrawTaxType" column="withdraw_tax_type"/>
+        <result property="exchangeId" column="exchange_id"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="WalletSetupWithdrawTax">
+        INSERT INTO `w_t_wallet_setup_withdraw_tax` (
+        `action_date`,
+        `wallet_id`,
+        `setup_id`,
+        `withdraw_tax`,
+        `withdraw_tax_total`,
+        `withdraw_tax_ct`,
+        `withdraw_tax_price`,
+        `withdraw_tax_price_total`,
+        `withdraw_tax_price_ct`,
+        `withdraw_tax_type`,
+        `exchange_id`
+        ) VALUES (
+        #actionDate#,
+        #walletId#,
+        #setupId#,
+        #withdrawTax#,
+        #withdrawTaxTotal#,
+        #withdrawTaxCurrencyType#,
+        #withdrawTaxPrice#,
+        #withdrawTaxPriceTotal#,
+        #withdrawTaxPriceCurrencyType#,
+        #withdrawTaxType#,
+        #exchangeId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmWalletSetupWithdrawTax" resultMap="rmWalletSetupWithdrawTaxSample" parameterClass="long">
+        SELECT * from `w_t_wallet_setup_withdraw_tax` WHERE `id` = #id#
+    </select>
+
+
+
+</sqlMap>

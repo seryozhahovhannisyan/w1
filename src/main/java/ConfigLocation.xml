@@ -1,0 +1,224 @@
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+    <!--<properties resource="com.university.config/db-com.university.config.properties"/>-->
+
+    <settings cacheModelsEnabled="false"
+              enhancementEnabled="true"
+              lazyLoadingEnabled="false"
+              errorTracingEnabled="true"
+              useStatementNamespaces="true"/>
+
+    <!--
+    ####################################################################################################################
+    Type Aliases
+    ####################################################################################################################
+    -->
+    <typeAlias alias="Partition" type="com.connectto.general.model.Partition"/>
+    <typeAlias alias="PartitionDto" type="com.connectto.general.model.PartitionDto"/>
+
+    <typeAlias alias="WalletSetup" type="com.connectto.general.model.WalletSetup"/>
+    <!--
+    Project
+    -->
+
+    <typeAlias alias="User" type="com.connectto.general.model.User"/>
+    <typeAlias alias="TsmCompany" type="com.connectto.general.model.TsmCompany"/>
+    <typeAlias alias="CoreSystemAdmin" type="com.connectto.general.model.CoreSystemAdmin"/>
+    <typeAlias alias="UserDto" type="com.connectto.general.model.UserDto"/>
+    <typeAlias alias="Account" type="com.connectto.general.model.Account"/>
+
+    <!--
+    WALLET
+    -->
+    <typeAlias alias="FileData" type="com.connectto.wallet.model.general.FileData"/>
+    <typeAlias alias="WalletLogger" type="com.connectto.wallet.model.general.WalletLogger"/>
+
+
+    <typeAlias alias="TransferSetting" type="com.connectto.wallet.creditCard.common.TransferSetting"/>
+
+
+    <typeAlias alias="CreditCard" type="com.connectto.wallet.model.wallet.CreditCard"/>
+    <typeAlias alias="CreditCardTransfer" type="com.connectto.wallet.model.wallet.CreditCardTransfer"/>
+    <typeAlias alias="CreditCardTransactionResult" type="com.connectto.wallet.model.wallet.CreditCardTransactionResult"/>
+
+
+    <typeAlias alias="BlockedUser" type="com.connectto.wallet.model.wallet.BlockedUser"/>
+    <typeAlias alias="Exchange" type="com.connectto.wallet.model.wallet.Exchange"/>
+    <typeAlias alias="ExchangeRate" type="com.connectto.wallet.model.wallet.ExchangeRate"/>
+    <typeAlias alias="ExchangeSource" type="com.connectto.wallet.model.wallet.ExchangeSource"/>
+    <!--Dtos-->
+    <typeAlias alias="TransactionDto"  type="com.connectto.wallet.web.action.wallet.dto.TransactionDto"/>
+    <!--<typeAlias alias="UserDto" type="com.connectto.general.model.UserDto"/>-->
+    <typeAlias alias="PartitionDto" type="com.connectto.general.model.PartitionDto"/>
+
+    <!---->
+    <typeAlias alias="TransactionData" type="com.connectto.wallet.model.wallet.TransactionData"/>
+    <typeAlias alias="TransactionDispute" type="com.connectto.wallet.model.wallet.TransactionDispute"/>
+    <typeAlias alias="PurchaseTicket" type="com.connectto.wallet.model.transaction.purchase.PurchaseTicket"/>
+    <typeAlias alias="TransactionPurchase" type="com.connectto.wallet.model.transaction.purchase.TransactionPurchase"/>
+    <typeAlias alias="TransactionPurchaseExchange" type="com.connectto.wallet.model.transaction.purchase.TransactionPurchaseExchange"/>
+    <typeAlias alias="TransactionPurchaseExchangeTax" type="com.connectto.wallet.model.transaction.purchase.TransactionPurchaseExchangeTax"/>
+    <typeAlias alias="TransactionPurchaseProcess" type="com.connectto.wallet.model.transaction.purchase.TransactionPurchaseProcess"/>
+    <typeAlias alias="TransactionPurchaseProcessTax" type="com.connectto.wallet.model.transaction.purchase.TransactionPurchaseProcessTax"/>
+    <typeAlias alias="TransactionPurchaseTax" type="com.connectto.wallet.model.transaction.purchase.TransactionPurchaseTax"/>
+
+    <typeAlias alias="TransferTicket" type="com.connectto.wallet.model.transaction.transfer.TransferTicket"/>
+    <typeAlias alias="TransferTransaction" type="com.connectto.wallet.model.transaction.transfer.TransferTransaction"/>
+
+    <typeAlias alias="MerchantDeposit" type="com.connectto.wallet.model.transaction.merchant.deposit.MerchantDeposit"/>
+    <typeAlias alias="MerchantDepositTax" type="com.connectto.wallet.model.transaction.merchant.deposit.MerchantDepositTax"/>
+    <typeAlias alias="TransactionDeposit" type="com.connectto.wallet.model.transaction.merchant.deposit.TransactionDeposit"/>
+    <typeAlias alias="TransactionDepositTax" type="com.connectto.wallet.model.transaction.merchant.deposit.TransactionDepositTax"/>
+    <typeAlias alias="WalletSetupDepositTax" type="com.connectto.wallet.model.transaction.merchant.deposit.WalletSetupDepositTax"/>
+    <typeAlias alias="TransactionDepositProcess" type="com.connectto.wallet.model.transaction.merchant.deposit.TransactionDepositProcess"/>
+    <typeAlias alias="TransactionDepositProcessTax" type="com.connectto.wallet.model.transaction.merchant.deposit.TransactionDepositProcessTax"/>
+    <typeAlias alias="TransactionDepositExchange" type="com.connectto.wallet.model.transaction.merchant.deposit.TransactionDepositExchange"/>
+    <typeAlias alias="TransactionDepositExchangeTax" type="com.connectto.wallet.model.transaction.merchant.deposit.TransactionDepositExchangeTax"/>
+
+    <typeAlias alias="MerchantWithdraw" type="com.connectto.wallet.model.transaction.merchant.withdraw.MerchantWithdraw"/>
+    <typeAlias alias="MerchantWithdrawTax" type="com.connectto.wallet.model.transaction.merchant.withdraw.MerchantWithdrawTax"/>
+    <typeAlias alias="TransactionWithdraw" type="com.connectto.wallet.model.transaction.merchant.withdraw.TransactionWithdraw"/>
+    <typeAlias alias="TransactionWithdrawTax" type="com.connectto.wallet.model.transaction.merchant.withdraw.TransactionWithdrawTax"/>
+    <typeAlias alias="WalletSetupWithdrawTax" type="com.connectto.wallet.model.transaction.merchant.withdraw.WalletSetupWithdrawTax"/>
+    <typeAlias alias="TransactionWithdrawProcess" type="com.connectto.wallet.model.transaction.merchant.withdraw.TransactionWithdrawProcess"/>
+    <typeAlias alias="TransactionWithdrawProcessTax" type="com.connectto.wallet.model.transaction.merchant.withdraw.TransactionWithdrawProcessTax"/>
+    <typeAlias alias="TransactionWithdrawExchange" type="com.connectto.wallet.model.transaction.merchant.withdraw.TransactionWithdrawExchange"/>
+    <typeAlias alias="TransactionWithdrawExchangeTax" type="com.connectto.wallet.model.transaction.merchant.withdraw.TransactionWithdrawExchangeTax"/>
+
+    <typeAlias alias="MerchantTransferTicket" type="com.connectto.wallet.model.transaction.merchant.transfer.MerchantTransferTicket"/>
+    <typeAlias alias="MerchantTransferTransaction" type="com.connectto.wallet.model.transaction.merchant.transfer.MerchantTransferTransaction"/>
+
+    <typeAlias alias="Wallet" type="com.connectto.wallet.model.wallet.Wallet"/>
+    <typeAlias alias="WalletLocation" type="com.connectto.wallet.model.wallet.WalletLocation"/>
+    <!--new transactions-->
+    <typeAlias alias="TransactionNotifier" type="com.connectto.wallet.model.wallet.TransactionNotifier"/>
+    <typeAlias alias="Transaction" type="com.connectto.wallet.model.wallet.Transaction"/>
+    <typeAlias alias="TransactionProcess" type="com.connectto.wallet.model.wallet.TransactionProcess"/>
+    <typeAlias alias="TransactionTax" type="com.connectto.wallet.model.wallet.TransactionTax"/>
+
+    <typeAlias alias="WalletExchange" type="com.connectto.wallet.model.wallet.WalletExchange"/>
+    <typeAlias alias="WalletExchangePending" type="com.connectto.wallet.model.wallet.WalletExchangePending"/>
+
+
+    <!--
+    ####################################################################################################################
+    Type Handlers
+    ####################################################################################################################
+    -->
+    <!--
+    PROJECT
+    -->
+    <!--
+        General
+    -->
+
+    <typeHandler javaType="com.connectto.general.model.lcp.Language"
+                 callback="com.connectto.general.dataaccess.extension.LanguageHandler"/>
+    <typeHandler javaType="com.connectto.general.model.lcp.Status"
+                 callback="com.connectto.general.dataaccess.extension.StatusHandler"/>
+    <typeHandler javaType="com.connectto.general.model.lcp.CoreRole"
+                 callback="com.connectto.general.dataaccess.extension.CoreRoleHandler"/>
+    <typeHandler javaType="com.connectto.general.model.lcp.UserProfile"
+                 callback="com.connectto.general.dataaccess.extension.UserProfileHandler"/>
+
+    <!--
+    Settings
+    -->
+    <!--
+    WALLET
+    -->
+    <typeHandler javaType="com.connectto.wallet.model.wallet.lcp.CurrencyType"
+                 callback="com.connectto.wallet.dataaccess.extension.CurrencyTypeHandler"/>
+    <typeHandler javaType="com.connectto.wallet.model.wallet.lcp.TransactionState"
+                 callback="com.connectto.wallet.dataaccess.extension.TransactionStateHandler"/>
+    <typeHandler javaType="com.connectto.wallet.model.wallet.lcp.TransactionType"
+                 callback="com.connectto.wallet.dataaccess.extension.TransactionTypeHandler"/>
+    <typeHandler javaType="com.connectto.wallet.model.wallet.lcp.TransactionTaxType"
+                 callback="com.connectto.wallet.dataaccess.extension.TransactionTaxTypeHandler"/>
+    <typeHandler javaType="com.connectto.wallet.model.wallet.lcp.TransactionPurchaseType"
+                 callback="com.connectto.wallet.dataaccess.extension.TransactionPurchaseTypeHandler"/>
+    <typeHandler javaType="com.connectto.wallet.model.wallet.lcp.WalletProfile"
+                 callback="com.connectto.wallet.dataaccess.extension.WalletProfileTypeHandler"/>
+    <typeHandler javaType="com.connectto.wallet.model.wallet.lcp.DisputeState"
+                 callback="com.connectto.wallet.dataaccess.extension.DisputeStateHandler"/>
+    
+    <typeHandler javaType="com.connectto.wallet.model.general.lcp.LogAction"
+                 callback="com.connectto.wallet.dataaccess.extension.LogActionTypeHandler"/>
+    <typeHandler javaType="com.connectto.wallet.model.general.lcp.LogLevel"
+                 callback="com.connectto.wallet.dataaccess.extension.LogLevelTypeHandler"/>
+    
+    <!--
+   ####################################################################################################################
+   Sql Maps
+   ####################################################################################################################
+   -->
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/general/WalletFileData.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/general/WalletLogger.Map.xml"/>
+
+
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/Exchange.Map.xml"/>
+
+    <!--<sqlMap resource="com/connectto/wallet/dataaccess/mapper/TransactionExchange.Map.xml"/>-->
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/TransactionData.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/TransactionDispute.Map.xml"/>
+    <!--new Transaction Mapper-->
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/Transaction.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/TransactionProcess.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/TransactionTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/WalletExchange.Map.xml"/>
+
+    <sqlMap resource="com/connectto/general/dataaccess/mapper/User.Map.xml"/>
+    <sqlMap resource="com/connectto/general/dataaccess/mapper/Tsm.Map.xml"/>
+    <sqlMap resource="com/connectto/general/dataaccess/mapper/CoreSystemAdmin.Map.xml"/>
+    <sqlMap resource="com/connectto/general/dataaccess/mapper/Partition.Map.xml"/>
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/wallet/TransferSetting.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/wallet/CreditCardTransfer.Map.xml"/>
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/wallet/CreditCard.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/wallet/ExchangeRate.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/wallet/ExchangeSource.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/wallet/Wallet.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/wallet/WalletLocation.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/wallet/WalletSetup.Map.xml"/>
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/purchase/PurchaseTicket.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/purchase/TransactionPurchase.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/purchase/TransactionPurchaseExchange.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/purchase/TransactionPurchaseExchangeTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/purchase/TransactionPurchaseProcess.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/purchase/TransactionPurchaseProcessTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/purchase/TransactionPurchaseTax.Map.xml"/>
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/transfer/TransferTransaction.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/transfer/TransferTicket.Map.xml"/>
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/MerchantDeposit.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/MerchantDepositTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/TransactionDeposit.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/TransactionDepositExchange.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/TransactionDepositExchangeTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/TransactionDepositProcess.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/TransactionDepositProcessTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/TransactionDepositTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/deposit/WalletSetupDepositTax.Map.xml"/>
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/MerchantWithdraw.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/MerchantWithdrawTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/TransactionWithdraw.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/TransactionWithdrawExchange.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/TransactionWithdrawExchangeTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/TransactionWithdrawProcess.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/TransactionWithdrawProcessTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/TransactionWithdrawTax.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/withdraw/WalletSetupWithdrawTax.Map.xml"/>
+
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/transfer/MerchantTransferTicket.Map.xml"/>
+    <sqlMap resource="com/connectto/wallet/dataaccess/mapper/transaction/merchant/transfer/MerchantTransferTransaction.Map.xml"/>
+
+</sqlMapConfig>

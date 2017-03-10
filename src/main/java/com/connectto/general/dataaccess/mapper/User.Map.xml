@@ -1,0 +1,277 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsUser">
+
+    <cacheModel id="cmUser" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmUser" class="User">
+
+        <result property="id" column="id" nullValue="0"/>
+
+        <result property="partitionId" column="partition_id"  />
+        <result property="partition" column="partition_id" select="nsPartitionSetup.getPartitionById"/>
+        <result property="currentAccount" column="session_id" select="nsUser.getAccountBySessionId"/>
+
+        <result property="tsmProfile" column="profile_tsm"/>
+        <result property="name" column="name"/>
+        <result property="surname" column="surname"/>
+        <result property="photo" column="photo"/>
+
+        <result property="phoneCode" column="phone_code"/>
+        <result property="phone" column="phone"/>
+
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="language" column="lang_id"/>
+    </resultMap>
+    <!--
+    private Long id;
+    private int partitionId;
+
+    private String name;
+    private String surname;
+    private String photo;
+
+    -->
+    <resultMap id="rmUserDto" class="UserDto">
+
+        <result property="id" column="id" nullValue="0"/>
+        <result property="partitionId" column="partition_id"  />
+
+        <result property="name" column="name"/>
+        <result property="surname" column="surname"/>
+    </resultMap>
+
+    <resultMap id="rmAccount" class="Account">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="lastUrl" column="last_url"/>
+        <result property="savePassword" column="save_password"/>
+        <result property="name" column="name"/>
+        <result property="imei" column="imei"/>
+        <result property="imsi" column="imsi"/>
+        <result property="userAgent" column="r_user_agent"/>
+        <result property="requestAccept" column="r_accept"/>
+        <result property="loginDate" column="login_date"/>
+        <result property="logoutDate" column="logout_date"/>
+        <result property="loginKey" column="login_key"/>
+        <result property="oldLoginKey" column="old_login_key"/>
+        <result property="sessionId" column="session_id"/>
+        <result property="oldSessionId" column="old_session_id"/>
+    </resultMap>
+
+    <select id="getAccountBySessionId" cacheModel="cmUser" resultMap="rmAccount" parameterClass="string">
+        SELECT a.* from `account` a where session_id like #sessionId#
+      </select>
+
+    <select id="getUserByAccountSessionId" cacheModel="cmUser" resultMap="rmUser" parameterClass="string">
+        select if(u.default_photo_id = 1, 1, ud.file_name) photo, u.*,
+        sg.lang_id lang_id, #sessionId# session_id from `account` a, user_account ua, s_general_setting sg, `user` u
+        left join u_data ud on ud.id = u.photo_data_id
+        where  u.id = ua.user_id and ua.account_id = a.id and sg.owner_id = u.id and
+        a.session_id like #sessionId#
+    </select>
+
+    <select id="getUserDtoByWalletId" cacheModel="cmUser" resultMap="rmUserDto" parameterClass="long">
+        SELECT u.id id, u.partition_id partition_id, u.name name, u.surname surname
+        from  w_wallet w,`user` u
+        WHERE w.user_id = u.id and w.id  = #id#
+    </select>
+
+    <select id="getUserIdesByUNameOrSurname" cacheModel="cmUser" resultClass="long" parameterClass="map">
+         select id from `user` where id != #userId# and
+            <isNotNull property="searchLike"> 1
+               and (LOWER(`name`) LIKE '%$searchLike$%' or LOWER(`surname`)  LIKE '%$searchLike$%')
+            </isNotNull>
+            <isNotNull property="searchName">
+                and (LOWER(`name`)     LIKE '%$searchName$%'
+            </isNotNull>
+            <isNotNull property="searchSurname">
+                and LOWER(`surname`)  LIKE '%$searchSurname$%')
+            </isNotNull>
+    </select>
+
+    <select id="getByParams" cacheModel="cmUser" resultMap="rmUserDto" parameterClass="map">
+        SELECT u.* from `user` u
+        <dynamic prepend="WHERE"> 1
+            <isNotNull property="exceptUser">
+                and u.id NOT IN ( #exceptUser# )
+            </isNotNull>
+            <isNotNull property="exceptUserId">
+                and u.id NOT IN ( #exceptUserId# )
+            </isNotNull>
+
+            <isNotNull property="exceptUserIdes">
+                and u.id not IN
+                <iterate property="exceptUserIdes" open="(" close=")" conjunction=",">
+                    #exceptUserIdes[]#
+                </iterate>
+            </isNotNull>
+            <isNotNull property="userIdes">
+                and u.id  IN
+                <iterate property="userIdes" open="(" close=")" conjunction=",">
+                    #userIdes[]#
+                </iterate>
+            </isNotNull>
+            <isNotNull property="userId">
+                and u.id =#userId#
+            </isNotNull>
+
+
+            <isNotNull property="exceptUsers">
+                and u.id not IN
+                <iterate property="exceptUsers" open="(" close=")" conjunction=",">
+                    #exceptUsers[]#
+                </iterate>
+            </isNotNull>
+
+            <isNotNull property="name">
+                and (LOWER(u.`name`) LIKE '%$name$%' or
+                LOWER(u.`email`) LIKE '%$name$%' or
+                LOWER(u.`phone`) LIKE '%$name$%')
+            </isNotNull>
+
+            <isNotNull property="searchLike">
+                and (LOWER(u.`name`) LIKE '%$searchLike$%' or
+                LOWER(u.`surname`) LIKE '%$searchLike$%' or
+                LOWER(u.`email`) LIKE '%$searchLike$%' or
+                LOWER(u.`phone`) LIKE '%$searchLike$%')
+            </isNotNull>
+
+            <isNotNull property="searchLikeName">
+                and (
+                LOWER(u.`name`)     LIKE '%$searchLikeName$%' or
+                LOWER(u.`surname`)  LIKE '%$searchLikeName$%' or
+                LOWER(u.`name`)     LIKE '%$searchLikeSurname$%' or
+                LOWER(u.`surname`)  LIKE '%$searchLikeSurname$%'
+                )
+            </isNotNull>
+
+            <isNotNull property="partitionId">
+                and u.partition_id = #partitionId#
+            </isNotNull>
+
+            <isNotNull property="orderType_asc">
+                order by u.`name`
+            </isNotNull>
+            <isNotNull property="orderType_desc">
+                order by u.`name` desc
+            </isNotNull>
+
+            <isNotNull property="limit">
+                LIMIT #limit# OFFSET #offset#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="countDifference">
+            order by u.id desc limit #countDifference#
+        </isNotNull>
+
+    </select>
+
+    <select id="getUserByParams" cacheModel="cmUser" resultMap="rmUser" parameterClass="map">
+        SELECT u.*, #sessionId# session_id, if(u.default_photo_id = 1, 1, ud.file_name) photo,sg.lang_id lang_id from `user` u
+        left join u_data ud on ud.id = u.photo_data_id
+        left join s_general_setting sg on sg.owner_id = u.id
+        <dynamic prepend="WHERE"> 1
+            <isNotNull property="exceptUser">
+                and u.id NOT IN ( #exceptUser# )
+            </isNotNull>
+            <isNotNull property="exceptUserId">
+                and u.id NOT IN ( #exceptUserId# )
+            </isNotNull>
+
+            <isNotNull property="exceptUserIdes">
+                and u.id not IN
+                <iterate property="exceptUserIdes" open="(" close=")" conjunction=",">
+                    #exceptUserIdes[]#
+                </iterate>
+            </isNotNull>
+            <isNotNull property="userIdes">
+                and u.id  IN
+                <iterate property="userIdes" open="(" close=")" conjunction=",">
+                    #userIdes[]#
+                </iterate>
+            </isNotNull>
+            <isNotNull property="userId">
+                and u.id =#userId#
+            </isNotNull>
+
+
+            <isNotNull property="exceptUsers">
+                and u.id not IN
+                <iterate property="exceptUsers" open="(" close=")" conjunction=",">
+                    #exceptUsers[]#
+                </iterate>
+            </isNotNull>
+
+            <isNotNull property="name">
+                and (LOWER(u.`name`) LIKE '%$name$%' or
+                LOWER(u.`email`) LIKE '%$name$%' or
+                LOWER(u.`phone`) LIKE '%$name$%')
+            </isNotNull>
+
+            <isNotNull property="searchLike">
+                and (LOWER(u.`name`) LIKE '%$searchLike$%' or
+                LOWER(u.`surname`) LIKE '%$searchLike$%' or
+                LOWER(u.`email`) LIKE '%$searchLike$%' or
+                LOWER(u.`phone`) LIKE '%$searchLike$%')
+            </isNotNull>
+
+            <isNotNull property="searchLikeName">
+                and (
+                LOWER(u.`name`)     LIKE '%$searchLikeName$%' or
+                LOWER(u.`surname`)  LIKE '%$searchLikeName$%' or
+                LOWER(u.`name`)     LIKE '%$searchLikeSurname$%' or
+                LOWER(u.`surname`)  LIKE '%$searchLikeSurname$%'
+                )
+            </isNotNull>
+
+            <isNotNull property="partitionId">
+                and u.partition_id = #partitionId#
+            </isNotNull>
+
+            <isNotNull property="orderType_asc">
+                order by u.`name`
+            </isNotNull>
+            <isNotNull property="orderType_desc">
+                order by u.`name` desc
+            </isNotNull>
+
+            <isNotNull property="limit">
+                LIMIT #limit# OFFSET #offset#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="countDifference">
+            order by u.id desc limit #countDifference#
+        </isNotNull>
+
+    </select>
+
+    <update id="updateLanguage" parameterClass="User">
+        UPDATE s_general_setting s
+        SET s.`lang_id` = #language#
+        WHERE s.owner_id = #id#
+    </update>
+
+    <update id="logoutAccount" parameterClass="Account">
+        UPDATE `account` SET
+
+            `logout_date` = #logoutDate#
+            ,`save_password` = #savePassword#
+
+            ,`login_key` = #loginKey#
+            ,`old_login_key` = #oldLoginKey#
+
+            ,`session_id` = #sessionId#
+            ,`old_session_id` = #oldSessionId#
+
+        where id = #id#
+    </update>
+
+
+
+</sqlMap>

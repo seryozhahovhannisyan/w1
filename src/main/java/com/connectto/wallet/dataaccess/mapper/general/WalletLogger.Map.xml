@@ -1,0 +1,113 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsWalletLogger">
+
+    <cacheModel id="cmWalletLogger" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmWalletLogger" class="WalletLogger">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="userId" column="user_id"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="partitionId" column="partition_id"/>
+        <result property="logLevel" column="level"/>
+        <result property="className" column="class_name"/>
+        <result property="methodName" column="method_name"/>
+        <result property="logAction" column="log_action"/>
+        <result property="message" column="message"/>
+        <result property="date" column="date"/>
+    </resultMap>
+
+    <!--
+    private Long id;
+    private Long userId;
+    private LogLevel logLevel;
+    private String className;
+    private String methodName;
+    private LogAction logAction;
+    private String message;
+    private Date date;
+    -->
+    <insert id="add" parameterClass="WalletLogger">
+        INSERT INTO `l_wallet_logger` (
+        `user_id`,
+        `wallet_id`,
+        `partition_id`,
+        `level`,
+        `class_name`,
+        `method_name`,
+        `log_action`,
+        `message`,
+        `date`
+        ) VALUES (
+        #userId#,
+        #walletId#,
+        #partitionId#,
+        #logLevel#,
+        #className#,
+        #methodName#,
+        #logAction#,
+        #message#,
+        #date#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+    <insert id="addAll" parameterClass="map">
+        INSERT INTO `l_wallet_logger` (
+        `user_id`,
+        `partition_id`,
+        `wallet_id`,
+        `level`,
+        `class_name`,
+        `method_name`,
+        `log_action`,
+        `message`,
+        `date`
+        ) VALUES
+        <iterate property="loggers" open="(" close=")" conjunction=",">
+            #loggers[].userId#,
+            #loggers[].partitionId#,
+            #loggers[].walletId#,
+            #loggers[].logLevel#,
+            #loggers[].className#,
+            #loggers[].methodName#,
+            #loggers[].logAction#,
+            #loggers[].message#,
+            #loggers[].date#
+        </iterate>
+
+
+    </insert>
+
+    <select id="getByParams" cacheModel="cmWalletLogger" resultMap="rmWalletLogger">
+        select * from l_wallet_logger
+        <dynamic prepend="WHERE">1
+            <isNotNull property="id">
+                AND `id` = #id#
+            </isNotNull>
+            <isNotNull property="walletId">
+                AND `wallet_id` = #walletId#
+            </isNotNull>
+            <isNotNull property="partitionId">
+                AND `partition_id` = #partitionId#
+            </isNotNull>
+            <isNotNull property="logLevel">
+                AND `level` = #logLevel#
+            </isNotNull>
+            <isNotNull property="logAction">
+                AND `log_action` = #logAction#
+            </isNotNull>
+            <isNotNull property="date">
+                AND `date` &gt; #date#
+            </isNotNull>
+        </dynamic>
+    </select>
+
+</sqlMap>

@@ -1,0 +1,185 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsWalletSetup">
+
+    <cacheModel id="cmWalletSetup" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+
+    <resultMap id="rmWalletSetup" class="WalletSetup">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="partitionId" column="partition_id"/>
+        <result property="currencyType" column="currency_type"/>
+        <result property="balance" column="balance"/>
+        <result property="frozenAmount" column="frozen_amount"/>
+        <result property="receivingAmount" column="receiving_amount"/>
+        <result property="transferTaxAmount" column="transfer_tax_amount"/>
+
+        <result property="transferFeePercent" column="transfer_fee_percent"/>
+        <result property="transferMinFee" column="transfer_min_fee"/>
+        <result property="transferMaxFee" column="transfer_max_fee"/>
+        <result property="receiverFeePercent" column="receiver_fee_percent"/>
+        <result property="receiverMinFee" column="receiver_min_fee"/>
+        <result property="receiverMaxFee" column="receiver_max_fee"/>
+
+        <result property="merchantDepositFeePercent" column="m_deposit_fee_percent"/>
+        <result property="merchantDepositMinFee" column="m_deposit_min_fee"/>
+        <result property="merchantDepositMaxFee" column="m_deposit_max_fee"/>
+        <result property="merchantWithdrawFeePercent" column="m_withdraw_fee_percent"/>
+        <result property="merchantWithdrawMinFee" column="m_withdraw_min_fee"/>
+        <result property="merchantWithdrawMaxFee" column="m_withdraw_max_fee"/>
+
+        <result property="exchangeTransferFeePercent" column="exchange_transfer_fee_percent"/>
+        <result property="exchangeTransferMinFee" column="exchange_transfer_min_fee"/>
+        <result property="exchangeTransferMaxFee" column="exchange_transfer_max_fee"/>
+        <result property="exchangeReceiverFeePercent" column="exchange_receiver_fee_percent"/>
+        <result property="exchangeReceiverMinFee" column="exchange_receiver_min_fee"/>
+        <result property="exchangeReceiverMaxFee" column="exchange_receiver_max_fee"/>
+
+
+
+        <result property="availableRateValues" column="available_rates"/>
+        <result property="availableCardValues" column="available_cards"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="WalletSetup">
+        INSERT INTO `wallet_setup` (
+        `partition_id`,
+        `currency_type`,
+        `balance`,
+        `transfer_fee_percent`,
+        `transfer_min_fee`,
+        `transfer_max_fee`,
+        `receiver_fee_percent`,
+        `receiver_min_fee`,
+        `receiver_max_fee`,
+        `exchange_transfer_fee_percent`,
+        `exchange_transfer_min_fee`,
+        `exchange_transfer_max_fee`,
+        `exchange_receiver_fee_percent`,
+        `exchange_receiver_min_fee`,
+        `exchange_receiver_max_fee`
+        ) VALUES (
+        #partitionId#,
+        #currencyType#,
+        #balance#,
+        #transferFeePercent#,
+        #transferMinFee#,
+        #transferMaxFee#,
+        #receiverFeePercent#,
+        #receiverMinFee#,
+        #receiverMaxFee#,
+        #exchangeTransferFeePercent#,
+        #exchangeTransferMinFee#,
+        #exchangeTransferMaxFee#,
+        #exchangeReceiverFeePercent#,
+        #exchangeReceiverMinFee#,
+        #exchangeReceiverMaxFee#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmWalletSetup" resultMap="rmWalletSetup" parameterClass="long">
+        SELECT * from `wallet_setup` WHERE `id` = #id#
+    </select>
+
+    <select id="getByPartitionId" cacheModel="cmWalletSetup" resultMap="rmWalletSetup" parameterClass="int">
+        SELECT * from `wallet_setup` WHERE `partition_id` = #id#
+    </select>
+
+    <select id="getAll" cacheModel="cmWalletSetup" resultMap="rmWalletSetup" >
+        SELECT * from `wallet_setup`
+    </select>
+
+    <update id="update" parameterClass="WalletSetup">
+         update wallet_setup set
+                transfer_fee_percent = #transferFeePercent#,
+                transfer_min_fee = #transferMinFee#,
+                transfer_max_fee = #transferMaxFee#,
+                receiver_fee_percent = #receiverFeePercent#,
+                receiver_min_fee = #receiverMinFee#,
+                receiver_max_fee = #receiverMaxFee#,
+                exchange_transfer_fee_percent = #exchangeTransferFeePercent#,
+                exchange_transfer_min_fee = #exchangeTransferMinFee#,
+                exchange_transfer_max_fee = #exchangeTransferMaxFee#,
+                exchange_receiver_fee_percent = #exchangeReceiverFeePercent#,
+                exchange_receiver_min_fee = #exchangeReceiverMinFee#,
+                exchange_receiver_max_fee = #exchangeReceiverMaxFee#
+                <isNotNull property="frozenAmount">
+                    ,`frozen_amount` = #frozenAmount#
+                </isNotNull>
+                <isNotNull property="receivingAmount">
+                    ,`receiving_amount` = #receivingAmount#
+                </isNotNull>
+                <isNotNull property="transferTaxAmount">
+                    ,`transfer_tax_amount` = #transferTaxAmount#
+                </isNotNull>
+
+         where id = #id#
+    </update>
+
+    <update id="updateNotNull" parameterClass="WalletSetup">
+        update wallet_setup set `id` = #id#
+        <isNotNull property="frozenAmount">
+            ,`frozen_amount` = #frozenAmount#
+        </isNotNull>
+        <isNotNull property="receivingAmount">
+            ,`receiving_amount` = #receivingAmount#
+        </isNotNull>
+        <isNotNull property="transferTaxAmount">
+            ,`transfer_tax_amount` = #transferTaxAmount#
+        </isNotNull>
+        <isNotNull property="balance">
+            ,`balance` = #balance#
+        </isNotNull>
+
+        where id = #id#
+    </update>
+
+    <update id="updateAvailableRates" parameterClass="WalletSetup">
+         update wallet_setup set available_rates =  #availableRateValues# where id = #id#
+    </update>
+
+    <update id="updateIncreaseBalance" parameterClass="WalletSetup">
+         update wallet_setup set balance = balance + #balance# where id = #id#
+    </update>
+
+    <update id="updateDecreaseBalance" parameterClass="WalletSetup">
+         update wallet_setup set balance = balance - #balance# where id = #id#
+    </update>
+
+    <update id="updateIncreaseFrozenAmount" parameterClass="WalletSetup">
+         update wallet_setup set frozen_amount = frozen_amount + #frozenAmount# where id = #id#
+    </update>
+
+    <update id="updateDecreaseFrozenAmount" parameterClass="WalletSetup">
+         update wallet_setup set frozen_amount = frozen_amount - #frozenAmount# where id = #id#
+    </update>
+
+
+    <update id="updateIncreaseReceivingAmount" parameterClass="WalletSetup">
+         update wallet_setup set receiving_amount = receiving_amount + #receivingAmount# where id = #id#
+    </update>
+
+    <update id="updateDecreaseReceivingAmount" parameterClass="WalletSetup">
+         update wallet_setup set receiving_amount = receiving_amount - #receivingAmount# where id = #id#
+    </update>
+<!---->
+    <update id="updateIncreaseTransferTaxAmount" parameterClass="WalletSetup">
+         update wallet_setup set transfer_tax_amount = transfer_tax_amount + #transferTaxAmount# where id = #id#
+    </update>
+
+    <update id="updateDecreaseTransferTaxAmount" parameterClass="WalletSetup">
+         update wallet_setup set transfer_tax_amount = transfer_tax_amount - #transferTaxAmount# where id = #id#
+    </update>
+
+
+
+</sqlMap>

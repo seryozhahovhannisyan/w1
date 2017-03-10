@@ -1,0 +1,21 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransferSetting">
+
+    <cacheModel id="cmTransferSetting" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransferSetting" class="TransferSetting">
+        <result property="exactId" column="exact_id"/>
+        <result property="transferPwd" column="password"/>
+    </resultMap>
+
+    <select id="getByPartitionId" cacheModel="cmTransferSetting" resultMap="rmTransferSetting" parameterClass="int">
+         SELECT * FROM w_transfer_settings WHERE partition_id = #partitionId#
+    </select>
+
+
+</sqlMap>

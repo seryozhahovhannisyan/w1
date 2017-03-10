@@ -1,0 +1,74 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionPurchaseProcess">
+
+    <cacheModel id="cmTransactionPurchaseProcess" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionPurchaseProcessSample" class="TransactionPurchaseProcess">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="state" column="state"/>
+        <result property="actionDate" column="action_date"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="purchaseAmount" column="purchase_amount"/>
+        <result property="purchaseAmountCurrencyType" column="purchase_amount_ct"/>
+        <result property="walletPurchasePrice" column="wallet_purchase_price"/>
+        <result property="walletTotalPrice" column="wallet_total_price"/>
+        <result property="walletTotalPriceCurrencyType" column="wallet_total_price_ct"/>
+        <result property="setupPurchasePrice" column="setup_purchase_price"/>
+        <result property="setupTotalPrice" column="setup_total_price"/>
+        <result property="setupTotalPriceCurrencyType" column="setup_total_price_ct"/>
+        <result property="processTaxId" column="process_tax_id"/>
+        <result property="exchangeId" column="exchange_id"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="TransactionPurchaseProcess">
+        INSERT INTO `w_t_purchase_process` (
+            `state`,
+            `action_date`,
+            `wallet_id`,
+            `setup_id`,
+            `purchase_amount`,
+            `purchase_amount_ct`,
+            `wallet_purchase_price`,
+            `wallet_total_price`,
+            `wallet_total_price_ct`,
+            `setup_purchase_price`,
+            `setup_total_price`,
+            `setup_total_price_ct`,
+            `process_tax_id`,
+            `exchange_id`
+        ) VALUES (
+            #state#,
+            #actionDate#,
+            #walletId#,
+            #setupId#,
+            #purchaseAmount#,
+            #purchaseAmountCurrencyType#,
+            #walletPurchasePrice#,
+            #walletTotalPrice#,
+            #walletTotalPriceCurrencyType#,
+            #setupPurchasePrice#,
+            #setupTotalPrice#,
+            #setupTotalPriceCurrencyType#,
+            #processTaxId#,
+            #exchangeId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionPurchaseProcess" resultMap="rmTransactionPurchaseProcessSample" parameterClass="long">
+        SELECT * from `w_t_purchase_process` WHERE `id` = #id#
+    </select>
+
+
+
+</sqlMap>

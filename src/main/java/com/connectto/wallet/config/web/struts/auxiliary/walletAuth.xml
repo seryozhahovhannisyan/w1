@@ -1,0 +1,27 @@
+<!--Authentication-->
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <package name="wallet_auth_package" extends="json-default" abstract="true">
+
+        <interceptors>
+
+            <interceptor name="wallet_authentication"  class="com.connectto.wallet.web.action.general.interceptor.WalletAuthInterceptor"/>
+            <interceptor name="language-interceptor" class="com.connectto.general.web.interceptor.LanguageInterceptor"/>
+
+            <interceptor-stack name="wallet_auth_stack">
+                <interceptor-ref name="wallet_authentication"/>
+                <interceptor-ref name="language-interceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+
+
+        </interceptors>
+
+        <default-interceptor-ref name="wallet_auth_stack"/>
+
+    </package>
+</struts>

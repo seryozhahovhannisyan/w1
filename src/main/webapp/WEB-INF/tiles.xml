@@ -1,0 +1,140 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+
+<tiles-definitions>
+
+
+    <!--
+    ####################################################################################################################
+               General
+    ####################################################################################################################
+    -->
+
+    <definition name="m-error" extends="wallet-mobile">
+        <put-attribute name="content" value="/WEB-INF/pages/general/error.jsp"/>
+    </definition>
+
+    <definition name="error" template="/WEB-INF/pages/general/error.jsp">
+    </definition>
+    <definition name="error404" template="/WEB-INF/pages/general/error404.jsp">
+    </definition>
+
+    <!--
+    Wallet
+    -->
+
+    <!--
+    ####################################################################################################################
+    http://rate.am/informer/rate/iframe/
+               General
+    ####################################################################################################################
+    -->
+
+    <definition name="wallet" template="/WEB-INF/pages/wallet/home.jsp">
+        <put-attribute name="person_panel" value="/WEB-INF/pages/wallet/tiles/person_panel.jsp"/>
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/tiles/action_panel.jsp"/>
+        <put-attribute name="footer_panel" value="wallet_footer"/>
+    </definition>
+
+    <definition name="wallet-mobile" template="/WEB-INF/pages/wallet-mobile/home.jsp">
+        <put-attribute name="person_panel" value="/WEB-INF/pages/wallet-mobile/tiles/person_panel.jsp"/>
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/tiles/action_panel.jsp"/>
+        <put-attribute name="footer_panel" value="wallet_footer_mobile"/>
+    </definition>
+
+
+    <definition name="wallet_entry" extends="wallet">
+    </definition>
+
+    <definition name="m-wallet_entry" extends="wallet-mobile">
+    </definition>
+
+    <definition name="wallet_footer" template="/WEB-INF/pages/wallet/tiles/footer.jsp">
+       <put-attribute name="language" value="/WEB-INF/pages/wallet/tiles/language.jsp"/>
+    </definition>
+
+    <definition name="wallet_footer_mobile" template="/WEB-INF/pages/wallet-mobile/tiles/footer.jsp">
+       <put-attribute name="language" value="/WEB-INF/pages/wallet-mobile/tiles/language.jsp"/>
+    </definition>
+
+
+    <!--
+    ####################################################################################################################
+    ####################################################################################################################
+    Menu Panels
+    ####################################################################################################################
+    ####################################################################################################################
+    -->
+
+
+
+    <definition name="settings" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/menu_action/settings.jsp"/>
+    </definition>
+
+    <definition name="m-settings" extends="wallet-mobile">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/menu_action/settings.jsp"/>
+    </definition>
+
+    <definition name="send-money" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/menu_action/send-money.jsp"/>
+    </definition>
+
+    <definition name="m-send-money" extends="wallet-mobile">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/menu_action/send-money.jsp"/>
+    </definition>
+
+    <definition name="request-transaction" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/menu_action/request-transaction.jsp"/>
+    </definition>
+
+    <definition name="m-request-transaction" extends="wallet-mobile">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/menu_action/request-transaction.jsp"/>
+    </definition>
+
+    <definition name="pending-transactions" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/menu_action/pending-transactions.jsp"/>
+    </definition>
+
+    <definition name="transaction-merchant" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/menu_action/transaction-merchant.jsp"/>
+    </definition>
+
+    <definition name="m-pending-transactions" extends="wallet-mobile">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/menu_action/pending-transactions.jsp"/>
+    </definition>
+
+    <definition name="completed-transaction" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/menu_action/completed-transactions.jsp"/>
+    </definition>
+    <definition name="m-completed-transaction" extends="wallet-mobile">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/menu_action/completed-transactions.jsp"/>
+    </definition>
+
+    <!--Card-->
+    <definition name="card-view" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/menu_action/card-view.jsp"/>
+    </definition>
+
+    <definition name="m-card-view" extends="wallet-mobile">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/menu_action/card-view.jsp"/>
+    </definition>
+
+    <definition name="dispute" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/menu_action/dispute.jsp"/>
+    </definition>
+    <definition name="m-dispute" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/menu_action/dispute.jsp"/>
+    </definition>
+
+    <definition name="show-transaction" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet/transaction/show-transaction.jsp"/>
+    </definition>
+    <definition name="m-show-transaction" extends="wallet">
+        <put-attribute name="action_panel" value="/WEB-INF/pages/wallet-mobile/transaction/show-transaction.jsp"/>
+    </definition>
+
+
+</tiles-definitions>

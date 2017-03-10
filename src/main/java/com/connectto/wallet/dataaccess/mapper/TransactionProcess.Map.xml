@@ -1,0 +1,62 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionProcess">
+
+    <cacheModel id="cmTransactionProcess" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <!-- 
+    -->
+    <resultMap id="rmTransactionProcess" class="TransactionProcess">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="actionDate" column="action_date"/>
+
+        <result property="wallet" column="wallet_id"  select="nsWallet.getById"/>
+        <result property="walletSetup" column="wallet_setup_id" select="nsWalletSetup.getById"/>
+
+        <result property="frozenAmount" column="frozen_amount"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="totalAmountPrice" column="total_amount_price"/>
+
+        <result property="tax" column="tax_id" select="nsTransactionTax.getById"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="TransactionProcess">
+        INSERT INTO `w_transaction_process` (
+        `action_date`,
+
+        `wallet_id`,
+        `wallet_setup_id`,
+
+        `frozen_amount`,
+        `total_amount`,
+        `total_amount_price`,
+        `total_amount_exchange_id`,
+        `tax_id`
+        ) VALUE (
+        #actionDate#,
+
+        #walletId#,
+        #walletSetupId#,
+
+        #frozenAmount#,
+        #totalAmount#,
+        #totalAmountPrice#,
+        #totalAmountExchangeId#,
+        #taxId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionProcess" resultMap="rmTransactionProcess" parameterClass="long">
+        SELECT ta.* from `w_transaction_process` ta WHERE ta.`id` = #id#
+    </select>
+
+</sqlMap>

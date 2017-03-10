@@ -1,0 +1,32 @@
+CREATE TABLE `w_card_transfer_result` (
+                   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                 
+                   `transaction_error` int(1) unsigned NOT NULL,
+                   `transaction_approved` int(1) unsigned NOT NULL,
+                   `transfer_response_msg` varchar(255),   
+                                                         
+                     `EXact_resp_code` varchar(255),
+                     `EXact_message` varchar(255),
+                     `bank_resp_code` varchar(255),
+                     `bank_message` varchar(255),
+                     `bank_resp_code2` varchar(255),
+                     `sequence_no` varchar(255),
+                     `AVS` varchar(255),  
+                     `CVV2` varchar(255),  
+                     `retrieval_ref_no` varchar(255),
+                     `CAVV_response` varchar(255),
+                     `amount_requested` varchar(255),
+                     `merchant_name` varchar(255),
+                     `merchant_address` varchar(255),
+                     `merchant_city` varchar(255),
+                     `merchant_province` varchar(255),
+                     `merchant_country` varchar(255),
+                     `merchant_postal` varchar(255),
+                     `merchantURL` varchar(255),  
+                     `current_balance` varchar(255),
+                     `previous_balance` varchar(255),
+                     `CTR` varchar(255),
+                                                         
+                   PRIMARY KEY (`id`)                                                             
+                 ) ENGINE=InnoD
+                  
+            

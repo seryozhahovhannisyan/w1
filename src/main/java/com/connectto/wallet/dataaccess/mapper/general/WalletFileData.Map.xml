@@ -1,0 +1,47 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsWalletFileData">
+
+    <cacheModel id="cmWalletFileData" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+
+    <resultMap id="rmWalletFileData" class="FileData">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="fileName" column="file_name"/>
+        <result property="contentType" column="content_type"/>
+        <result property="size" column="size"/>
+        <result property="creationDate" column="creation_date"/>
+    </resultMap>
+
+    <insert id="addFileData" parameterClass="FileData">
+        INSERT INTO `w_data` (
+        `file_name`,
+        `content_type`,
+        `size`,
+        `creation_date`
+        ) VALUES (
+        #fileName#,
+        #contentType#,
+        #size#,
+        #creationDate#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmWalletFileData" resultMap="rmWalletFileData" parameterClass="long">
+        SELECT * from `w_data` WHERE `id` = #id#
+    </select>
+
+    <select id="getByServiceId" cacheModel="cmWalletFileData" resultMap="rmWalletFileData" parameterClass="long">
+        SELECT * from `w_data` WHERE `service_id` = #id#
+    </select>
+
+</sqlMap>

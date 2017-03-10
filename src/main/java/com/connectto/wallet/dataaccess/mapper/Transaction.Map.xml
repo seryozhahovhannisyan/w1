@@ -1,0 +1,344 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransaction">
+
+    <cacheModel id="cmTransaction" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransaction" class="Transaction">
+        <result property="id" column="id" nullValue="0"/>
+
+        <result property="state" column="state"/>
+        <result property="actionState" column="action_state"/>
+
+        <result property="openedAt" column="opened_at"/>
+        <result property="closedAt" column="closed_at"/>
+
+        <result property="productAmount" column="product_amount"/>
+        <result property="productCurrencyType" column="product_currency_type"/>
+
+        <result property="setupAmount" column="setup_amount"/>
+        <result property="setupAmountCurrencyType" column="setup_amount_currency_type"/>
+
+        <result property="fromTotalPrice" column="from_total_price"/>
+        <result property="fromTotalPriceCurrencyType" column="from_total_price_currency_type"/>
+
+        <result property="toTotalPrice" column="to_total_price"/>
+        <result property="toTotalPriceCurrencyType" column="to_total_price_currency_type"/>
+
+        <result property="fromTransactionProcess" column="from_process_id" select="nsTransactionProcess.getById"/>
+        <result property="toTransactionProcess" column="to_process_id" select="nsTransactionProcess.getById"/>
+
+        <result property="fromTransactionProcessId" column="from_process_id"  />
+        <result property="toTransactionProcessId" column="to_process_id"  />
+
+        <result property="fromWalletId" column="from_wallet_id"/>
+        <result property="fromWalletSetupId" column="from_wallet_setup_id"/>
+
+        <result property="toWalletId" column="to_wallet_id"/>
+        <result property="toWalletSetupId" column="to_wallet_setup_id"/>
+
+        <result property="transactionType" column="transaction_type"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="message" column="message"/>
+        <result property="transactionDatas" column="id"  select="nsTransactionData.getByTransactionId"/>
+
+        <result property="sessionId" column="session_id"/>
+
+    </resultMap>
+
+    <resultMap id="rmTransactionSample" class="Transaction">
+        <result property="id" column="id" nullValue="0"/>
+
+        <result property="fromTotalPrice" column="from_total_price"/>
+        <result property="fromTotalPriceCurrencyType" column="from_total_price_currency_type"/>
+
+        <result property="toTotalPrice" column="to_total_price"/>
+        <result property="toTotalPriceCurrencyType" column="to_total_price_currency_type"/>
+
+        <result property="fromWalletId" column="from_wallet_id"/>
+        <result property="toWalletId" column="to_wallet_id"/>
+
+    </resultMap>
+
+    <resultMap id="rmTransactionNotifier" class="TransactionNotifier">
+
+        <result property="pendingCountTotal" column="pct" nullValue="0"/>
+        <result property="pendingCountSend" column="pcs" nullValue="0"/>
+        <result property="pendingCountRequestTransaction" column="pcr" nullValue="0"/>
+
+        <result property="completedCountTotal" column="cct" nullValue="0"/>
+        <result property="completedCountSend" column="ccs" nullValue="0"/>
+        <result property="completedCountRequestTransaction" column="ccr" nullValue="0"/>
+
+    </resultMap>
+
+    <resultMap id="rmTransactionDto" class="TransactionDto">
+
+        <result property="transactionId" column="transaction_id" nullValue="0"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="openedAt" column="opened_at"/>
+        <result property="closedAt" column="closed_at"/>
+
+        <result property="userWalletId" column="user_wallet_id"/>
+        <result property="walletSetupId" column="wallet_setup_id"/>
+
+        <!--<result property="userDto" column="user_wallet_id" nullValue="0" select="nsUser.getUserDtoByWalletId"/>
+        <result property="partitionDto" column="wallet_setup_id" nullValue="0" select="nsPartitionSetup.getPartitionDtoByWalletSetupId"/>-->
+
+        <result property="isDebited" column="is_debited"/>
+        <result property="isCredited" column="is_credited"/>
+
+        <result property="allowDelay" column="allow_delay"/>
+
+        <result property="price" column="price"/>
+        <result property="priceCurrency" column="price_currency"/>
+
+        <result property="disputeState" column="dispute_state" nullValue="0"/>
+        <result property="disputeId" column="dispute_id"  />
+
+    </resultMap>
+
+    <insert id="add" parameterClass="Transaction">
+        INSERT INTO `w_transaction` (
+
+            `frozen_transaction_id`,
+
+            `state`,
+            `action_state`,
+
+            `opened_at`,
+            `closed_at`,
+
+            `product_amount`,
+            `product_currency_type`,
+
+            `setup_amount`,
+            `setup_amount_currency_type`,
+
+            `from_total_price`,
+            `from_total_price_currency_type`,
+
+            `to_total_price`,
+            `to_total_price_currency_type`,
+
+            `transaction_type`,
+            `order_code`,
+            `message`,
+            `session_id`,
+            `from_wallet_id`,
+            `from_wallet_setup_id`,
+            `to_wallet_id`,
+            `to_wallet_setup_id`,
+            `from_process_id`,
+            `to_process_id`
+        ) VALUES (
+
+            #frozenTransactionId#,
+
+            #state#,
+            #actionState#,
+
+            #openedAt#,
+            #closedAt#,
+
+            #productAmount#,
+            #productCurrencyType#,
+
+            #setupAmount#,
+            #setupAmountCurrencyType#,
+
+            #fromTotalPrice#,
+            #fromTotalPriceCurrencyType#,
+            #toTotalPrice#,
+            #toTotalPriceCurrencyType#,
+            #transactionType#,
+            #orderCode#,
+            #message#,
+            #sessionId#,
+            #fromWalletId#,
+            #fromWalletSetupId#,
+            #toWalletId#,
+            #toWalletSetupId#,
+
+            #fromTransactionProcessId#,
+            #toTransactionProcessId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransaction" resultMap="rmTransaction"
+            parameterClass="long">
+
+        SELECT t.* FROM   w_transaction t where t.id = #id#
+
+    </select>
+
+    <select id="getByOrderCode" cacheModel="cmTransaction" resultMap="rmTransaction"
+            parameterClass="string">
+
+        SELECT t.* FROM   w_transaction t where t.order_code = #orderCode#
+
+    </select>
+
+    <select id="getDtosByParams" cacheModel="cmTransaction" resultMap="rmTransactionDto"
+            parameterClass="map">
+
+        SELECT
+        t.id transaction_id,
+        t.order_code order_code,
+        t.opened_at opened_at,
+        t.closed_at closed_at,
+
+        if(t.from_wallet_id = #walletId#, t.to_wallet_id, t.from_wallet_id) user_wallet_id,
+        if(t.from_wallet_setup_id is null ,t.to_wallet_setup_id,t.from_wallet_setup_id) wallet_setup_id,
+
+        if(t.from_wallet_id = #walletId#,1,0) is_debited,
+        if(t.to_wallet_id = #walletId#,1,0) is_credited,
+        if(
+            (t.from_wallet_id = #walletId# and t.action_state = #sendMoneyId#) or
+            (t.to_wallet_id = #walletId# and t.action_state = #requestTransactionId#),
+            0,1
+        ) allow_delay,
+
+        if(t.from_wallet_id = #walletId#,t.from_total_price, t.to_total_price) price,
+        if(t.from_wallet_id = #walletId#,t.from_total_price_currency_type, t.to_total_price_currency_type) price_currency,
+
+        td.state dispute_state, td.id dispute_id
+
+        FROM   w_transaction t
+        <isNull property="disputeState"> left </isNull>
+        <isNotNull property="disputeStateNY"> left </isNotNull>
+        JOIN w_transaction_dispute td on td.transaction_id = t.id
+        <isNotNull property="disputeState"> AND td.state = #disputeState#</isNotNull>
+        <isNotNull property="userIdes">
+            JOIN (w_wallet  w) on  w.id = if(t.from_wallet_id = #walletId#, t.to_wallet_id, t.from_wallet_id) and w.user_id  in
+            <iterate property="userIdes" open="(" close=")" conjunction=",">
+                #userIdes[]#
+            </iterate>
+        </isNotNull>
+        where 1
+        <isNotNull property="tt">
+            and (t.from_wallet_id = #walletId# or t.to_wallet_id = #walletId#)
+        </isNotNull>
+        <isNotNull property="tts">
+            and t.from_wallet_id = #walletId#
+        </isNotNull>
+        <isNotNull property="ttr">
+            and t.to_wallet_id = #walletId#
+        </isNotNull>
+
+        <isNotNull property="strictStates">
+            and  t.state in
+            <iterate property="strictStates" open="(" close=")" conjunction=",">
+                #strictStates[]#
+            </iterate>
+        </isNotNull>
+
+        <isNotNull property="strictExceptStates">
+            and  t.state not in
+            <iterate property="strictExceptStates" open="(" close=")" conjunction=",">
+                #strictExceptStates[]#
+            </iterate>
+        </isNotNull>
+        /*Criteria start*/
+        <isNotNull property="rangeActionDateGreat">
+            and t.opened_at &gt; #rangeActionDateGreat#
+        </isNotNull>
+
+        <isNotNull property="rangeActionDateLess">
+            and t.opened_at &lt; #rangeActionDateLess#
+        </isNotNull>
+
+        <isNotNull property="byCurrency">
+            and if(t.from_wallet_id =  #walletId#,t.from_total_price_currency_type, t.to_total_price_currency_type) = #byCurrency#
+        </isNotNull>
+
+        <isNotNull property="rangeAmountGreat">
+            and if(t.from_wallet_id =  #walletId#,t.from_total_price, t.to_total_price) &gt; #rangeAmountGreat#
+        </isNotNull>
+
+        <isNotNull property="rangeAmountLess">
+            and if(t.from_wallet_id =  #walletId#,t.from_total_price, t.to_total_price)  &lt; #rangeAmountLess#
+        </isNotNull>
+
+        <isNotNull property="id">
+            and t.id =  #id#
+        </isNotNull>
+
+        /*Criteria end*/
+
+        <isNotNull property="orderType_desc">
+            order by t.id desc
+        </isNotNull>
+        <isNotNull property="orderType_asc">
+            order by t.id
+        </isNotNull>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <select id="getSampleTransactionsByParams" cacheModel="cmTransaction" resultMap="rmTransactionSample"
+            parameterClass="map">
+
+        SELECT t.* FROM   w_transaction t where t.state in
+            <iterate property="strictStates" open="(" close=")" conjunction=",">
+                #strictStates[]#
+            </iterate>
+            and
+        (t.from_wallet_id = #walletId# or t.to_wallet_id = #walletId#)
+
+    </select>
+
+    <select id="getTransactionNotifier" cacheModel="cmTransaction" resultMap="rmTransactionNotifier"
+            parameterClass="map">
+        Select
+        SUM(if(t.state = 15, 1, 0)) AS pct,
+        SUM(if(t.state = 15 and t.action_state = 11 , 1, 0)) AS pcs,
+        SUM(if(t.state = 15 and (t.action_state = 7 or t.action_state = 12) , 1, 0)) AS pcr,
+
+        SUM(if(t.state in(5,14,10,13), 1, 0)) AS cct,
+        SUM(if(t.state in(5,14,10,13) and t.action_state = 11 , 1, 0)) AS ccs,
+        SUM(if(t.state in(5,14,10,13) and (t.action_state = 7 or t.action_state = 12) , 1, 0)) AS ccr
+
+         from w_transaction t where t.from_wallet_id = #walletId# or t.to_wallet_id = #walletId#
+    </select>
+
+    <update id="update" parameterClass="Transaction">
+        UPDATE `w_transaction`
+        SET `id` = #id#
+            <isNotNull property="fromTotalPrice">
+                , `from_total_price` = #fromTotalPrice#
+                , `from_total_price_currency_type` = #fromTotalPriceCurrencyType#
+            </isNotNull>
+            <isNotNull property="toTotalPrice">
+                , `to_total_price` = #toTotalPrice#
+                , `to_total_price_currency_type` = #toTotalPriceCurrencyType#
+            </isNotNull>
+        WHERE `id` = #id#
+    </update>
+
+    <update id="updateState" parameterClass="Transaction">
+        UPDATE `w_transaction`
+        SET `closed_at` = #closedAt# ,`state` = #state#
+
+        WHERE `id` = #id#
+    </update>
+
+    <delete id="delete" parameterClass="long">
+        DELETE FROM `w_transaction` WHERE `id` = #id#
+    </delete>
+
+    <select id="isOrderCode" resultClass="boolean" parameterClass="string">
+        select count(`id`) from `w_transaction` where order_code = #orderCode#
+    </select>
+
+</sqlMap>

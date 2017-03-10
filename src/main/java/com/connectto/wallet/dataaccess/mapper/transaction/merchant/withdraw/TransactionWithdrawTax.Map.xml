@@ -1,0 +1,65 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionWithdrawTax">
+
+    <cacheModel id="cmTransactionWithdrawTax" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionWithdrawTaxSample" class="TransactionWithdrawTax">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="actionDate" column="action_date"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="totalTax" column="total_tax"/>
+        <result property="totalTaxPrice" column="total_tax_price"/>
+        <result property="processTaxId" column="process_tax_id"/>
+        <result property="setupWithdrawTaxId" column="setup_withdraw_tax_id"/>
+        <result property="exchangeTaxId" column="exchange_tax_id"/>
+        <result property="isPaid" column="is_paid"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="TransactionWithdrawTax">
+        INSERT INTO `w_t_withdraw_tax` (
+            `action_date`,
+            `wallet_id`,
+            `setup_id`,
+            `total_tax`,
+            `total_tax_price`,
+            `process_tax_id`,
+            `setup_withdraw_tax_id`,
+            `merchant_withdraw_tax_id`,
+            `exchange_tax_id`,
+            `is_paid`
+        ) VALUES (
+            #actionDate#,
+            #walletId#,
+            #setupId#,
+            #totalTax#,
+            #totalTaxPrice#,
+            #processTaxId#,
+            #setupWithdrawTaxId#,
+            #merchantWithdrawTaxId#,
+            #exchangeTaxId#,
+            #isPaid#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionWithdrawTax" resultMap="rmTransactionWithdrawTaxSample" parameterClass="long">
+        SELECT * from `w_t_withdraw_tax` WHERE `id` = #id#
+    </select>
+
+    <update id="pay" parameterClass="TransactionWithdrawTax">
+        UPDATE `w_t_withdraw_tax`
+        SET `is_paid` = #isPaid#
+        WHERE `id` = #id#
+    </update>
+
+</sqlMap>

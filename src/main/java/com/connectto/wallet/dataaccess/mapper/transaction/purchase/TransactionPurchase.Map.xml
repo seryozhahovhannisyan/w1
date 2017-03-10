@@ -1,0 +1,128 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionPurchase">
+
+    <cacheModel id="cmTransactionPurchase" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionPurchaseSample" class="TransactionPurchase">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="finalState" column="final_state"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="openedAt" column="opened_at"/>
+        <result property="closedAt" column="closed_at"/>
+        <result property="purchaseAmount" column="purchase_amount"/>
+        <result property="purchaseCurrencyType" column="purchase_ct"/>
+        <result property="walletTotalPrice" column="wallet_total_price"/>
+        <result property="walletTotalPriceCurrencyType" column="wallet_total_price_ct"/>
+        <result property="setupTotalAmount" column="setup_total_amount"/>
+        <result property="setupTotalAmountCurrencyType" column="setup_total_amount_ct"/>
+
+        <result property="processStartId" column="process_start_id"/>
+        <result property="processEndId" column="process_end_id"/>
+        <result property="taxId" column="tax_id"/>
+
+        <result property="isEncoded" column="is_encoded"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="message" column="message"/>
+        <result property="sessionId" column="session_id"/>
+    </resultMap>
+
+    <resultMap id="rmTransactionPurchaseFull" class="TransactionPurchase">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="finalState" column="final_state"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="openedAt" column="opened_at"/>
+        <result property="closedAt" column="closed_at"/>
+        <result property="purchaseAmount" column="purchase_amount"/>
+        <result property="purchaseCurrencyType" column="purchase_ct"/>
+        <result property="walletTotalPrice" column="wallet_total_price"/>
+        <result property="walletTotalPriceCurrencyType" column="wallet_total_price_ct"/>
+        <result property="setupTotalAmount" column="setup_total_amount"/>
+        <result property="setupTotalAmountCurrencyType" column="setup_total_amount_ct"/>
+
+        <result property="processStart" column="process_start_id" select="nsTransactionPurchaseProcess.getById"/>
+        <result property="processEnd" column="process_end_id" select="nsTransactionPurchaseProcess.getById"/>
+        <result property="tax" column="tax_id" select="nsTransactionPurchaseTax.getById"/>
+
+        <result property="isEncoded" column="is_encoded"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="message" column="message"/>
+        <result property="sessionId" column="session_id"/>
+    </resultMap>
+
+
+
+    <insert id="add" parameterClass="TransactionPurchase">
+        INSERT INTO `w_t_purchase` (
+            `final_state`,
+            `wallet_id`,
+            `setup_id`,
+            `opened_at`,
+            `closed_at`,
+            `purchase_amount`,
+            `purchase_ct`,
+            `wallet_total_price`,
+            `wallet_total_price_ct`,
+            `setup_total_amount`,
+            `setup_total_amount_ct`,
+            `process_start_id`,
+            `process_end_id`,
+            `tax_id`,
+            `is_encoded`,
+            `order_code`,
+            `message`,
+            `session_id`
+        ) VALUES (
+            #finalState#,
+            #walletId#,
+            #setupId#,
+            #openedAt#,
+            #closedAt#,
+            #purchaseAmount#,
+            #purchaseCurrencyType#,
+            #walletTotalPrice#,
+            #walletTotalPriceCurrencyType#,
+            #setupTotalAmount#,
+            #setupTotalAmountCurrencyType#,
+            #processStartId#,
+            #processEndId#,
+            #taxId#,
+            #isEncoded#,
+            #orderCode#,
+            #message#,
+            #sessionId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionPurchase" resultMap="rmTransactionPurchaseSample" parameterClass="long">
+        SELECT * from `w_t_purchase` WHERE `id` = #id#
+    </select>
+
+    <select id="getBy" cacheModel="cmTransactionPurchase" resultMap="rmTransactionPurchaseFull" parameterClass="map">
+        select * from `w_t_purchase` where order_code = #orderCode# AND `wallet_id` = #walletId# AND `setup_id` = #setupId#
+    </select>
+
+    <select id="isOrderCode" resultClass="boolean" parameterClass="string">
+        select count(`id`) from `w_t_purchase` where order_code = #orderCode#
+    </select>
+
+    <update id="update" parameterClass="TransactionPurchase">
+        UPDATE `w_t_purchase`
+        SET `final_state` = #finalState#
+            ,`closed_at` = #closedAt#
+
+        WHERE `id` = #id#
+    </update>
+
+</sqlMap>

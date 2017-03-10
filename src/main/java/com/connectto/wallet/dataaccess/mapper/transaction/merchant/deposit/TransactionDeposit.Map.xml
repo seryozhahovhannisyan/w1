@@ -1,0 +1,132 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionDeposit">
+
+    <cacheModel id="cmTransactionDeposit" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionDepositSample" class="TransactionDeposit">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="finalState" column="final_state"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="openedAt" column="opened_at"/>
+        <result property="closedAt" column="closed_at"/>
+        <result property="depositAmount" column="deposit_amount"/>
+        <result property="depositAmountCurrencyType" column="deposit_amount_ct"/>
+        <result property="walletTotalPrice" column="wallet_total_price"/>
+        <result property="walletTotalPriceCurrencyType" column="wallet_total_price_ct"/>
+        <result property="setupTotalAmount" column="setup_total_amount"/>
+        <result property="setupTotalAmountCurrencyType" column="setup_total_amount_ct"/>
+
+        <result property="processStartId" column="process_start_id"/>
+        <result property="processEndId" column="process_end_id"/>
+        <result property="taxId" column="tax_id"/>
+
+        <result property="isEncoded" column="is_encoded"/>
+        <result property="orderCode" column="order_code"/>
+    </resultMap>
+
+    <resultMap id="rmTransactionDepositFull" class="TransactionDeposit">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="finalState" column="final_state"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="openedAt" column="opened_at"/>
+        <result property="closedAt" column="closed_at"/>
+        <result property="depositAmount" column="deposit_amount"/>
+        <result property="depositAmountCurrencyType" column="deposit_amount_ct"/>
+        <result property="depositMerchantTotalTax" column="deposit_m_total_tax"/>
+        <result property="depositMerchantTotalTaxCurrencyType" column="deposit_m_total_tax_ct"/>
+        <result property="walletTotalPrice" column="wallet_total_price"/>
+        <result property="walletTotalPriceCurrencyType" column="wallet_total_price_ct"/>
+        <result property="setupTotalAmount" column="setup_total_amount"/>
+        <result property="setupTotalAmountCurrencyType" column="setup_total_amount_ct"/>
+
+        <result property="processStart" column="process_start_id" select="nsTransactionDepositProcess.getById"/>
+        <result property="processEnd" column="process_end_id" select="nsTransactionDepositProcess.getById"/>
+        <result property="tax" column="tax_id" select="nsTransactionDepositTax.getById"/>
+
+        <result property="isEncoded" column="is_encoded"/>
+        <result property="orderCode" column="order_code"/>
+    </resultMap>
+
+
+
+    <insert id="add" parameterClass="TransactionDeposit">
+        INSERT INTO `w_t_deposit` (
+            `final_state`,
+            `wallet_id`,
+            `setup_id`,
+            `opened_at`,
+            `closed_at`,
+            `deposit_amount`,
+            `deposit_amount_ct`,
+            `deposit_m_total_tax`,
+            `deposit_m_total_tax_ct`,
+            `wallet_total_price`,
+            `wallet_total_price_ct`,
+            `setup_total_amount`,
+            `setup_total_amount_ct`,
+            `process_start_id`,
+            `process_end_id`,
+            `merchant_deposit_id`,
+            `tax_id`,
+            `is_encoded`,
+            `order_code`
+        ) VALUES (
+            #finalState#,
+            #walletId#,
+            #setupId#,
+            #openedAt#,
+            #closedAt#,
+            #depositAmount#,
+            #depositAmountCurrencyType#,
+            #depositMerchantTotalTax#,
+            #depositMerchantTotalTaxCurrencyType#,
+            #walletTotalPrice#,
+            #walletTotalPriceCurrencyType#,
+            #setupTotalAmount#,
+            #setupTotalAmountCurrencyType#,
+            #processStartId#,
+            #processEndId#,
+            #merchantDepositId#,
+            #taxId#,
+            #isEncoded#,
+            #orderCode#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionDeposit" resultMap="rmTransactionDepositSample" parameterClass="long">
+        SELECT * from `w_t_deposit` WHERE `id` = #id#
+    </select>
+
+    <select id="getBy" cacheModel="cmTransactionDeposit" resultMap="rmTransactionDepositFull" parameterClass="map">
+        select * from `w_t_deposit` where order_code = #orderCode# AND `wallet_id` = #walletId# AND `setup_id` = #setupId#
+    </select>
+
+    <select id="getUniqueByParams" cacheModel="cmTransactionDeposit" resultMap="rmTransactionDepositFull" parameterClass="map">
+        select * from `w_t_deposit` where `wallet_id` = #walletId#  AND `final_state` = #finalState#
+    </select>
+
+    <select id="isOrderCode" resultClass="boolean" parameterClass="string">
+        select count(`id`) from `w_t_deposit` where order_code = #orderCode#
+    </select>
+
+    <update id="update" parameterClass="TransactionDeposit">
+        UPDATE `w_t_deposit`
+        SET `final_state` = #finalState#
+            ,`closed_at` = #closedAt#
+
+        WHERE `id` = #id#
+    </update>
+
+</sqlMap>

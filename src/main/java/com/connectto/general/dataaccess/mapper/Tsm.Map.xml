@@ -1,0 +1,32 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="nsTsm">
+
+    <cacheModel id="cmTsm" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <!--tsm_countries-->
+
+    <resultMap id="rmTsmCompany" class="TsmCompany">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="partitionId" column="id_tsm_partition"/>
+        <result property="name" column="name"/>
+        <result property="convertToMerchant" column="convert_to_merchant" nullValue="0"/>
+    </resultMap>
+
+    <select id="getByParams" cacheModel="cmTsm" resultMap="rmTsmCompany" parameterClass="map">
+
+        SELECT * FROM tsm_company WHERE
+
+        `merchant_secretKey` = #secretKey# AND `merchant_clientKey` = #clientKey# AND convert_to_merchant = 1
+
+
+    </select>
+
+
+
+</sqlMap>

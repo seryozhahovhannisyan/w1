@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID"
+         version="2.5">
+
+    <!--<session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>-->
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <context-param>
+        <param-name>tilesDefinitions</param-name>
+        <param-value>classpath:/WEB-INF/tiles.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring-config.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.connectto.general.util.Initializer</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.apache.struts2.tiles.StrutsTilesListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>*.htm</url-pattern>
+    </filter-mapping>
+
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/pages/general/error404.jsp</location>
+    </error-page>
+
+    <filter>
+        <filter-name>StartFilter</filter-name>
+        <filter-class>com.connectto.general.web.filter.StartFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>StartFilter</filter-name>
+        <url-pattern>/index.jsp</url-pattern>
+        <url-pattern>/connecttotv_start.*</url-pattern>
+        <url-pattern>/hollor_start.*</url-pattern>
+        <url-pattern>/vshoo_start.*</url-pattern>
+    </filter-mapping>
+
+    <!--
+            SERVICE
+    -->
+    <servlet>
+        <servlet-name>JerseySpringServlet</servlet-name>
+
+        <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>com.connectto.general.web.rest</param-value>
+        </init-param>
+        <init-param>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JerseySpringServlet</servlet-name>
+        <url-pattern>/service/*</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>

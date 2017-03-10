@@ -1,0 +1,34 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsCoreSystemAdmin">
+
+    <cacheModel id="cmCoreSystemAdmin" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmCoreSystemAdmin" class="CoreSystemAdmin">
+        <result property="id" column="admin_id" nullValue="0"/>
+        <result property="partitionId" column="partition_id"  />
+        <result property="role" column="role"  />
+        <result property="firstName" column="first_name"  />
+        <result property="lastName" column="last_name"  />
+        <result property="username" column="username"  />
+        <result property="email" column="email"  />
+        <result property="phone" column="phone"  />
+    </resultMap>
+
+    <select id="getByParams" cacheModel="cmCoreSystemAdmin" resultMap="rmCoreSystemAdmin" parameterClass="map">
+         select * from `core_system_admins` where
+            username = #username#
+            and password = #password#
+            and partition_id = #partitionId#
+            and role IN
+        <iterate property="roles" open="(" close=")" conjunction=",">
+            #roles[]#
+        </iterate>
+    </select>
+
+
+</sqlMap>

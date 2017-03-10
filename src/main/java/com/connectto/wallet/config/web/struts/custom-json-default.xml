@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="custom-json-default" extends="struts-default">
+
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+            <result-type name="jsonActionRedirect" class="org.apache.struts2.json.JSONActionRedirectResult"/>
+        </result-types>
+
+        <interceptors>
+            <interceptor name="CustomJson" class="org.apache.struts2.json.JSONInterceptor">
+                <param name="accept">application/json</param>
+                <param name="enableSMD">true</param>
+                <param name="noCache">true</param>
+                <param name="excludeNullProperties">true</param>
+            </interceptor>
+            <interceptor name="jsonValidation" class="org.apache.struts2.json.JSONValidationInterceptor"/>
+            <interceptor name="language-interceptor" class="com.connectto.general.web.interceptor.LanguageInterceptor"/>
+            <interceptor name="partition-interceptor"  class="com.connectto.general.web.interceptor.PartitionInterceptor"/>
+
+            <!-- Sample JSON validation stack -->
+            <interceptor-stack name="CustomJsonValidationWorkflowStack">
+                <interceptor-ref name="basicStack"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel</param>
+                </interceptor-ref>
+                <interceptor-ref name="CustomJson"/>
+                <interceptor-ref name="jsonValidation"/>
+                <interceptor-ref name="workflow"/>
+                <interceptor-ref name="partition-interceptor"/>
+                <interceptor-ref name="language-interceptor"/>
+            </interceptor-stack>
+
+        </interceptors>
+
+    </package>
+    <package name="exclude-null-json-default" extends="struts-default">
+
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult">
+                <param name="excludeNullProperties">true</param>
+            </result-type>
+            <result-type name="jsonActionRedirect" class="org.apache.struts2.json.JSONActionRedirectResult"/>
+        </result-types>
+
+        <interceptors>
+
+            <interceptor name="CustomJsonExcludeNull" class="org.apache.struts2.json.JSONInterceptor">
+                <param name="enableSMD">true</param>
+                <param name="excludeNullProperties">true</param>
+            </interceptor>
+
+            <interceptor name="jsonValidation" class="org.apache.struts2.json.JSONValidationInterceptor"/>
+            <interceptor name="language-interceptor" class="com.connectto.general.web.interceptor.LanguageInterceptor"/>
+            <interceptor name="partition-interceptor"  class="com.connectto.general.web.interceptor.PartitionInterceptor"/>
+
+            <!-- Sample JSON validation stack -->
+            <interceptor-stack name="CustomJsonExcludeNullValidationWorkflowStack">
+                <interceptor-ref name="basicStack"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel</param>
+                </interceptor-ref>
+                <interceptor-ref name="CustomJsonExcludeNull"/>
+                <interceptor-ref name="jsonValidation"/>
+                <interceptor-ref name="workflow"/>
+                <interceptor-ref name="partition-interceptor"/>
+                <interceptor-ref name="language-interceptor"/>
+            </interceptor-stack>
+
+        </interceptors>
+
+    </package>
+</struts>

@@ -1,0 +1,890 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'GothaProIta.otf';
+    src: url(../../css/general/fonts/GothaProIta.otf);
+}
+
+@font-face {
+    font-family: 'GothaProBol.otf';
+    src: url(../../css/general/fonts/GothaProBol.otf);
+}
+
+@font-face {
+    font-family: 'GothaProReg.otf';
+    src: url(../../css/general/fonts/GothaProReg.otf);
+}
+
+@font-face {
+    font-family: 'credit-card.regular.ttf';
+    src: url(../../css/general/fonts/credit-card.regular.ttf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    src: url(../../css/general/fonts/HelveticaNeueCyr-Roman.otf);
+}
+
+@font-face {
+    font-family: 'GothaProMed.otf';
+    src: url(../../css/general/fonts/GothaProMed.otf);
+}
+
+@font-face {
+    font-family: 'GothaProMedIta.otf';
+    src: url(../../css/general/fonts/GothaProMedIta.otf);
+}
+
+@font-face {
+    font-family: 'GothaProLig.otf';
+    src: url(../../css/general/fonts/GothaProLig.otf);
+}
+
+body {
+    background: url("../../img/wallet/login/background/background_wallet.png");
+}
+
+.row {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.main {
+    background-color: #212430;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.select_design{
+    background-image: url('../../img/wallet/icon/wallet_credit_card_select-arrow.png');
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    max-width: 100px;
+    min-width: 70px;
+    height: 35px;
+    background-size: 15px;
+    background-position: 94%;
+    padding-right: 20px!important;
+    border-radius: 6px;
+    text-transform: uppercase;
+    background-color: #e7e7e7;
+    border: 1px solid #9b9b9b;
+    cursor: pointer;
+
+}
+.user_search_div {
+    float: right;
+    position: relative;
+}
+
+.card_sort_div {
+    float: right;
+}
+
+.arrow_div {
+    float: left;
+    padding: 10px;
+    position: relative;
+}
+
+.arrow_div img {
+    width: 100%;
+    height: auto;
+}
+
+.up {
+    position: absolute;
+    top: 4px;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+
+}
+
+.down {
+    position: absolute;
+    bottom: 5px;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+
+}
+
+.sort_div {
+    float: left;
+    color: #c3c3c3;
+    font-family: 'GothaProReg.otf';
+    padding: 20px;
+
+}
+
+.search_checkbox {
+    text-align: center;
+    height: auto;
+    width: 200px;
+    float: right;
+    border-right: 1px solid #555965;
+    border-left: 1px solid #555965;
+    color: #a4a4a5;
+    cursor: pointer;
+    position: relative;
+}
+
+.search_dispute_checkbox {
+    text-align: center;
+    height: auto;
+    width: 200px;
+    padding: 10px;
+    float: right;
+    border-right: 1px solid #555965;
+    color: #a4a4a5;
+    cursor: pointer;
+    position: relative;
+}
+
+.choose_type {
+    color: #a4a4a5;
+}
+
+.choose_transaction_type_parent div:hover {
+    background-color: #535B74;
+}
+
+.choose_transaction_type_parent {
+    position: absolute;
+    height: auto;
+    width: 200px;
+    padding: 10px;
+    left: -1px;
+    display: none;
+    background-color: #30364A;
+    text-align: left;
+    z-index: 2;
+}
+
+.show_only_sended {
+    font-family: 'GothaProLig.otf';
+    color: #10c76b;
+    font-size: 100%;
+}
+
+.show_only_sended div:first-child, .show_only_sended div:last-child, .show_only_received div:first-child, .show_only_received div:last-child, .show_both div:first-child, .show_both div:last-child {
+    display: inline-block;
+}
+
+.show_only_sended div:last-child input, .show_only_received div:last-child input, .show_both div:last-child input {
+    vertical-align: sub;
+}
+
+.show_only_received {
+    font-family: 'GothaProLig.otf';
+    color: #ff4154;
+    font-size: 100%;
+}
+
+.show_both {
+    font-family: 'GothaProLig.otf';
+    color: #a4a4a5;
+    font-size: 100%;
+}
+
+.cards_place_div {
+    width: auto;
+    padding: 10px;
+    min-height: 200px;
+    height: auto;
+    /*background-color: gainsboro;*/
+}
+
+.cards_whith_plus {
+    background-image: url('../../img/wallet/icon/add_card_wallet.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-width: 300px;
+    width: 370px;
+    height: 225px;
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: 40px;
+    cursor: pointer;
+}
+.add_new_credit_card{
+    width: auto;
+    display: inline-block;
+    color: #d9d9d9;
+    font-family: 'GothaProReg.otf';
+    font-size: 110%;
+    margin-left: 10px;
+    margin-top: 30px;
+}
+.add_new_credit_next{
+    background-image: url('../../img/wallet/icon/wallet_credit_card_next_arrow.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+    width: auto;
+    display: inline-block;
+    color: #d9d9d9;
+    font-family: 'GothaProReg.otf';
+    font-size: 110%;
+    padding-right: 22px;
+    float: right;
+    margin-top: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.add_new_credit_card_back{
+    background-image: url('../../img/wallet/icon/wallet_credit_card_back_arrow.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: contain;
+    width: auto;
+    display: inline-block;
+    color: #d9d9d9;
+    font-family: 'GothaProReg.otf';
+    font-size: 110%;
+    padding-left: 22px;
+    margin-top: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.add_new_credit_finish{
+    background-image: url('../../img/wallet/icon/wallet_credit_card_finich_check.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 18px;
+    width: auto;
+    display: inline-block;
+    color: #d9d9d9;
+    font-family: 'GothaProReg.otf';
+    font-size: 110%;
+    padding-right: 22px;
+    float: right;
+    margin-top: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.add_new_credit_card_parent{
+    text-align: center;
+}
+.close_card_edit{
+    width: auto;
+    height: auto;
+    margin-top: 30px;
+    float: left;
+    margin-left: 5px;
+    color: #d9d9d9;
+    font-family: 'GothaProReg.otf';
+    font-size: 110%;
+    cursor: pointer;
+}
+.add_new_credit_card_optional{
+    width: auto;
+    display: inline-block;
+    color: #d9d9d9;
+    font-family: 'GothaProReg.otf';
+    font-size: 110%;
+    margin-top: 30px;
+    margin-right: 10px;
+    margin-left: 20px;
+
+}
+.credit_card_edit {
+    width: 500px;
+    height: 300px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.credit_card_edit_part_2{
+    width: 500px;
+    height: 300px;
+    display: block;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.section_1{
+
+}
+.credit_card_design {
+    width: 370px;
+    height: 225px;
+    display: inline-block;
+    float: left;
+    margin-left: 50px;
+    margin-top: 40px;
+}
+
+.card_header {
+    width: 100%;
+    height: 50px;
+    background-color: #018ffd;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+.card_header_edit{
+    width: 100%;
+    height: 80px;
+    background-color: #018ffd;
+}
+.card_content{
+    width: 100%;
+    height: calc(100% - 50px);
+    background-color: #e7e7e7;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.card_pencil{
+    background-image: url('../../img/wallet/icon/wallet_card-pencil.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 16px;
+    /*min-width: 80px;*/
+    width: auto;
+    padding-left: 20px;
+    height: 50px;
+    margin-left: 10px;
+    padding-top: 15px;
+    cursor: pointer;
+    font-family: 'GothaProReg.otf';
+    color: #d9d9d9;
+    display: inline-block;
+
+
+}
+.cart_disabel{
+    background-image: url('../../img/wallet/icon/wallet_credit_disable.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 16px;
+    /*min-width: 80px;*/
+    width: auto;
+    padding-left: 20px;
+    height: 50px;
+    margin-left: 10px;
+    padding-top: 15px;
+    cursor: pointer;
+    font-family: 'GothaProReg.otf';
+    color: #d9d9d9;
+    display: inline-block;
+
+}
+.card_delete{
+    background-image: url('../../img/wallet/icon/wallet_credit_trash.png');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 16px;
+    /*min-width: 80px;*/
+    width: auto;
+    padding-left: 20px;
+    height: 50px;
+    margin-left: 10px;
+    padding-top: 15px;
+    cursor: pointer;
+    font-family: 'GothaProReg.otf';
+    color: #d9d9d9;
+    display: inline-block;
+
+}
+.card_transfer{
+    width: auto;
+    height: 50px;
+    padding-top: 15px;
+    cursor: pointer;
+    font-family: 'GothaProReg.otf';
+    color: #d9d9d9;
+    display: inline-block;
+    float: right;
+    margin-right: 3px;
+    position: relative;
+}
+.card_prioirty{
+    /*min-width: 80px;*/
+    width: 50px;
+    height: 50px;
+    padding-top: 15px;
+    cursor: pointer;
+    font-family: 'GothaProReg.otf';
+    color: #d9d9d9;
+    display: inline-block;
+    position: absolute;
+    margin-right: 5px;
+    background-color: #018ffd;
+    border-radius: 50%;
+    text-align: center;
+    top: -35px;
+    left: 35px;
+}
+.card_name_left div:nth-child(1){
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 100%;
+}
+.card_name_left_edit div:nth-child(1){
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 130%;
+}
+
+.card_name_left_input,.card_name_left_edit_input{
+    font-family: 'credit-card.regular.ttf';
+    font-size: 100%;
+}
+.card_name_left_input{
+    width: 100%;
+    height: 30px;
+    background-color: #e7e7e7;
+    border: 1px solid #9b9b9b;
+    border-radius: 6px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 4px;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.card_name_left_edit_input input,.card_name_left_edit_input select,.expiry_date_input_edit_part2 input{
+    background-color: #e7e7e7;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    border: 1px solid #9b9b9b;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 200px;
+    height: 35px;
+    min-width: 100px;
+    text-transform: uppercase;
+}
+.card_name_left_edit_input input::-webkit-input-placeholder,.card_name_right_edit_input input::-webkit-input-placeholder,.expiry_date_input_edit input::-webkit-input-placeholder{
+    text-transform: uppercase;
+    font-size: 100%;
+    color: #353636;
+}
+.card_name_left_edit_input input::-moz-placeholder.card_name_right_edit_input input::-moz-placeholder,.expiry_date_input_edit input::-moz-placeholder{
+    text-transform: uppercase;
+    font-size: 100%;
+    color: #353636;
+}
+.card_name_left_edit_input input:-ms-input-placeholder,.card_name_right_edit_input input:-ms-input-placeholder,.expiry_date_input_edit input:-ms-input-placeholder{
+    text-transform: uppercase;
+    font-size: 100%;
+    color: #353636;
+}
+
+.card_name_right div:nth-child(1){
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 100%;
+}
+.card_name_right_edit div:nth-child(1){
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 130%;
+}
+
+.card_name_right_input,.card_name_right_edit_input{
+    font-family: 'credit-card.regular.ttf';
+    font-size: 100%;
+
+}
+
+.card_name_right_input{
+    width: 100%;
+    height: 30px;
+    background-color: #e7e7e7;
+    border: 1px solid #9b9b9b;
+    border-radius: 6px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 7px;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 70%;
+}
+.card_name_right_edit_input input,.card_name_right_edit_input select{
+    background-color: #e7e7e7;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    border: 1px solid #9b9b9b;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 200px;
+    height: 35px;
+    min-width: 100px;
+    font-size: 90%;
+    text-transform: uppercase;
+}
+
+.section_2{
+    margin-top: 90px;
+}
+.expiry_date_parent{
+    margin-top: 35px;
+}
+.expiry_date div:nth-child(1){
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 100%;
+}
+.expiry_date_edit div:nth-child(1){
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 130%;
+}
+.expiry_date_input {
+    display: inline-block;
+    width: 70px;
+    font-family: 'credit-card.regular.ttf';
+    height: 30px;
+    background-color: #e7e7e7;
+    border: 1px solid #9b9b9b;
+    border-radius: 6px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 4px;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 5px;
+
+}
+.expiry_date_input_edit{
+    display: inline-block;
+    width: 100px;
+    font-family: 'credit-card.regular.ttf';
+    margin-right: 5px;
+
+}
+.expiry_date_input_edit_part2{
+    display: inline-block;
+    width: 100%;
+    font-family: 'credit-card.regular.ttf';
+    margin-right: 5px;
+}
+
+ .expiry_date_input_edit input,.expiry_date_input_edit_part2 select {
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: center;
+    border: 1px solid #9b9b9b;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.card_cvv_input_edit{
+    display: inline-block;
+    width: 70px;
+    font-family: 'credit-card.regular.ttf';
+    vertical-align: top;
+}
+
+.card_cvv_input{
+    display: inline-block;
+    width: 70px;
+    font-family: 'credit-card.regular.ttf';
+    height: 30px;
+    background-color: #e7e7e7;
+    border: 1px solid #9b9b9b;
+    border-radius: 6px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 4px;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.money_transfer_div_popup{
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(32, 32, 32, 0.5);
+    width: 100%;
+    top: 300px;
+    padding: 20px;
+    /*display: none;*/
+}
+
+.money_transfer_div{
+    min-width: 300px;
+    max-width: 500px;
+    height: 300px;
+    width: 50%;
+    background-image: url("../../img/wallet/wallet-popup/send_money_popup_bg.png");
+    background-size: cover;
+    margin:auto;
+    padding: 15px;
+}
+.credit_card_number_info{
+    font-size: 150%;
+    color: #6d6d6d;
+    font-family: 'GothaProMed.otf';
+}
+.credit_send_money{
+    float: right;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    font-size: 150%;
+    color: #6d6d6d;
+    font-family: 'GothaProMed.otf';
+}
+.close_transfer{
+    float: left;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    font-size: 150%;
+    color: #6d6d6d;
+    font-family: 'GothaProMed.otf';
+}
+.untitiled{
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px dashed black;
+    border-radius: 6px;
+    background-color: #fff7e6;
+}
+.balance_text{
+    width: 85%;
+    padding: 10px;
+    margin: 0 auto;
+    font-family: 'GothaProReg.otf';
+    font-size: 120%;
+    color: #444444;
+    border-bottom:1px solid #444444;
+    text-align:left;
+}
+
+.balance_text div {
+    float: right;
+    width: auto;
+    min-width: 50px;
+    max-width: 150px;
+    display: inline-block;
+    border: 1px solid #444444;
+    text-align: center;
+    vertical-align: bottom;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+.card_cvv div:nth-child(1){
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 100%;
+    width: 70px;
+    text-align: center;
+
+}
+.cvv_text_edit,.card_type_text{
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 130%;
+
+}
+.zip_text_edit{
+    color: #9b9b9b;
+    font-family: 'GothaProBol.otf';
+    margin-bottom: 5px;
+    font-size: 130%;
+
+}
+.card_zip_code{
+    display: inline-block;
+    width: 70px;
+    font-family: 'credit-card.regular.ttf';
+}
+.card_zip_code input {
+    background-color: #e7e7e7;
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: center;
+    border: 1px solid #9b9b9b;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+}
+.card_type_parent{
+    text-align: center;
+}
+.card_cvv_input input,.card_cvv_input_edit input{
+    background-color: #e7e7e7;
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: center;
+    border: 1px solid #9b9b9b;
+    border-radius: 8px;
+    width: 100%;
+    height: 35px;
+}
+.card_type_edit{
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 200%;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.card_type {
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 40px;
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+    }
+.card_type_img{
+    width: 100px;
+    height: auto;
+    max-height: 200px;
+    overflow: auto;
+    background-color: #e8fdff;
+    box-shadow: 0 0 5px black;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    z-index: 1;
+    padding:5px;
+    cursor: pointer;
+    display: none;
+}
+
+.card_type_img img{
+    width: 100%;
+    height: auto;
+}
+.ux_card{
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    margin-bottom: 5px;
+}
+.ux_card:hover{
+    border-bottom: 2px solid lime;
+}
+.card_blur_div{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+
+}
+.div_for_card{
+    position: absolute;
+    width: auto;
+    height: 500px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+
+
+.number1 {
+    width: 200px;
+    height: 200px;
+    background-color: lime;
+    display: inline-block;
+}
+
+.number2 {
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    display: inline-block;
+}
+.number3 {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    display: inline-block;
+}
+.number4 {
+    width: 200px;
+    height: 200px;
+    background-color: purple;
+    display: inline-block;
+}
+@media all and (max-width:768px){
+    .cards_whith_plus,.credit_card_design {
+        width: 300px;
+        height: 180px;
+        margin-left: -9px;
+        float: none;
+        display: block;
+        margin-bottom: 20px;
+    }
+    .card_name_right_input{
+        margin-top: 20px;
+    }
+    .card_name_right_input input::-webkit-input-placeholder{
+        font-size: 60%;
+
+    }
+}

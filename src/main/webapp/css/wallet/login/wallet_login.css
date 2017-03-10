@@ -1,0 +1,123 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'GothaProReg.otf';
+    src: url(../../../css/general/fonts/GothaProReg.otf);
+}
+@font-face {
+    font-family: 'GothaProBol.otf';
+    src: url(../../../css/general/fonts/GothaProBol.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    src: url(../../../css/general/fonts/HelveticaNeueCyr-Roman.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Bold.otf';
+    src: url(../../../css/general/fonts/HelveticaNeueCyr-Bold.otf);
+}
+
+.row{
+
+    margin: 0!important;
+
+}
+
+.hello_div_parent{
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 250%;
+    color: #27ccc0;
+    font-family: 'HelveticaNeueCyr-Bold.otf';
+    margin-top: 20px;
+}
+.name_div{
+    display: inline-block;
+}
+.user_text_div{
+    margin: 0 auto;
+    float: none!important;
+    font-size: 200%;
+    font-family: 'GothaProReg.otf';
+    color: #d9d9d9;
+    text-align: justify;
+    margin-top: 20px;
+
+}
+
+
+.current_button_div{
+    float: right;
+    margin-right: 100px;
+    margin-top: 20px;
+}
+.current_button_div button{
+    font-size: 100%;
+    font-family: 'GothaProReg.otf';
+    background-color: #ff4154;
+    color: #dadada!important;
+    padding: 10px 20px 10px 20px;
+}
+.current_button_div button:hover{
+    background-color: #da3e52;
+    color: #dadada;
+}
+.current_button_div button:active{
+    background-color: #cc3c51;
+    color: #dadada!important;
+}
+
+.curent_bal_div{
+    min-width: 300px;
+    max-width: 500px;
+    height: 300px;
+    width: 50%;
+    background-image: url("../../../img/wallet/wallet-popup/send_money_popup_bg.png");
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin:auto;
+    padding: 15px;
+    top: 0;
+    bottom: 0;
+}
+
+.close_bal{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background-image: url("../../../img/wallet/icon/close_curent_bal.png");
+    background-size: cover;
+    cursor: pointer;
+}
+.balance_text{
+    width: 85%;
+    padding: 10px;
+    margin: 0 auto;
+    font-family: 'GothaProReg.otf';
+    font-size: 120%;
+    color: #444444;
+    border-bottom:1px solid #444444;
+    text-align:left;
+}
+
+.balance_text div {
+    float: right;
+    width: auto;
+    min-width: 50px;
+    max-width: 150px;
+    display: inline-block;
+    border: 1px solid #444444;
+    text-align: center;
+    vertical-align: bottom;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}

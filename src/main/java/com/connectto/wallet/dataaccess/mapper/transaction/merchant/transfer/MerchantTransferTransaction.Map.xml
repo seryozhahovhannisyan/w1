@@ -1,0 +1,31 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsMerchantTransferTransaction">
+
+    <insert id="add" parameterClass="MerchantTransferTransaction">
+        INSERT INTO `w_t_m_transfer_transaction` (
+            `transfer_ticket_id`,
+            `tsm_company_id`,
+            `wallet_id`,
+            `action_date`,
+            `transfer_amount`,
+            `transfer_amount_ct`,
+            `is_encoded`
+        ) VALUES (
+            #transferTicketId#,
+            #tsmCompanyId#,
+            #walletId#,
+            #actionDate#,
+            #transferAmount#,
+            #transferAmountCurrencyType#,
+            #isEncoded#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+</sqlMap>

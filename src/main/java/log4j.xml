@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- PRODUCTION -->
+<!--<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" [<!ENTITY logpath "/var/log/tomcat7/UICashCode">]>-->
+<!--<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" [<!ENTITY logpath "C:/Users/htdev001/Desktop/projectCashCode">]>-->
+<!--<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" [<!ENTITY logpath "C:/User/SAM/Desktop/log">]>-->
+<!-- DEVELOPMENT -->
+
+<!--<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" [<!ENTITY logpath "/var/log/tomcat7/UICashCode">]>-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" [<!ENTITY logpath "/opt/tomcat/webapps/WalletLogs">]>
+
+<log4j:configuration>
+
+    <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %C (%M:%L) [%t] - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="GeneralAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="&logpath;/logs.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %C (%M:%L) [%t] - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="TrackerAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="&logpath;/tracker/tracker.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %C (%M:%L) [%t] - %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- will only sends error events -->
+    <appender name="Email" class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="1"/>
+        <!-- default is 512, changed for test cases to work -->
+        <param name="SMTPProtocol" value="smtp"/>
+        <!-- GMail will not work without this, log4j 1.2.16 is required -->
+        <param name="SMTPHost" value="mail.connectto.com"/>
+        <param name="SMTPUsername" value="partitionxadmin@connectto.com"/>
+        <!-- example@gmail.com -->
+        <param name="SMTPPassword" value="hi1915a24"/>
+        <param name="From" value="partitionxadmin@connectto.com"/>
+        <param name="To" value="partitionxlog@connectto.com"/>
+        <!--<param name="Cc" value="developers@hi-teck.com"/>-->
+        <param name="Subject" value="Hollor Log Mail"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[${name}] - %d{ISO8601} - %X{login} - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="EMAIL_ASYNC" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="1"/>
+        <appender-ref ref="Email"/>
+    </appender>
+
+    <logger name="Informer" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="GeneralAppender"/>
+    </logger>
+
+    <logger name="Tracker" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="TrackerAppender"/>
+    </logger>
+
+    <logger name="log4j.logger.com.ibatis" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="TrackerAppender"/>
+    </logger>
+
+    <logger name="com.ibatis" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="ConsoleAppender"/>
+    </logger>
+
+    <logger name="log4j.logger.java.sql.Statement" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="TrackerAppender"/>
+    </logger>
+
+    <logger name="org.apache.ibatis.common.jdbc.SimpleDataSource">
+        <level value="debug"/>
+        <appender-ref ref="ConsoleAppender" />
+    </logger>
+
+    <logger name="org.apache.commons.dbcp.BasicDataSource">
+        <level value="debug"/>
+        <appender-ref ref="ConsoleAppender" />
+    </logger>
+
+    <logger name="java.sql" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="ConsoleAppender" />
+    </logger>
+
+    <logger name="log4j.rootLogger" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="TrackerAppender"/>
+    </logger>
+
+    <logger name="logging.simple.jdbcLogger">
+        <level value="debug"/>
+        <appender-ref ref="TrackerAppender"/>
+    </logger>
+
+    <root>
+        <level value="debug"/>
+        <appender-ref ref="ConsoleAppender"/>
+        <appender-ref ref="TrackerAppender"/>
+        <appender-ref ref="GeneralAppender"/>
+        <appender-ref ref="Email" />
+    </root>
+
+
+</log4j:configuration>

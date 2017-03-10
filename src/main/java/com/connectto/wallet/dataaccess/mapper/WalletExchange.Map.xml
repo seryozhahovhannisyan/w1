@@ -1,0 +1,235 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsWalletExchange">
+
+    <cacheModel id="cmWalletExchange" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmWalletExchange" class="WalletExchange">
+        <result property="id" column="id" nullValue="0"/>
+
+        <result property="walletId" column="wallet_id"/>
+        <result property="walletSetupId" column="setup_id"/>
+
+        <result property="money" column="money"/>
+        <result property="newMoneyPaidTax" column="new_m_p_t"/>
+        <result property="newMoneyPaidTaxPrice" column="new_m_p_t_price"/>
+        <result property="newMoneyPaidTaxExchange" column="new_m_p_t_e_id" select="nsExchange.getById"/>
+
+        <result property="oldCurrencyType" column="old_currency"/>
+        <result property="newCurrencyType" column="new_currency"/>
+        <result property="exchangedAt" column="exchanged_at"  />
+
+        <result property="disputeState" column="dispute_state" nullValue="0"/>
+        <result property="disputeId" column="dispute_id"  />
+
+    </resultMap>
+
+    <resultMap id="rmWalletExchangeFull" class="WalletExchange">
+        <result property="id" column="id" nullValue="0"/>
+
+        <result property="walletId" column="wallet_id"/>
+        <result property="walletSetupId" column="setup_id"/>
+        <result property="walletExchangePendingIdes" column="id" select="nsWalletExchange.getExchangePendingIdes"/>
+
+        <result property="money" column="money"/>
+        <result property="newMoneyPaidTax" column="new_m_p_t"/>
+        <result property="newMoneyPaidTaxPrice" column="new_m_p_t_price"/>
+        <result property="newMoneyPaidTaxExchange" column="new_m_p_t_e_id" select="nsExchange.getById"/>
+
+        <result property="frozenAmount" column="f_a"/>
+        <result property="frozenAmountPrice" column="f_a_price"/>
+        <result property="frozenAmountExchange" column="f_a_e_id" select="nsExchange.getById"/>
+
+        <result property="receivingAmount" column="r_a"/>
+        <result property="receivingAmountPrice" column="r_a_price"/>
+        <result property="receivingAmountExchange" column="r_a_e_id" select="nsExchange.getById"/>
+
+        <result property="totalTax" column="total_tax"/>
+        <result property="totalTaxPrice" column="total_tax_price"/>
+        <result property="totalExchange" column="total_exchange_id"  select="nsExchange.getById"/>
+        <result property="totalTaxType" column="total_tax_type"  />
+
+        <result property="oldCurrencyType" column="old_currency"/>
+        <result property="newCurrencyType" column="new_currency"/>
+        <result property="exchangedAt" column="exchanged_at"  />
+
+        <result property="disputeState" column="dispute_state" nullValue="0"/>
+        <result property="disputeId" column="dispute_id"  />
+
+    </resultMap>
+
+    <resultMap id="rmWalletExchangePending" class="WalletExchangePending">
+        <result property="id" column="id" nullValue="0"/>
+
+        <result property="walletExchangeId" column="w_e_id"/>
+        <result property="transactionId" column="tr_id"/>
+
+        <result property="oldFromTotalPrice" column="old_from_t_p"/>
+        <result property="newFromTotalPrice" column="new_from_t_p"/>
+        <result property="oldFromTotalPriceCurrencyType" column="old_from_t_p_c"/>
+        <result property="newFromTotalPriceCurrencyType" column="new_from_t_p_c"/>
+        <result property="fromTotalPriceExchange" column="from_t_p_e_id" select="nsExchange.getById"/>
+
+        <result property="oldToTotalPrice" column="old_to_t_p"/>
+        <result property="newToTotalPrice" column="new_to_t_p"/>
+        <result property="oldToTotalPriceCurrencyType" column="old_to_t_p_c"/>
+        <result property="newToTotalPriceCurrencyType" column="new_to_t_p_c"/>
+        <result property="toTotalPriceExchange" column="to_t_p_e_id" select="nsExchange.getById"/>
+
+    </resultMap>
+
+    <insert id="add" parameterClass="WalletExchange">
+        INSERT INTO `wallet_exchange` (
+
+        `wallet_id`,
+        `setup_id`,
+        `money`,
+        `new_m_p_t`,
+        `new_m_p_t_price`,
+        `new_m_p_t_e_id`,
+        `f_a`,
+        `f_a_price`,
+        `f_a_e_id`,
+        `r_a`,
+        `r_a_price`,
+        `r_a_e_id`,
+        `total_tax`,
+        `total_tax_price`,
+        `total_exchange_id`,
+        `total_tax_type`,
+        `old_currency`,
+        `new_currency`,
+        `exchanged_at`
+
+        ) VALUE (
+
+        #walletId#,
+        #walletSetupId#,
+
+        #money#,
+        #newMoneyPaidTax#,
+        #newMoneyPaidTaxPrice#,
+        #newMoneyPaidTaxExchangeId#,
+
+        #frozenAmount#,
+        #frozenAmountPrice#,
+        #frozenAmountExchangeId#,
+
+        #receivingAmount#,
+        #receivingAmountPrice#,
+        #receivingAmountExchangeId#,
+
+        #totalTax#,
+        #totalTaxPrice#,
+        #totalExchangeId#,
+
+        #totalTaxType#,
+
+        #oldCurrencyType#,
+        #newCurrencyType#,
+
+        #exchangedAt#
+
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <insert id="addWalletExchangePending" parameterClass="WalletExchangePending">
+        INSERT INTO `wallet_exchange_pending` (
+            `w_e_id`,
+            `tr_id`,
+            `w_id`,
+
+            `old_from_t_p`,
+            `new_from_t_p`,
+            `old_from_t_p_c`,
+            `new_from_t_p_c`,
+            `from_t_p_e_id`,
+
+            `old_to_t_p`,
+            `new_to_t_p`,
+            `old_to_t_p_c`,
+            `new_to_t_p_c`,
+            `to_t_p_e_id`
+        ) VALUE (
+            #walletExchangeId#,
+            #transactionId#,
+            #walletId#,
+
+            #oldFromTotalPrice#,
+            #newFromTotalPrice#,
+            #oldFromTotalPriceCurrencyType#,
+            #newFromTotalPriceCurrencyType#,
+            #fromTotalPriceExchangeId#,
+    
+            #oldToTotalPrice#,
+            #newToTotalPrice#,
+            #oldToTotalPriceCurrencyType#,
+            #newToTotalPriceCurrencyType#,
+            #toTotalPriceExchangeId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmWalletExchange" resultMap="rmWalletExchangeFull" parameterClass="long">
+        SELECT we.*, td.state dispute_state, td.id dispute_id from `wallet_exchange` we
+        left JOIN w_transaction_dispute td on td.wallet_exchange_id = we.id
+        WHERE we.`id` = #id#
+    </select>
+
+    <select id="getByParams" cacheModel="cmWalletExchange" resultMap="rmWalletExchange" parameterClass="map">
+        SELECT we.*, td.state dispute_state, td.id dispute_id from `wallet_exchange` we
+        <isNull property="disputeState"> left </isNull>
+        <isNotNull property="disputeStateNY"> left </isNotNull>
+        JOIN w_transaction_dispute td on td.wallet_exchange_id = we.id
+        <isNotNull property="disputeState"> AND td.state = #disputeState#</isNotNull>
+        WHERE  1
+
+        <isNotNull property="walletId">
+            and we.wallet_id = #walletId#
+        </isNotNull>
+
+        <isNotNull property="rangeActionDateGreat">
+            and we.exchanged_at &gt; #rangeActionDateGreat#
+        </isNotNull>
+
+        <isNotNull property="rangeActionDateLess">
+            and we.exchanged_at &lt; #rangeActionDateLess#
+        </isNotNull>
+
+        <isNotNull property="byCurrency">
+            and we.new_currency = #byCurrency#
+        </isNotNull>
+
+        <isNotNull property="rangeAmountGreat">
+            and we.new_m_p_t_price &gt; #rangeAmountGreat#
+        </isNotNull>
+
+        <isNotNull property="rangeAmountLess">
+            and we.new_m_p_t_price &lt; #rangeAmountLess#
+        </isNotNull>
+
+        order by we.id desc
+
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <select id="getExchangePendingIdes" cacheModel="cmWalletExchange" resultClass="long" parameterClass="long">
+        SELECT tr_id from `wallet_exchange_pending` WHERE `w_e_id` = #id#
+    </select>
+
+</sqlMap>

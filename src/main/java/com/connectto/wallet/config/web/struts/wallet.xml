@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <package name="wallet" extends="wallet_auth_merchant_package" namespace="/">
+
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"></result-type>
+        </result-types>
+
+        <default-class-ref class="com.connectto.general.util.ShellAction"/>
+
+        <global-results>
+            <result name="error" type="tiles">error</result>
+            <result name="transactionMerchantShow" type="redirect">transaction-merchant-show.htm</result>
+            <result name="home" type="redirect">home_wallet.htm</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="com.connectto.general.exception.InternalErrorException" result="error"/>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+        </global-exception-mappings>
+
+        <action name="home_wallet" class="ShellAction" method="execute">
+            <result name="success" type="tiles">wallet</result>
+            <result name="m-success" type="tiles">wallet-mobile</result>
+        </action>
+
+
+
+        <action name="transaction_data_upload" class="TransactionDataUploadAction" method="upload">
+            <result name="success" type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">result</param>
+            </result>
+            <result name="input" type="stream">
+                <param name="contentType">text/html</param>
+                <param name="inputName">result</param>
+            </result>
+        </action>
+
+        <action name="remove-uploaded" class="TransactionDataUploadAction" method="removeUploaded">
+            <result name="success" type="json"/>
+        </action>
+        <action name="remove-all-uploaded" class="TransactionDataUploadAction" method="removeAllUploaded">
+            <result name="success" type="json"/>
+        </action>
+
+
+        <action name="transaction_data_download" class="TransactionDataDownloadAction">
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename="${dataFileName}"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+            <result name="start" type="tiles">wallet</result>
+        </action>
+
+        <action name="transaction-info-download" class="TransactionInfoAction" method="transactionInfoDownload">
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename="${dataFileName}"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+            <result name="start" type="tiles">wallet</result>
+        </action>
+
+        <action  name="transaction-info-email" class="TransactionInfoAction" method="transactionInfoEmail">
+            <!--<result name="success" type="redirect">completed-transaction.htm?transactionId=${transactionId}</result>-->
+            <result name="success" type="json"/>
+        </action>
+
+
+        <!--
+        ################################################################################################################
+        ################################################################################################################
+        TransactionAction
+        ################################################################################################################
+        ################################################################################################################
+        -->
+
+        <!--Dispute transactions-->
+
+        <action name="view-dispute" class="DisputeAction" method="viewDispute">
+            <result name="success" type="json"/>
+        </action>
+
+        <!--<action name="close-dispute" class="DisputeAction" method="closeDispute">
+            <result name="success" type="json"/>
+        </action>-->
+
+        <action name="dispute" class="DisputeAction" method="dispute">
+            <result name="success" type="json"/>
+        </action>
+
+        <!--
+        ###############################################################################################################
+        ###############################################################################################################
+        Menu
+        ###############################################################################################################
+        ###############################################################################################################
+        -->
+
+        <action name="settings">
+            <result name="success" type="tiles">settings</result>
+            <result name="m-success" type="tiles">m-settings</result>
+        </action>
+
+
+        <action name="send-money" class="WalletMenuAction" method="execute">
+            <result name="success" type="tiles">send-money</result>
+            <result name="m-success" type="tiles">m-send-money</result>
+        </action>
+
+        <action name="request-transaction" class="WalletMenuAction" method="execute">
+            <result name="success" type="tiles">request-transaction</result>
+            <result name="m-success" type="tiles">m-request-transaction</result>
+        </action>
+
+        <action name="pending-transaction" class="WalletMenuAction" method="execute">
+            <result name="success" type="tiles">pending-transactions</result>
+            <result name="m-success" type="tiles">m-pending-transactions</result>
+        </action>
+
+
+
+
+
+        <action  name="completed-transaction" class="WalletMenuAction" method="execute">
+            <result name="success" type="tiles">completed-transaction</result>
+            <result name="m-success" type="tiles">m-completed-transaction</result>
+        </action>
+
+        <!--<action name="card-payment" class="CreditCardAction" method="payment">
+            <result name="success" type="tiles">card-view</result>
+            <result name="m-success" type="tiles">m-card-view</result>
+        </action>-->
+
+        <action name="current-balance-view" class="WalletMenuAction" method="currentBalanceView">
+            <result name="success" type="json"/>
+        </action>
+
+
+        <!--
+        ###############################################################################################################
+        ###############################################################################################################
+        Load
+        ###############################################################################################################
+        ###############################################################################################################
+        -->
+
+        <action name="search_user" class="SearchAction" method="searchUsers">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="load-available-currencies" class="LoadSettingAction" method="loadAvailableCurrencies">
+            <result name="success" type="json"/>
+        </action>
+
+        <!--
+            CreditCardAction Start
+        -->
+
+        <action name="credit-cards-view" class="CreditCardAction" method="viewCards">
+            <result name="success" type="tiles">card-view</result>
+            <result name="m-success" type="tiles">m-card-view</result>
+            <result name="error" type="tiles">wallet_entry</result>
+            <result name="m-error" type="tiles">m-wallet_entry</result>
+        </action>
+
+        <action name="credit-cards-load" class="CreditCardAction" method="loadCards">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="credit-card-view" class="CreditCardAction" method="viewCard">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="credit-card-create" class="CreditCardAction" method="createCard">
+            <result name="success" type="redirect">credit-cards-view.htm</result>
+            <result name="error" type="tiles">card-view</result>
+        </action>
+
+        <action name="credit-card-edit" class="CreditCardAction" method="editCard">
+            <result name="success" type="redirect">credit-cards-view.htm</result>
+            <result name="error" type="tiles">card-view</result>
+        </action>
+
+        <action name="credit-card-enable" class="CreditCardAction" method="enableCard">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="credit-card-disable" class="CreditCardAction" method="disableCard">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="credit-card-delete" class="CreditCardAction" method="deleteCard">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="credit-card-reorder-priorities" class="CreditCardAction" method="prioritiesCard">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="credit-card-make-default" class="CreditCardAction" method="makeDefaultCard">
+            <result name="success" type="json"/>
+        </action>
+
+
+
+        <!--
+            CreditCardAction End
+        -->
+
+        <!--
+            TransactionProcess Start
+        -->
+
+
+        <!--Send money-->
+
+        <action name="send-money-check-tax" class="WalletTransactionAction" method="sendMoneyCheckTax">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="send-money-preview" class="WalletTransactionAction" method="sendMoneyPreview">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="send-money-make-payment" class="WalletTransactionAction" method="sendMoneyMakePayment">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="send-money-approve" class="WalletTransactionAction" method="sendMoneyApprove">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="send-money-reject" class="WalletTransactionAction" method="sendMoneyReject">
+            <result name="success" type="json"/>
+        </action>
+
+
+        <!--request_transaction requestTransaction-->
+        <action name="request-transaction-check-tax" class="WalletTransactionAction" method="requestTransactionCheckTax">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="request-transaction-preview" class="WalletTransactionAction" method="requestTransactionPreview">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="request-transaction-make-payment" class="WalletTransactionAction" method="requestTransactionMakePayment">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="request-transaction-approve" class="WalletTransactionAction" method="requestTransactionApprove">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="request-transaction-reject" class="WalletTransactionAction" method="requestTransactionReject">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="charge-amount-from-wallet" class="TransactionPurchaseTicketAction" method="chargeWalletAmountFromGuide">
+            <result name="success" type="json"/>
+        </action>
+
+
+
+
+        <!--loading-->
+        <action name="load-pending-transactions" class="WalletTransactionAction" method="loadPendingTransactions">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="show-pending-transaction" class="WalletTransactionAction" method="showPendingTransaction">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="load-completed-transactions" class="WalletTransactionAction" method="loadCompletedTransactions">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="load-exchanged-transactions" class="WalletTransactionAction" method="loadExchangedTransactions">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="show-completed-transaction" class="WalletTransactionAction" method="showCompletedTransaction">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="show-exchanged-transaction" class="WalletTransactionAction" method="showExchangedTransaction">
+            <result name="success" type="json"/>
+        </action>
+
+
+
+        <!--
+        ################################################################################################################
+        ################################################################################################################
+        Settings
+        ################################################################################################################
+        ################################################################################################################
+        -->
+
+        <action name="change-password" class="SettingsAction" method="changePassword">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="change-currency-type-check-tax" class="WalletTransactionAction" method="exchangeBalanceCheckTax">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="change-currency-type" class="WalletTransactionAction" method="exchangeBalance">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="load-blocked-users" class="SearchAction" method="searchBlockedUsers">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="block-user" class="BlockedUserAction" method="blockUser">
+            <result name="success" type="json"/>
+        </action>
+
+        <action name="unblock-user" class="BlockedUserAction" method="unblockUser">
+            <result name="success" type="json"/>
+        </action>
+
+
+    </package>
+
+    <package name="wallet-mobile-custom-package" namespace="/" extends="exclude-null-json-default">
+
+        <!--The default filter/interceptor, action and class -->
+        <default-interceptor-ref name="CustomJsonExcludeNullValidationWorkflowStack"/>
+        <!--<default-action-ref name="general"/>-->
+        <default-class-ref class="com.connectto.general.util.ShellAction"/>
+
+        <action name="get-available-credit-cards-count" class="CreditCardAction" method="getAvailableCardsCount">
+            <result name="success" type="json"/>
+        </action>
+
+
+    </package>
+
+</struts>

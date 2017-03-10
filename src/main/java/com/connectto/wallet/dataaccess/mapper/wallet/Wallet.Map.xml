@@ -1,0 +1,267 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsWallet">
+
+    <cacheModel id="cmWallet" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmWallet" class="Wallet">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="password" column="password"/>
+        <result property="money" column="money"/>
+        <result property="frozenAmount" column="frozen_amount"/>
+        <result property="receivingAmount" column="receiving_amount"/>
+        <result property="currencyType" column="currency_type"/>
+        <result property="partitionId" column="partition_id"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="profile" column="profile_id"/>
+        <result property="updatedById" column="updated_by"/>
+        <result property="loggedAt" column="logged_at"/>
+        <result property="isLocked" column="is_locked"/>
+        <result property="currentLocation" column="location_id" select="nsWalletLocation.getById"/>
+    </resultMap>
+
+    <resultMap id="rmWalletUser" class="User">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="name" column="name"/>
+        <result property="surname" column="surname"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <!--<result property="status" column="status"/>-->
+        <!--<result property="defaultPhotoId" column="default_photo_id"/>-->
+        <!--<result property="photoData" column="photo_data_id" select="nsUserData.getById"/>-->
+    </resultMap>
+
+    <select id="getWalletUserByWalletId" cacheModel="cmWallet" resultMap="rmWalletUser" parameterClass="long">
+        SELECT u.* from `user` u, w_wallet w WHERE w.user_id = u.id and w.id  = #id#
+    </select>
+    <resultMap id="rmWalletSimple" class="Wallet">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="password" column="password"/>
+        <result property="userId" column="user_id"/>
+        <result property="money" column="money"/>
+        <result property="frozenAmount" column="frozen_amount"/>
+        <result property="receivingAmount" column="receiving_amount"/>
+        <result property="currencyType" column="currency_type"/>
+        <result property="partitionId" column="partition_id"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="loggedAt" column="logged_at"/>
+        <result property="profile" column="profile_id"/>
+        <result property="updatedById" column="updated_by"/>
+        <result property="isLocked" column="is_locked"/>
+    </resultMap>
+
+
+    <resultMap id="rmBlockedUser" class="BlockedUser">
+        <result property="id" column="unblocked_at" nullValue="0"/>
+        <result property="ownerId" column="owner_id"/>
+        <result property="blockedId" column="blocked_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="blockedAt" column="blocked_at"/>
+        <result property="unblockedAt" column="unblocked_at"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="Wallet">
+        INSERT INTO `w_wallet` (
+            `user_id`,
+            `money`,
+            `currency_type`,
+            `password`,
+            `partition_id`,
+            `updated_at`,
+            `updated_by`,
+            `profile_id`
+        ) VALUES (
+            #userId#,
+            #money#,
+            #currencyType#,
+            #password#,
+            #partitionId#,
+            #updatedAt#,
+            #updatedById#,
+            #profile#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <insert id="replaceBlockedUser" parameterClass="BlockedUser">
+        REPLACE  INTO `w_blocked_user` (
+            `owner_id`,
+            `blocked_id`,
+            `title`,
+            `content`,
+            `blocked_at`,
+            `unblocked_at`
+        ) VALUES (
+            #ownerId#,
+            #blockedId#,
+            #title#,
+            #content#,
+            #blockedAt#,
+            #unblockedAt#
+        )
+    </insert>
+
+    <select id="getBlockedUser" cacheModel="cmWallet" resultMap="rmBlockedUser" parameterClass="map">
+        SELECT * from `w_blocked_user` WHERE `owner_id` = #ownerId# AND blocked_id = #blockedId#
+    </select>
+
+    <update id="deleteBlockedUser" parameterClass="BlockedUser">
+        delete from `w_blocked_user`
+        WHERE `owner_id` = #ownerId# AND `blocked_id` = #blockedId#
+    </update>
+
+    <select id="getById" cacheModel="cmWallet" resultMap="rmWalletSimple" parameterClass="long">
+        SELECT * from `w_wallet` WHERE `id` = #id#
+    </select>
+
+    <select id="getByUserId" cacheModel="cmWallet" resultMap="rmWalletSimple" parameterClass="long">
+        SELECT * from `w_wallet` WHERE `user_id` = #userId#
+    </select>
+
+    <select id="getByEncryptKey" cacheModel="cmWallet" resultMap="rmWallet" parameterClass="string">
+        select w.*,l.id location_id
+        from w_wallet w,w_wallet_current_location l
+        where w.id = l.wallet_id and l.encrypt_key = #encryptKey#
+    </select>
+
+    <select id="login" cacheModel="cmWallet" resultMap="rmWalletSimple" parameterClass="map">
+        select w.*
+        from w_wallet w, `user` u
+        where w.user_id = u.id
+            and w.password = #password#
+            and (u.`email` like #email# or u.`phone` like #email#)
+    </select>
+
+    <select id="checkUserBalance" cacheModel="cmWallet" resultClass="double" parameterClass="long">
+        select w.money
+        from w_wallet w
+        where w.id = #walletId#
+    </select>
+
+    <select id="getByParams" cacheModel="cmWallet" resultMap="rmWalletSimple" parameterClass="map">
+        SELECT * from `w_wallet`
+        <dynamic prepend="WHERE"> 1
+            <isNotNull property="id">
+                and id = #id#
+            </isNotNull><isNotNull property="userId">
+                and user_id = #userId#
+            </isNotNull><isNotNull property="token">
+                and reset_password_token = #token#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <select id="getBlockedUserIdes" cacheModel="cmWallet" resultClass="long" parameterClass="long">
+        select blocked_id from w_blocked_user where owner_id = #ownerId#
+    </select>
+
+
+
+    <select id="getCountByParams" cacheModel="cmWallet" resultClass="int" parameterClass="map">
+        SELECT count(`id`) from `w_wallet`
+        <dynamic prepend="WHERE">1
+            <isNotNull property="id">
+                and id` = #id#
+            </isNotNull>
+        </dynamic>
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <update id="update" parameterClass="Wallet">
+        UPDATE `w_wallet`
+        SET `id` = #id#
+        <isNotNull property="isLocked">
+            ,`is_locked` = #isLocked#
+        </isNotNull>
+        <isNotNull property="money">
+            ,`money` = #money#
+        </isNotNull>
+        <isNotNull property="frozenAmount">
+            ,`frozen_amount` = #frozenAmount#
+        </isNotNull>
+        <isNotNull property="receivingAmount">
+            ,`receiving_amount` = #receivingAmount#
+        </isNotNull>
+        <isNotNull property="currencyType">
+            ,`currency_type` = #currencyType#
+        </isNotNull>
+        <isNotNull property="updatedById">
+            ,`updated_by` = #updatedById#
+        </isNotNull>
+        <isNotNull property="updatedAt">
+            ,`updated_at` = #updatedAt#
+        </isNotNull>
+        <isNotNull property="loggedAt">
+            ,`logged_at` = #loggedAt#
+        </isNotNull>
+
+        WHERE `id` = #id#
+    </update>
+
+    <update id="updateIncreaseFrozenAmount" parameterClass="Wallet">
+        UPDATE `w_wallet`
+        SET  frozen_amount = frozen_amount + #frozenAmount#
+        WHERE `id` = #id#
+    </update>
+    <update id="updateDecreaseFrozenAmount" parameterClass="Wallet">
+        UPDATE `w_wallet`
+        SET  frozen_amount = frozen_amount - #frozenAmount#
+        WHERE `id` = #id#
+    </update>
+
+    <update id="updateIncreaseReceivingAmount" parameterClass="Wallet">
+        UPDATE `w_wallet`
+        SET  receiving_amount = receiving_amount + #receivingAmount#
+        WHERE `id` = #id#
+    </update>
+    <update id="updateDecreaseReceivingAmount" parameterClass="Wallet">
+        UPDATE `w_wallet`
+        SET  receiving_amount = receiving_amount - #receivingAmount#
+        WHERE `id` = #id#
+    </update>
+
+    <update id="updateIncreaseMoneyAmount" parameterClass="Wallet">
+        UPDATE `w_wallet`
+        SET  money = money + #money#
+        WHERE `id` = #id#
+    </update>
+    <update id="updateDecreaseMoneyAmount" parameterClass="Wallet">
+        UPDATE `w_wallet`
+        SET  money = money - #money#
+        WHERE `id` = #id#
+    </update>
+
+    <update id="resetPassword" parameterClass="Wallet">
+        UPDATE `w_wallet`
+        SET `user_id` = #userId#
+
+        <isNotNull property="password">
+             ,password = #password#
+        </isNotNull>
+        <isNotNull property="resetPasswordToken">
+             ,reset_password_token = #resetPasswordToken#
+        </isNotNull>
+
+        WHERE `user_id` = #userId#
+    </update>
+
+    <delete id="delete" parameterClass="long">
+        DELETE FROM `w_wallet` WHERE `id` = #id#
+    </delete>
+
+
+</sqlMap>

@@ -1,0 +1,77 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsTransactionWithdrawProcess">
+
+    <cacheModel id="cmTransactionWithdrawProcess" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmTransactionWithdrawProcessSample" class="TransactionWithdrawProcess">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="state" column="state"/>
+        <result property="actionDate" column="action_date"/>
+        <result property="walletId" column="wallet_id"/>
+        <result property="setupId" column="setup_id"/>
+        <result property="withdrawAmount" column="withdraw_amount"/>
+        <result property="withdrawAmountCurrencyType" column="withdraw_amount_ct"/>
+        <result property="walletWithdrawPrice" column="wallet_withdraw_price"/>
+        <result property="walletTotalPrice" column="wallet_total_price"/>
+        <result property="walletTotalPriceCurrencyType" column="wallet_total_price_ct"/>
+        <result property="setupWithdrawPrice" column="setup_withdraw_price"/>
+        <result property="setupTotalPrice" column="setup_total_price"/>
+        <result property="setupTotalPriceCurrencyType" column="setup_total_price_ct"/>
+        <result property="processTaxId" column="process_tax_id"/>
+        <result property="setupWithdrawTaxId" column="setup_withdraw_tax_id"/>
+        <result property="exchangeId" column="exchange_id"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="TransactionWithdrawProcess">
+        INSERT INTO `w_t_withdraw_process` (
+            `state`,
+            `action_date`,
+            `wallet_id`,
+            `setup_id`,
+            `withdraw_amount`,
+            `withdraw_amount_ct`,
+            `wallet_withdraw_price`,
+            `wallet_total_price`,
+            `wallet_total_price_ct`,
+            `setup_withdraw_price`,
+            `setup_total_price`,
+            `setup_total_price_ct`,
+            `process_tax_id`,
+            `setup_withdraw_tax_id`,
+            `exchange_id`
+        ) VALUES (
+            #state#,
+            #actionDate#,
+            #walletId#,
+            #setupId#,
+            #withdrawAmount#,
+            #withdrawAmountCurrencyType#,
+            #walletWithdrawPrice#,
+            #walletTotalPrice#,
+            #walletTotalPriceCurrencyType#,
+            #setupWithdrawPrice#,
+            #setupTotalPrice#,
+            #setupTotalPriceCurrencyType#,
+            #processTaxId#,
+            #setupWithdrawTaxId#,
+            #exchangeId#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmTransactionWithdrawProcess" resultMap="rmTransactionWithdrawProcessSample" parameterClass="long">
+        SELECT * from `w_t_withdraw_process` WHERE `id` = #id#
+    </select>
+
+
+
+</sqlMap>

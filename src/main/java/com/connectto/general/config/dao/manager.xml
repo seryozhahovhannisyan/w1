@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="CoreSystemAdminManagerImpl" class="com.connectto.general.dataaccess.service.impl.CoreSystemAdminManagerImpl">
+        <property name="coreSystemAdminDao" ref="CoreSystemAdminDaoImpl"/>
+    </bean>
+
+    <bean id="TsmManagerImpl" class="com.connectto.general.dataaccess.service.impl.TsmManagerImpl">
+        <property name="tsmDao" ref="TsmDaoImpl"/>
+    </bean>
+
+    <bean id="UserManagerImpl" class="com.connectto.general.dataaccess.service.impl.UserManagerImpl">
+        <property name="userDao" ref="UserDaoImpl"/>
+        <property name="walletSetupDao" ref="WalletSetupDaoImpl"/>
+    </bean>
+
+    <bean id="PartitionSetupManagerImpl" class="com.connectto.general.dataaccess.service.impl.PartitionSetupManagerImpl">
+        <property name="partitionSetupDao" ref="PartitionSetupDaoImpl"/>
+    </bean>
+
+</beans>

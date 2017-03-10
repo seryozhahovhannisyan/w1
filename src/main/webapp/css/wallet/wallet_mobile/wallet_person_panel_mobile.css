@@ -1,0 +1,363 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'GothaProReg.otf';
+    src: url(../../../css/general/fonts/GothaProReg.otf);
+}
+@font-face {
+    font-family: 'GothaProBol.otf';
+    src: url(../../../css/general/fonts/GothaProBol.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    src: url(../../../css/general/fonts/HelveticaNeueCyr-Roman.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    src: url(../../../css/general/fonts/HelveticaNeueCyr-Medium.otf);
+}
+@font-face {
+    font-family: 'HelveticaNeueCyr-Bold.otf';
+    src: url(../../../css/general/fonts/HelveticaNeueCyr-Bold.otf);
+}
+
+body{
+    background-image: url("../../../img/wallet/login/background/background_wallet.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.row{
+    margin: 0!important;
+
+}
+.person_panel_parent{
+
+}
+
+.header_logo{
+    margin-top: 10px;
+    position: relative;
+}
+.header_logo_img{
+    float:left;
+    margin-left: 20px;
+
+}
+.header_logo_img img{
+    width: 100%;
+    height: auto;
+}
+.log_out_div{
+    float: right;
+    margin-right: 20px;
+}
+.log_out{
+    float: right;
+    margin-right: 10px;
+    color: #a8a4a4;
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    font-size: 100%;
+    cursor: pointer;
+}
+.log_out img{
+    width: 14px;
+    height: auto;
+    vertical-align: sub;
+}
+.close_wallet{
+    float: right;
+    color: #a8a4a4;
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    font-size: 100%;
+    cursor: pointer;
+}
+.close_wallet img{
+    width: 12px;
+    height: auto;
+    vertical-align: baseline;
+}
+.name_surname_menu_parent{
+    text-align: center;
+}
+
+.avatar_div{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #27ccc0;
+    border-radius: 50%;
+    background-color: #d8d7d5;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+.avatar_div img{
+   width: 100%;
+    height: auto;
+
+}
+
+.person_img{
+    width: 40px;
+}
+
+.money_envelop{
+    margin: 10px auto;
+    text-align: center;
+
+}
+.send_money_div{
+    text-align: center;
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    cursor: pointer;
+
+}
+
+.settings_mobile {
+    color: #a8a4a4;
+    font-family: 'HelveticaNeueCyr-Medium.otf';
+    font-size: 130%;
+    cursor: pointer;
+}
+.request_envelop{
+    margin: 10px auto;
+    text-align: center;
+
+}
+
+
+.footer_bottom{
+    position: absolute;
+    background-color: #b2b9bb;
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    height: auto;
+    bottom: 0;
+    padding-bottom: 10px;
+}
+.footer_auto{
+    background-color: #b2b9bb;
+    font-family: 'HelveticaNeueCyr-Roman.otf';
+    height: auto;
+}
+.footer_parent_div{
+    margin: 0 auto;
+    float: none!important;
+    padding-top: 25px;
+
+}
+
+
+
+
+
+/*left-menu*/
+
+.aside{
+    width: 320px;
+    top:10px;
+    left: -370px;
+    position: absolute;
+    z-index: 3;
+    /*display: none;*/
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -o-transition: all 1s;
+    -ms-transition: all 1s;
+}
+.close_menu{
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.close_menu img{
+    width: 100%;
+    height: auto;
+}
+.avatar_div_menu{
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    border: 2px solid #27ccc0;
+    border-radius: 50%;
+    background-color: #d8d7d5;
+    position: relative;
+    overflow: hidden;
+}
+.avatar_div_menu img{
+    width: 100%;
+    height: auto;
+
+}
+.name_surname_menu{
+    background: url("../../../img/wallet/login/background/left_menu_background.png") no-repeat ;
+    background-size: cover;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.name_surname_div_menu{
+    font-size: 160%;
+    font-family: 'GothaProReg.otf';
+    color: #eeeeef;
+    padding: 5px 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+.left_menu_icon{
+    padding: 10px 5px;
+    width:100%;
+    height: auto;
+    background-color: #eeeeef;
+}
+.left_menu_img{
+    vertical-align: top;
+    width: 50px;
+    height: auto;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 10px;
+
+}
+.left_menu_img i{
+    font-size: 200%;
+}
+.credit_card_img{
+    margin: 10px auto;
+    text-align: center;
+    cursor: pointer;
+}
+.completed_credit_card_parent_li span{
+    cursor: pointer;
+}
+.credit_card_img img{
+    width: 40px;
+    height: 40px;
+}
+.left_menu_img img{
+    width: 100%;
+    height: auto;
+}
+.money{
+    font-family: 'HelveticaNeueCyr-Bold.otf';
+    font-size: 130%;
+    color: #10c76b;
+    vertical-align: bottom;
+    cursor: pointer;
+    display: inline-block;
+    width: 240px;
+}
+.request{
+    font-family: 'HelveticaNeueCyr-Bold.otf';
+    font-size: 130%;
+    color: #ff4154;
+    vertical-align: bottom;
+    cursor: pointer;
+    display: inline-block;
+    width: 240px;
+}
+.pending{
+    font-family: 'HelveticaNeueCyr-Bold.otf';
+    font-size: 130%;
+    color: #868688;
+    cursor: pointer;
+    display: inline-block;
+    width: 240px;
+}
+.completed{
+    font-family: 'HelveticaNeueCyr-Bold.otf';
+    font-size: 130%;
+    color: #15a45d;
+    cursor: pointer;
+    display: inline-block;
+    width: 240px;
+}
+.credit_card_mobile{
+    font-family: 'HelveticaNeueCyr-Bold.otf';
+    font-size: 130%;
+    color: #717171;
+    cursor: pointer;
+    display: inline-block;
+    width: 240px;
+}
+.bordered{
+    border-top: 1px solid #cecece;
+    border-bottom: 1px solid #cecece;
+
+}
+
+.expand{
+    top: 10px;
+    left:0;
+    position: absolute;
+    z-index: 3;
+    display: inline-block;
+}
+
+
+
+    .person_panel_parent{
+        display: none;
+    }
+    .menu_person_panel{
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        position: absolute;
+        left: 10px;
+        cursor: pointer;
+    }
+.back_menu_person_panel{
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+    display: none;
+}
+    .header_logo_img {
+        margin: 0 auto;
+        float: none!important;
+        min-width: 230px;
+    }
+    .menu_person_panel img,.back_menu_person_panel img{
+        width: 100%;
+        height: auto;
+    }
+    .name_surname_device{
+        text-align: center;
+        width: 100%;
+        height: auto;
+        padding: 5px;
+    }
+
+    .avatar_div img{
+        width: 100%;
+        height:auto;
+        left: 10px;
+        top: 3px;
+    }
+    .name_surname_div{
+        font-size: 150%;
+        text-align: center;
+        font-family: 'GothaProReg.otf';
+        padding: 17px 10px 0 10px;
+        color: #d9d9d9;
+        overflow: hidden;
+        text-overflow:ellipsis ;
+        white-space: nowrap;
+        cursor: pointer;
+
+    }
+
+

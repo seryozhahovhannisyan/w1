@@ -1,0 +1,74 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="nsPurchaseTicket">
+
+    <cacheModel id="cmPurchaseTicket" type="LRU">
+        <flushInterval hours="24"/>
+        <property name="fileSize" value="1000"/>
+    </cacheModel>
+
+    <resultMap id="rmPurchaseTicketSample" class="PurchaseTicket">
+        <result property="id" column="id" nullValue="0"/>
+        <result property="itemId" column="item_id"/>
+        <result property="purchaseType" column="purchase_type"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+    </resultMap>
+
+    <insert id="add" parameterClass="PurchaseTicket">
+        INSERT INTO `w_purchase_ticket` (
+            `item_id`,
+            `transaction_id`,
+            `purchase_type`,
+            `name`,
+            `description`
+        ) VALUES (
+            #itemId#,
+            #transactionId#,
+            #purchaseType#,
+            #name#,
+            #description#
+        )
+
+        <selectKey keyProperty="id" resultClass="long">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+
+    </insert>
+
+    <select id="getById" cacheModel="cmPurchaseTicket" resultMap="rmPurchaseTicketSample" parameterClass="long">
+        SELECT * from `w_purchase_ticket` WHERE `id` = #id#
+    </select>
+
+    <select id="getByTransactionId" cacheModel="cmPurchaseTicket" resultMap="rmPurchaseTicketSample" parameterClass="long">
+        SELECT * from `w_purchase_ticket` -- WHERE `transaction_id` = #transactionId#
+    </select>
+
+    <select id="getByParams" cacheModel="cmPurchaseTicket" resultMap="rmPurchaseTicketSample" parameterClass="map">
+        SELECT * from `w_purchase_ticket`
+        <dynamic prepend="WHERE">
+            <isNotNull property="id">
+                and `id` = #id#
+            </isNotNull>
+        </dynamic>
+        order by `id` asc
+        <isNotNull property="limit">
+            LIMIT #limit# OFFSET #offset#
+        </isNotNull>
+    </select>
+
+    <select id="getCountByParams" cacheModel="cmPurchaseTicket" resultClass="int" parameterClass="map">
+        SELECT count(`id`) from `w_purchase_ticket`
+        <dynamic prepend="WHERE"> `is_deleted` = 0
+            <isNotNull property="id">
+                and `id` = #id#
+            </isNotNull>
+        </dynamic>
+    </select>
+
+    <delete id="forceDelete" parameterClass="long">
+        DELETE FROM `w_purchase_ticket` WHERE `id` = #id#
+    </delete>
+
+</sqlMap>
